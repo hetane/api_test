@@ -47,7 +47,7 @@ public class SoapUISSLSocketFactory extends SSLSocketFactory
 {
 	// a cache of factories for custom certificates/Keystores at the project level - never cleared
 	private static final Map<String, SSLSocketFactory> factoryMap = new ConcurrentHashMap<String, SSLSocketFactory>();
-	private final SSLContext sslContext = SSLContext.getInstance( "TLS" );
+	private final SSLContext sslContext = SSLContext.getInstance( SSLSocketFactory.TLS );
 	private final static Logger log = Logger.getLogger( SoapUISSLSocketFactory.class );
 
 	@SuppressWarnings( "deprecation" )
@@ -107,19 +107,19 @@ public class SoapUISSLSocketFactory extends SSLSocketFactory
 		{
 			socket.setEnabledProtocols( protocols.split( "," ) );
 		}
-		//		else if( socket.getSupportedProtocols() != null )
-		//		{
-		//			socket.setEnabledProtocols( socket.getSupportedProtocols() );
-		//		}
+		else if( socket.getSupportedProtocols() != null )
+		{
+			socket.setEnabledProtocols( socket.getSupportedProtocols() );
+		}
 
 		if( StringUtils.hasContent( ciphers ) )
 		{
 			socket.setEnabledCipherSuites( ciphers.split( "," ) );
 		}
-		//		else if( socket.getSupportedCipherSuites() != null )
-		//		{
-		//			socket.setEnabledCipherSuites(  socket.getSupportedCipherSuites()  );
-		//		}
+		else if( socket.getSupportedCipherSuites() != null )
+		{
+			socket.setEnabledCipherSuites( socket.getSupportedCipherSuites() );
+		}
 
 		return socket;
 	}
@@ -235,26 +235,26 @@ public class SoapUISSLSocketFactory extends SSLSocketFactory
 			sslsock = enableSocket( sslsock );
 		}
 		// do we need it? trust all hosts
-//		if( getHostnameVerifier() != null )
-//		{
-//			try
-//			{
-//				getHostnameVerifier().verify( remoteAddress.getHostName(), sslsock );
-//				// verifyHostName() didn't blowup - good!
-//			}
-//			catch( IOException iox )
-//			{
-//				// close the socket before re-throwing the exception
-//				try
-//				{
-//					sslsock.close();
-//				}
-//				catch( Exception x )
-//				{ /* ignore */
-//				}
-//				throw iox;
-//			}
-//		}
+		//		if( getHostnameVerifier() != null )
+		//		{
+		//			try
+		//			{
+		//				getHostnameVerifier().verify( remoteAddress.getHostName(), sslsock );
+		//				// verifyHostName() didn't blowup - good!
+		//			}
+		//			catch( IOException iox )
+		//			{
+		//				// close the socket before re-throwing the exception
+		//				try
+		//				{
+		//					sslsock.close();
+		//				}
+		//				catch( Exception x )
+		//				{ /* ignore */
+		//				}
+		//				throw iox;
+		//			}
+		//		}
 		return sslsock;
 	}
 
@@ -267,10 +267,10 @@ public class SoapUISSLSocketFactory extends SSLSocketFactory
 	{
 		SSLSocket sslSocket = ( SSLSocket )getSocketFactory().createSocket( socket, host, port, autoClose );
 		sslSocket = enableSocket( sslSocket );
-//		if( getHostnameVerifier() != null )
-//		{
-//			getHostnameVerifier().verify( host, sslSocket );
-//		}
+		//		if( getHostnameVerifier() != null )
+		//		{
+		//			getHostnameVerifier().verify( host, sslSocket );
+		//		}
 		// verifyHostName() didn't blowup - good!
 		return sslSocket;
 	}
