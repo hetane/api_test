@@ -73,6 +73,9 @@ public class HttpRequestFilter extends AbstractRequestFilter
 	{
 		HttpRequestBase httpMethod = ( HttpRequestBase )context.getProperty( BaseHttpRequestTransport.HTTP_METHOD );
 
+		String strURL = request.getEndpoint();
+		strURL = PropertyExpander.expandProperties( context, strURL );
+
 		String path = PropertyExpander.expandProperties( context, request.getPath() );
 		StringBuffer query = new StringBuffer();
 
@@ -197,42 +200,17 @@ public class HttpRequestFilter extends AbstractRequestFilter
 		if( request.getSettings().getBoolean( HttpSettings.FORWARD_SLASHES ) )
 			path = PathUtils.fixForwardSlashesInPath( path );
 
-		if( PathUtils.isHttpPath( path ) )
+		try
 		{
-			try
-			{
-				// URI(String) automatically URLencodes the input, so we need to
-				// decode it first...
-				URI uri = new URI( path, request.getSettings().getBoolean( HttpSettings.ENCODED_URLS ) );
-				context.setProperty( BaseHttpRequestTransport.REQUEST_URI, uri );
-				java.net.URI oldUri = httpMethod.getURI();
-				httpMethod
-						.setURI( new java.net.URI( oldUri.getScheme(), oldUri.getUserInfo(), oldUri.getHost(), oldUri
-								.getPort(), ( uri.getPath() ) == null ? "/" : uri.getPath(), oldUri.getQuery(), oldUri
-								.getFragment() ) );
-			}
-			catch( Exception e )
-			{
-				SoapUI.logError( e );
-			}
+			// URI(String) automatically URLencodes the input, so we need to
+			// decode it first...
+			URI uri = new URI( path, request.getSettings().getBoolean( HttpSettings.ENCODED_URLS ) );
+			context.setProperty( BaseHttpRequestTransport.REQUEST_URI, uri );
+			httpMethod.setURI( new java.net.URI( uri.toString() ) );
 		}
-		else if( StringUtils.hasContent( path ) )
+		catch( Exception e )
 		{
-			try
-			{
-				java.net.URI oldUri = httpMethod.getURI();
-				String pathToSet = StringUtils.hasContent( oldUri.getPath() ) && !"/".equals( oldUri.getPath() ) ? oldUri
-						.getPath() + path : path;
-				java.net.URI newUri = URIUtils.createURI( oldUri.getScheme(), oldUri.getHost(), oldUri.getPort(),
-						pathToSet, oldUri.getQuery(), oldUri.getFragment() );
-				httpMethod.setURI( newUri );
-				context.setProperty( BaseHttpRequestTransport.REQUEST_URI, new URI( newUri.toString(), request
-						.getSettings().getBoolean( HttpSettings.ENCODED_URLS ) ) );
-			}
-			catch( Exception e )
-			{
-				SoapUI.logError( e );
-			}
+			SoapUI.logError( e );
 		}
 
 		if( query.length() > 0 && !request.isPostQueryString() )

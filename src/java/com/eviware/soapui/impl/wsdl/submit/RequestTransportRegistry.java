@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.eviware.soapui.SoapUI;
-import com.eviware.soapui.impl.wsdl.submit.filters.EndpointRequestFilter;
 import com.eviware.soapui.impl.wsdl.submit.filters.EndpointStrategyRequestFilter;
 import com.eviware.soapui.impl.wsdl.submit.filters.HttpAuthenticationRequestFilter;
 import com.eviware.soapui.impl.wsdl.submit.filters.HttpCompressionRequestFilter;
@@ -62,7 +61,7 @@ public class RequestTransportRegistry
 		List<RequestFilterFactory> filterFactories = SoapUI.getFactoryRegistry()
 				.getFactories( RequestFilterFactory.class );
 
-		httpTransport.addRequestFilter( new EndpointRequestFilter() );
+		//		httpTransport.addRequestFilter( new EndpointRequestFilter() );
 		httpTransport.addRequestFilter( new HttpSettingsRequestFilter() );
 		httpTransport.addRequestFilter( new RestRequestFilter() );
 		httpTransport.addRequestFilter( new SoapHeadersRequestFilter() );
