@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+
+	<!--Publish built content onto FTP site-->
+	<target name="publish">
+		<ftp server="${host}"
+			   port="${port}"
+		       userid="${user}"
+		       password="${pass}">
+		    <fileset dir="${fileset}"/>
+		  </ftp>
+	</target>
+
+</project>

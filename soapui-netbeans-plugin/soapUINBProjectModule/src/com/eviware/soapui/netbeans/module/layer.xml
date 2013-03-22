@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<filesystem>
+    <attr name="Menu\Tools\DerbyDatabaseAction.instance\position" intvalue="100"/>
+    <attr name="Menu\Tools\JavaPlatformsCustomizerAction.instance\position" intvalue="500"/>
+    <attr name="Menu\Tools\LibrariesCustomizerAction.instance\position" intvalue="700"/>
+    <attr name="Menu\Tools\MobilityDeploymentManagerAction.instance\position" intvalue="1100"/>
+    <attr name="Menu\Tools\PaletteManager\position" intvalue="1500"/>
+    <attr name="Menu\Tools\SecurityManagerAction.instance\position" intvalue="1200"/>
+    <attr name="Menu\Tools\Separator1.instance\position" intvalue="400"/>
+    <attr name="Menu\Tools\Separator2.instance\position" intvalue="1700"/>
+    <attr name="Menu\Tools\Separator3.instance\position" intvalue="1900"/>
+    <attr name="Menu\Tools\ServerManagerAction.instance\position" intvalue="1000"/>
+    <attr name="Menu\Tools\org-netbeans-modules-apisupport-project-ui-platform-NbPlatformCustomizerAction.instance\position" intvalue="600"/>
+    <attr name="Menu\Tools\org-netbeans-modules-autoupdate-ui-actions-PluginManagerAction.shadow\position" intvalue="1800"/>
+    <attr name="Menu\Tools\org-netbeans-modules-favorites-templates-TemplatesAction.instance\position" intvalue="1300"/>
+    <attr name="Menu\Tools\org-netbeans-modules-options-OptionsWindowAction.shadow\position" intvalue="2000"/>
+    <attr name="Menu\Tools\org-netbeans-modules-ruby-rubyproject-gems-GemAction.shadow\position" intvalue="800"/>
+    <attr name="Menu\Tools\org-netbeans-modules-visualweb-complib-ui-ComponentLibraryManagerAction.instance\position" intvalue="900"/>
+    <attr name="Menu\Tools\org-netbeans-modules-xml-catalog-CatalogAction.instance\position" intvalue="1400"/>
+    <attr name="Menu\Tools\org-openide-actions-ToolsAction.instance\position" intvalue="300"/>
+    <folder name="Loaders">
+        <folder name="text">
+            <folder name="x-java-netbeans-websvcmgr-webservice">
+                <folder name="Actions">
+                    <file name="com-eviware-soapui-netbeans-module-actions-SoapUIProjectAction.instance">
+                        <!--<attr name="instanceCreate" stringvalue="org.mymodule.MyAction" />-->
+                    </file>
+                </folder>
+            </folder>
+        
+        </folder>
+ 
+       <folder name="text">
+           <folder name="x-wsdl+xml">
+               <folder name="Actions">
+                    <file name="com-eviware-soapui-netbeans-module-actions-SoapUIProjectAction.instance">
+                        <!--<attr name="instanceCreate" stringvalue="org.mymodule.MyAction" />-->
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+
+    <folder name="Actions">
+        <folder name="SoapUI">
+            <file name="com-eviware-soapui-netbeans-module-actions-PreferencesAction.instance"/>
+            <file name="com-eviware-soapui-netbeans-module-actions-SoapUIMenuAction.instance"/>
+           
+        </folder>
+        <folder name="Window">
+            <file name="com-eviware-soapui-netbeans-module-LogAction.instance"/>
+        </folder>
+    </folder>
+    <!--<folder name="Loaders">
+        <folder name="text">
+            <folder name="xml-wsdl">
+                <folder name="Actions">
+                    <attr name="org-openide-actions-ToolsAction.instance/com-eviware-soapui-netbeans-module-actions-AddToSoapUIProjectAction.shadow" boolvalue="true"/>
+                    <file name="com-eviware-soapui-netbeans-module-actions-AddToSoapUIProjectAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/SoapUI/com-eviware-soapui-netbeans-module-actions-SoapUIProjectAction.instance"/>
+                    </file>
+                    <attr name="com-eviware-soapui-netbeans-module-actions-AddToSoapUIProjectAction.shadow/org-openide-actions-PropertiesAction.instance" boolvalue="true"/>
+                </folder>
+            </folder>
+        </folder>
+    </folder>-->
+ 
+    <folder name="Projects">
+        <folder name="org-netbeans-modules-web-project">
+            <folder name="Nodes">
+                <file name="com-eviware-soapui-netbeans-module-SoapUINodeFactory.instance">
+                    <attr name="position" intvalue="1000"/>
+                </file>
+            </folder>
+        </folder>
+        <folder name="org-netbeans-modules-j2ee-ejbjarproject">
+            <folder name="Nodes">
+                <file name="com-eviware-soapui-netbeans-module-SoapUINodeFactory.instance">
+                    <attr name="position" intvalue="1000"/>
+                </file>
+            </folder>
+        </folder>
+        <folder name="org-netbeans-modules-java-j2seproject">
+            <folder name="Nodes">
+                <file name="com-eviware-soapui-netbeans-module-SoapUINodeFactory.instance">
+                    <attr name="position" intvalue="1000"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="WebServices">
+        <folder name="Services">
+           <folder name="Actions">
+             <file name="com.eviware.soapui.netbeans.module.actions.SoapUICreateTestsAction.instance"/>
+           </folder>
+       </folder>
+        <folder name="Clients">
+           <folder name="Actions">
+             <file name="com.eviware.soapui.netbeans.module.actions.SoapUICreateTestsAction.instance"/>
+           </folder>
+       </folder>
+    </folder>
+    <folder name="Templates">
+        <folder name="Project">
+            <folder name="J2EE">
+                <file name="Web Service Testing Project" url="EmptySoapUIProject.zip">
+                    <attr name="SystemFileSystem.localizingBundle" stringvalue="com.eviware.soapui.netbeans.module.Bundle"/>
+                    <attr name="instantiatingIterator" methodvalue="com.eviware.soapui.netbeans.module.templates.SoapUIProjectWizardIterator.createIterator"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eviware/soapui/netbeans/module/templates/SoapUIProjectDescription.html"/>
+                    <attr name="position" intvalue="900"/>
+                    <attr name="template" boolvalue="true"/>
+                </file>
+            </folder>
+             <folder name="SOA">
+                <file name="Web Service Testing Project" url="EmptySoapUIProject.zip">
+                    <attr name="SystemFileSystem.localizingBundle" stringvalue="com.eviware.soapui.netbeans.module.Bundle"/>
+                    <attr name="instantiatingIterator" methodvalue="com.eviware.soapui.netbeans.module.templates.SoapUIProjectWizardIterator.createIterator"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eviware/soapui/netbeans/module/templates/SoapUIProjectDescription.html"/>
+                    <attr name="position" intvalue="900"/>
+                    <attr name="template" boolvalue="true"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+
+ <folder name="Menu">
+        <folder name="Tools">
+            <file name="com-eviware-soapui-netbeans-module-actions-SoapUIMenuAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/SoapUI/com-eviware-soapui-netbeans-module-actions-SoapUIMenuAction.instance"/>
+                <attr name="position" intvalue="1450"/>
+            </file>
+            <file name="com-eviware-soapui-netbeans-module-actions-separatorBefore.instance">
+                <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                <attr name="position" intvalue="201"/>
+            </file>
+            </folder>
+        <folder name="Window">
+          
+            <folder name="Output">
+                <file name="LogAction.shadow" url="LogAction.shadow">
+                    <attr name="originalFile" stringvalue="Actions/Window/com-eviware-soapui-netbeans-module-LogAction.instance"/>
+                    <attr name="position" intvalue="600"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+   
+  
+</filesystem>

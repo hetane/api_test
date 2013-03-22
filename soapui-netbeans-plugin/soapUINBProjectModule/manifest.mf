@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+OpenIDE-Module: com.eviware.soapui.netbeans.module
+OpenIDE-Module-Layer: com/eviware/soapui/netbeans/module/layer.xml
+OpenIDE-Module-Install: com/eviware/soapui/netbeans/module/Installer.class
+OpenIDE-Module-Localizing-Bundle: com/eviware/soapui/netbeans/module/Bundle.properties
+OpenIDE-Module-Specification-Version: 4.5.0
+

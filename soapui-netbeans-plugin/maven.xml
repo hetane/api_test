@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project
+   xmlns:j="jelly:core"
+   xmlns:ant="jelly:ant"
+   xmlns:maven="jelly:maven"
+   >
+	 <goal name="soapui:get-eviware-dependencies">
+
+	   <j:forEach var="lib" items="${pom.artifacts}">
+          <j:set var="dep" value="${lib.dependency}"/>
+          <j:if test="${dep.groupId == 'eviware'}">
+              <echo>Getting ${lib.file.name} from local repository</echo>
+              <ant:copy file="${maven.repo.local}/${dep.groupId}/jars/${lib.file.name}"
+                  toFile="soapUINBProjectModule/release/modules/ext/${lib.file.name}" failonerror="false" overwrite="true"/>
+
+           </j:if>
+       </j:forEach>
+	</goal>
+
+   	<goal name="soapui:ftp-publish">
+        <j:set var="source" value="${maven.soapui.ftp.source}"/>
+
+        <j:if test="${!empty(source)}">
+            <echo>ftp:ing!</echo>
+            <taskdef name="ftp" classname="org.apache.tools.ant.taskdefs.optional.net.FTP"/>
+
+            <ant:ftp server="${maven.soapui.ftp.host}" port="${maven.soapui.ftp.port}" verbose="yes"
+                     userid="${maven.soapui.ftp.username}" password="${maven.soapui.ftp.password}">
+                <ant:fileset dir="${source}">
+                    <ant:include name="**/*.nbm"/>
+                </ant:fileset>
+            </ant:ftp>
+        </j:if>
+
+    </goal>
+
+</project>

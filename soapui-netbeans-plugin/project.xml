@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <pomVersion>3</pomVersion>
+
+    <artifactId>soapui-netbeans-plugin</artifactId>
+    <name>soapui-netbeans-plugin</name>
+    <groupId>eviware</groupId>
+    <currentVersion>4.0.1</currentVersion>
+    <organization>
+        <name>eviware.com</name>
+    </organization>
+    <inceptionYear>2006</inceptionYear>
+    <package>com.eviware.soapui.netbeans.plugin</package>
+    <shortDescription>SoapUI plugin for NetBeans IDE</shortDescription>
+    <repository />
+    <dependencies>
+        	<dependency>
+            <groupId>net-components</groupId>
+            <artifactId>netcomponents</artifactId>
+            <version>1.3.8a</version>
+            <properties>
+                <classloader>root</classloader>
+            </properties>
+        </dependency>
+
+         <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soapui</artifactId>
+            <version>4.0.1</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soapui-xmlbeans</artifactId>
+            <version>4.0.1</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>policy-xmlbeans</artifactId>
+            <version>1.5</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+            </properties>
+        </dependency>
+         <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soap-xmlbeans</artifactId>
+            <version>1.2</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>wadl-xmlbeans</artifactId>
+            <version>1.1</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>j2ee-xmlbeans</artifactId>
+            <version>1.4</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+                <eclipse.jar>true</eclipse.jar>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>ext-xmlbeans</artifactId>
+            <version>1.2</version>
+            <type>jar</type>
+            <properties>
+                <jnlp.jar>true</jnlp.jar>
+                <eclipse.jar>true</eclipse.jar>
+            </properties>
+        </dependency>
+
+
+    </dependencies>
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>META-INF</directory>
+                 <targetPath>META-INF</targetPath>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src</directory>
+                <includes>
+                    <include>*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>
+
