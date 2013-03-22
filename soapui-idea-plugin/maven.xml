@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project
+   xmlns:j="jelly:core"
+   xmlns:ant="jelly:ant"
+   xmlns:maven="jelly:maven"
+   >
+    
+    <!-- get dependencies from project.xml into lib folder -->
+    <goal name="soapui:get-idea-dependencies">
+        <ant:delete>
+            <ant:fileset dir="lib" includes="**/*.jar"/>
+        </ant:delete>
+   	   
+	   <j:forEach var="lib" items="${pom.artifacts}">
+          <j:set var="dep" value="${lib.dependency}"/>
+          <j:if test="${dep.groupId != 'intellij'}">
+          
+              <ant:copy file="${maven.repo.local}/${dep.groupId}/jars/${lib.file.name}"
+                  toFile="lib/${lib.file.name}" failonerror="false"/>
+
+           </j:if>
+       </j:forEach>
+	</goal>
+	
+	 <goal name="soapui:get-eviware-dependencies">
+   	   
+	   <j:forEach var="lib" items="${pom.artifacts}">
+          <j:set var="dep" value="${lib.dependency}"/>
+          <j:if test="${dep.groupId == 'eviware'}">
+              <echo>Getting ${lib.file.name} from local repository</echo>
+              <ant:copy file="${maven.repo.local}/${dep.groupId}/jars/${lib.file.name}"
+                  toFile="lib/${lib.file.name}" failonerror="false" overwrite="true"/>
+
+           </j:if>
+       </j:forEach>
+	</goal>
+
+    <!-- build binary and source distributions -->
+
+    <goal name="soapui:build">
+	    <attainGoal name="clean"/>
+        <attainGoal name="soapui:get-idea-dependencies"/>
+        <attainGoal name="soapui:build-idea-plugin"/>
+    </goal>
+
+    <goal name="soapui:build-idea-plugin">
+       <attainGoal name="jar"/>
+       <ant:mkdir dir="${maven.soapui.dist}"/>
+       <ant:zip destfile="${maven.soapui.dist}/soapui-idea-plugin-${pom.currentVersion}.zip">
+   		  <zipfileset dir="lib" prefix="SoapUIPlugin/lib"/>
+          <zipfileset dir="target" includes="soapui-idea-plugin-${pom.currentVersion}.jar" prefix="SoapUIPlugin/lib"/>
+          <zipfileset dir="licenses" prefix="SoapUIPlugin/licenses"/>
+       </ant:zip>
+
+       <ant:zip destfile="${maven.soapui.dist}/soapui-idea-plugin-${pom.currentVersion}-src.zip">
+   		  <zipfileset dir="." excludes="target/**,classes/**,lib/**" prefix="SoapUIPlugin"/>
+       </ant:zip>
+
+
+    </goal>
+	
+	<goal name="soapui:ftp-publish">
+        <j:set var="source" value="${maven.soapui.ftp.source}"/>
+
+        <j:if test="${!empty(source)}">
+            <echo>ftp:ing!</echo>
+            <taskdef name="ftp" classname="org.apache.tools.ant.taskdefs.optional.net.FTP"/>
+
+            <ant:ftp server="${maven.soapui.ftp.host}" port="${maven.soapui.ftp.port}" verbose="yes"
+                     userid="${maven.soapui.ftp.username}" password="${maven.soapui.ftp.password}">
+                <ant:fileset dir="${source}"/>
+            </ant:ftp>
+        </j:if>
+
+    </goal>
+	
+</project>
