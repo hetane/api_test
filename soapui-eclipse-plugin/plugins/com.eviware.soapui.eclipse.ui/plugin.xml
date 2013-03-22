@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+<!--
+   A browser with all soapui projects in the workspace
+-->
+
+<!--
+   <extension point="org.eclipse.ui.views">
+      <category id="soapui_view"
+      		name="soapUI">
+      </category>
+      <view name="soapUI Projects"
+            icon="src/images/workspace.gif"
+            category="soapui_view"
+            class="com.eviware.soapui.eclipse.browser.BrowserView"
+            id="com.eviware.soapui.browser.soapui_projects">
+      </view>
+   </extension>
+-->
+
+
+<!--
+   Enable soapUI functionality for a project
+-->
+
+   <extension point="org.eclipse.ui.popupMenus">
+   
+      <objectContribution id="com.eviware.soapui.project"
+            objectClass="org.eclipse.jdt.core.IJavaProject"
+            adaptable="true">
+         <menu id="com.eviware.soapui.project.popup"
+               label="soapUI">
+         </menu>
+      </objectContribution>
+
+      <objectContribution id="com.eviware.soapui.project.actions"
+            objectClass="org.eclipse.jdt.core.IJavaProject"
+            adaptable="true">
+         <visibility>
+            <and>
+               <objectState name="open" value="true"/>
+               <not>
+                  <or>
+	                 <objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+	                 <objectState name="projectNature" value="com.eviware.soapui.jbosside.jbosswsNature"/>
+	              </or>
+	           </not>
+            </and>
+         </visibility>
+         <action id="com.eviware.soapui.nature.AddSoapuiNatureAction"
+               label="Add soapUI Nature"
+               class="com.eviware.soapui.eclipse.project.AddSoapuiNatureAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.project.popup/soapuiNature">
+         </action>
+      </objectContribution>
+   </extension>
+
+   <extension point="org.eclipse.core.resources.natures"
+	   id="com.eviware.soapui.soapuiNature"
+	   name="soapUI Nature" >
+       <runtime>
+           <run class="com.eviware.soapui.eclipse.project.SoapuiProjectNature"/> 
+       </runtime>
+       <requires-nature id="org.eclipse.jdt.core.javanature"/>
+   </extension>
+
+
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution id="com.eviware.soapui.eclipse.ui.java"
+            objectClass="org.eclipse.jdt.core.ICompilationUnit"
+            adaptable="true">
+         <visibility>
+         	<objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+         </visibility>
+         <menu id="com.eviware.soapui.eclipse.ui.java.soapui"
+               label="soapUI">
+         </menu>
+         <action id="com.eviware.soapui.eclipse.wsannotate"
+               class="com.eviware.soapui.eclipse.actions.WsAnnotateAction"
+               label="Add Web Service Annotations"
+               menubarPath="com.eviware.soapui.eclipse.ui.java.soapui/addAnnotations"/>
+      </objectContribution>
+   </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution id="com.eviware.soapui.eclipse.ui.file.wsdl"
+            nameFilter="*.wsdl"
+            objectClass="org.eclipse.core.resources.IFile">
+         <visibility>
+         	<objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+         </visibility>
+         <menu id="com.eviware.soapui.eclipse.ui.file.wsdl.soapui"
+               label="soapUI"
+               path="additions">
+            <separator name="soapui"/>
+         </menu>
+         <action id="com.eviware.soapui.eclipse.ui.file.wsdl.add"
+               class="com.eviware.soapui.eclipse.project.AddWsdlToSoapUIProjectAction"
+               enablesFor="1"
+               label="Add to soapUI Project"
+               menubarPath="com.eviware.soapui.eclipse.ui.file.wsdl.soapui/soapui"/>
+      </objectContribution>
+   </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution id="com.eviware.soapui.eclipse.ui.file.wadl"
+            nameFilter="*.wadl"
+            objectClass="org.eclipse.core.resources.IFile">
+         <visibility>
+         	<objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+         </visibility>
+         <menu id="com.eviware.soapui.eclipse.ui.file.wadl.soapui"
+               label="soapUI"
+               path="additions">
+            <separator name="soapui"/>
+         </menu>
+         <action id="com.eviware.soapui.eclipse.ui.file.wadl.add"
+               class="com.eviware.soapui.eclipse.project.AddWadlToSoapUIProjectAction"
+               enablesFor="1"
+               label="Add to soapUI Project"
+               menubarPath="com.eviware.soapui.eclipse.ui.file.wadl.soapui/soapui"/>
+      </objectContribution>
+   </extension>
+   
+<!--
+   <extension point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml">
+      </toc>
+      <toc
+            file="testToc.xml"
+            primary="true">
+      </toc>
+   </extension>
+-->
+   
+</plugin>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:soapui-actions xmlns:tns="http://eviware.com/soapui/config">
+
+	<!-- Project Action Groups -->
+
+	<tns:actionGroup name="Enabled Project Actions" id="ProjectWithSoapUINatureActions" default="ShowDesktopPanelAction">
+		<tns:actionMapping actionId="ShowDesktopPanelAction" name="Show Project View"
+ 			description="Shows the Project View for this Project" keyStroke="ENTER"/>
+ 		<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="AddWsdlAction" keyStroke="menu U"/>
+		<tns:actionMapping actionId="AddWadlAction" keyStroke="menu F"/>
+		<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="NewRestServiceAction"/>
+		<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="TestRunnerAction"/>
+		<tns:actionMapping actionId="LoadTestRunnerAction"/>
+		<tns:actionMapping actionId="SoapMonitorAction"/>
+	<!-- 	<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="WSToolsJava2WsdlAction"/> -->
+		<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="AddNewTestSuiteAction" keyStroke="menu T"/>
+		<tns:actionMapping actionId="AddNewMockServiceAction" keyStroke="menu O"/>
+		<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="ReloadProjectAction" keyStroke="F5"/>
+		<tns:actionMapping actionId="ResolveProjectAction"/>
+		<tns:actionMapping actionId="CloseProjectAction"/>
+		<tns:actionMapping actionId="SaveProjectAction" keyStroke="menu S"/>
+		<tns:actionMapping actionId="SeperatorAction"/>
+	 	<tns:actionMapping actionId="ImportTestSuite"/>
+	 	<tns:actionMapping actionId="SeperatorAction"/>
+		<tns:actionMapping actionId="ShowOnlineSoapUIHelp" keyStroke="F1" param="projects/index.html"/>
+	</tns:actionGroup>
+
+</tns:soapui-actions>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://www.soapui.org/eclipse/update">
+      soapUI provides functionality for implementing, inspecting and testing web services.
+   </description>
+   <feature url="features/com.eviware.soapui.soapui_feature_4.0.1.jar" id="com.eviware.soapui.soapui_feature" version="4.0.1">
+      <category name="soapui"/>
+   </feature>
+   <archive path="com.eviware.soapui" url="plugins/com.eviware.soapui.eclipse_4.0.1.jar"/>
+   <category-def name="soapui" label="soapUI">
+      <description>
+         soapUI Eclipse Plugin
+      </description>
+   </category-def>
+</site>

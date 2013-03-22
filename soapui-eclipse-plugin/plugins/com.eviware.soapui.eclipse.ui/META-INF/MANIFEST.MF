@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: soapUI EclipseUI Plug-in
+Bundle-SymbolicName: com.eviware.soapui.eclipse.ui; singleton:=true
+Bundle-Version: 2.5.1
+Bundle-ClassPath: soapui-eclipse-ui.jar
+Bundle-Vendor: eviware
+Bundle-Localization: plugin
+Export-Package: com.eviware.soapui.eclipse.project,
+ com.eviware.soapui.eclipse.ui.popup.actions
+Require-Bundle: com.eviware.soapui.eclipse.core,
+ com.eviware.soapui.libs,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.core,
+ org.eclipse.ui.views,
+ org.eclipse.ui.ide
+Eclipse-LazyStart: false
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

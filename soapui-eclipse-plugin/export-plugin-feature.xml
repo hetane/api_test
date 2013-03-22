@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="all">
+
+	<target name="export-plugin-feature"
+		description="This target should be called by ``headless'' Eclipse from 'build' goal defined in luntbuild.xml">
+		<pde.exportFeatures destination="${buildDir}"
+			exportSource="false" exportType="directory" features="com.eviware.soapui.soapui_feature"
+			useJARFormat="true" />
+		<echo>Exported feature needed by soapUI Eclipse plugin in '${buildDir}' folder.</echo>
+	</target>
+
+</project>

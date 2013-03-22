@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="com.eviware.soapui.eclipse.extras" name="Extras" schema="schema/com.eviware.soapui.eclipse.extras.exsd"/>
+
+   <extension point="org.eclipse.ui.views">
+      <category id="com.eviware.soapui.views"
+      		name="soapUI">
+      </category>
+      <view id="com.eviware.soapui.views.LogView"
+            allowMultiple="false"
+            category="com.eviware.soapui.views"
+            class="com.eviware.soapui.eclipse.views.LogView"
+            name="soapUI Logs"/>
+       <view id="com.eviware.soapui.views.NavigatorView"
+            icon="src/images/workspace.gif"
+            allowMultiple="false"
+            category="com.eviware.soapui.views"
+            class="com.eviware.soapui.eclipse.views.NavigatorView"
+            name="soapUI Navigator"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.perspectives"> 
+        <perspective
+              class="com.eviware.soapui.eclipse.SoapUIPerspectiveFactory"
+              icon="src/images/16-perc.gif"
+              id="com.eviware.soapui.perspective"
+              name="soapUI"> 
+        </perspective> 
+    </extension> 
+
+   <extension point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <view id="com.eviware.soapui.views.LogView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList"/>
+      </perspectiveExtension>
+   </extension>
+   
+   <extension point="org.eclipse.core.resources.natures"
+	   id="com.eviware.soapui.soapuiNature"
+	   name="soapUI Nature" >
+       <runtime>
+           <run class="com.eviware.soapui.eclipse.project.SoapuiProjectNature"/> 
+       </runtime>
+       <requires-nature id="org.eclipse.jdt.core.javanature"/>
+   </extension>
+
+
+
+<!--
+   Preference pages
+-->
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page id="com.eviware.soapui.prefs"
+            name="soapUI"
+            class="com.eviware.soapui.eclipse.prefs.MainPreferencePage" />
+      <page id="com.eviware.soapui.prefs.http"
+      	    category="com.eviware.soapui.prefs"
+            name="HTTP Settings"
+            class="com.eviware.soapui.eclipse.prefs.HttpPreferencePage" />
+      <page id="com.eviware.soapui.prefs.proxy"
+      	    category="com.eviware.soapui.prefs"
+            name="Proxy Settings"
+            class="com.eviware.soapui.eclipse.prefs.ProxyPreferencePage" />
+      <page id="com.eviware.soapui.prefs.ssl"
+      	    category="com.eviware.soapui.prefs"
+            name="SSL Settings"
+            class="com.eviware.soapui.eclipse.prefs.SSLPreferencePage" />
+      <page id="com.eviware.soapui.prefs.wsdl"
+      	    category="com.eviware.soapui.prefs"
+            name="WSDL Settings"
+            class="com.eviware.soapui.eclipse.prefs.WSDLPreferencePage" />
+      <page id="com.eviware.soapui.prefs.ui"
+      	    category="com.eviware.soapui.prefs"
+            name="UI Settings"
+            class="com.eviware.soapui.eclipse.prefs.UIPreferencePage" />
+      <page id="com.eviware.soapui.prefs.editor"
+      	    category="com.eviware.soapui.prefs"
+            name="Editor Settings"
+            class="com.eviware.soapui.eclipse.prefs.EditorPreferencePage" />
+      <page id="com.eviware.soapui.prefs.integrated_tools"
+      	    category="com.eviware.soapui.prefs"
+            name="Integrated Tools"
+            class="com.eviware.soapui.eclipse.prefs.ToolsPreferencePage" />
+      <page id="com.eviware.soapui.prefs.wsi"
+      	    category="com.eviware.soapui.prefs"
+            name="WS-I Settings"
+            class="com.eviware.soapui.eclipse.prefs.WSIPreferencePage" />
+       <page id="com.eviware.soapui.prefs.globalproperties"
+      	    category="com.eviware.soapui.prefs"
+            name="Global Properties"
+            class="com.eviware.soapui.eclipse.prefs.GlobalPropertiesPreferencePage" />
+       <page id="com.eviware.soapui.prefs.security"
+      	    category="com.eviware.soapui.prefs"
+            name="Global Security Settings"
+            class="com.eviware.soapui.eclipse.prefs.SecurityPreferencePage" />
+      <page id="com.eviware.soapui.prefs.wsa"
+      	    category="com.eviware.soapui.prefs"
+            name="WS-A Settings"
+            class="com.eviware.soapui.eclipse.prefs.WSAPreferencePage" />
+      <page id="com.eviware.soapui.prefs.loadui"
+      	    category="com.eviware.soapui.prefs"
+            name="loadUI Settings"
+            class="com.eviware.soapui.eclipse.prefs.LoadUIPreferencePage" />
+      <page id="com.eviware.soapui.prefs.webrecording"
+      	    category="com.eviware.soapui.prefs"
+            name="Web Recording Settings"
+            class="com.eviware.soapui.eclipse.prefs.WebRecordingPreferencePage" />
+       <page id="com.eviware.soapui.prefs.sensitiveinformation"
+      	    category="com.eviware.soapui.prefs"
+            name="Global Sensitive Information Tokens"
+            class="com.eviware.soapui.eclipse.prefs.GlobalSensitiveInformationPreferencePage" />
+   </extension>
+
+
+
+<!--
+   Request editor
+-->
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- To test SWT_AWT bridge: class="com.eviware.soapui.eclipse.swt_awt.SwtAwtRequestEditor" -->
+      <!-- To not test SWT_AWT bridge: class="com.eviware.soapui.eclipse.editors.RequestResponseEditor"
+          contributorClass="com.eviware.soapui.eclipse.editors.RequestEditorActionContributor" -->
+      <!--<editor name="Request Editor"
+            icon="src/images/request.gif"
+            class="com.eviware.soapui.eclipse.swt_awt.SwtAwtRequestEditor"
+            id="com.eviware.soapui.editors.SoapUIEditor">
+      </editor>-->
+      <editor
+            class="com.eviware.soapui.eclipse.swt_awt.SwtAwtRequestEditor"
+            default="true"
+            filenames="soapui-project.xml"
+            icon="src/images/request.gif"
+            id="com.eviware.soapui.editors.SoapUIEditor"
+            name="Project Viewer">
+      </editor>
+   </extension>
+
+
+<!--
+   Show soapUI elements in the Project Explorer
+-->
+
+   <extension point="org.eclipse.ui.decorators"> 
+        <decorator id="com.eviware.soapui.jbosside.decorator" 
+            label="JBossWS Decorator" 
+            state="true" 
+            class="com.eviware.soapui.eclipse.browser.SoapuiElementDecorator">
+            <enablement>
+               <and>
+                  <objectClass name="org.eclipse.core.resources.IFile"/>
+                  <objectState name="name" value="*soapui-project.xml"/>
+               </and>
+            </enablement>
+        </decorator>
+   </extension>
+
+   <extension point="org.eclipse.ui.navigator.navigatorContent"
+         id="com.eviware.soapui.eclipse.navigatorContent"
+         name="soapUI Project">
+      <navigatorContent id="com.eviware.soapui.eclipse.projectContent"
+            activeByDefault="true"
+            contentProvider="com.eviware.soapui.eclipse.browser.ProjectContentProvider"
+            icon="src/images/project.gif"
+            labelProvider="com.eviware.soapui.eclipse.browser.SoapUILabelProvider"
+            name="soapUI Project"
+            priority="normal" >
+         <triggerPoints>
+            <or>
+               <instanceof value="org.eclipse.core.resources.IResource"/>
+               <instanceof value="com.eviware.soapui.model.ModelItem"/>
+            </or>
+         </triggerPoints>
+         <possibleChildren>
+            <instanceof value="com.eviware.soapui.model.ModelItem"/>
+         </possibleChildren>
+      </navigatorContent>
+   </extension>
+
+   <extension point="org.eclipse.ui.navigator.viewer"
+		id="com.eviware.soapui.eclipse.projectExplorerContent"
+		name="soapUI Content">
+		<viewerContentBinding viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+			<includes>
+				<contentExtension pattern="com.eviware.soapui.eclipse.projectContent" />	
+			</includes>
+		</viewerContentBinding>
+   </extension>
+
+
+
+<!--
+   Popup menus on soapUI projects.
+   Menus on other soapUI elements are added programmatically.
+   NOTE: The popup menus appear in the opposite order than declared here,
+         but not if menubarPath is used.
+-->
+
+   <!-- This adapter will show Project popup menus on a soapui-project.xml file -->
+   <extension point="org.eclipse.core.runtime.adapters"
+         id="com.eviware.soapui.eclipse.project.adapter"
+         name="soapUI Adapter">
+      <factory
+            adaptableType="org.eclipse.core.resources.IFile"
+            class="com.eviware.soapui.eclipse.project.SoapuiAdapterFactory">
+         <adapter type="com.eviware.soapui.model.project.Project"/>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.core.resources.IFile"
+            class="com.eviware.soapui.eclipse.project.SoapuiAdapterFactory">
+         <adapter type="com.eviware.soapui.eclipse.project.ProjectWithSoapUINature"/>
+      </factory>
+   </extension>
+
+	<extension point="org.eclipse.ui.popupMenus">
+	<objectContribution id="com.eviware.soapui.eclipse.ui.java"
+            objectClass="org.eclipse.jdt.core.ICompilationUnit"
+            adaptable="true">
+         <visibility>
+         	<objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+         </visibility>
+         <menu id="com.eviware.soapui.eclipse.ui.java.soapui"
+               label="soapUI">
+         </menu>
+         <action id="com.eviware.soapui.eclipse.wsannotate"
+               class="com.eviware.soapui.eclipse.actions.WsAnnotateAction"
+               label="Add Web Service Annotations"
+               menubarPath="com.eviware.soapui.eclipse.ui.java.soapui/addAnnotations"/>
+      </objectContribution>
+
+      <objectContribution id="com.eviware.soapui.eclipse.ui.file.wsdl"
+            nameFilter="*.wsdl"
+            objectClass="org.eclipse.core.resources.IFile">
+         <visibility>
+         	<objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+         </visibility>
+         <menu id="com.eviware.soapui.eclipse.ui.file.wsdl.soapui"
+               label="soapUI"
+               path="additions">
+            <separator name="soapui"/>
+         </menu>
+         <action id="com.eviware.soapui.eclipse.ui.file.wsdl.add"
+               class="com.eviware.soapui.eclipse.project.AddWsdlToSoapUIProjectAction"
+               enablesFor="1"
+               label="Add to soapUI Project"
+               menubarPath="com.eviware.soapui.eclipse.ui.file.wsdl.soapui/soapui"/>
+      </objectContribution>
+  
+      <objectContribution id="com.eviware.soapui.eclipse.ui.file.wadl"
+            nameFilter="*.wadl"
+            objectClass="org.eclipse.core.resources.IFile">
+         <visibility>
+         	<objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+         </visibility>
+         <menu id="com.eviware.soapui.eclipse.ui.file.wadl.soapui"
+               label="soapUI"
+               path="additions">
+            <separator name="soapui"/>
+         </menu>
+         <action id="com.eviware.soapui.eclipse.ui.file.wadl.add"
+               class="com.eviware.soapui.eclipse.project.AddWadlToSoapUIProjectAction"
+               enablesFor="1"
+               label="Add to soapUI Project"
+               menubarPath="com.eviware.soapui.eclipse.ui.file.wadl.soapui/soapui"/>
+      </objectContribution>
+   
+      <objectContribution id="com.eviware.soapui.project"
+            objectClass="org.eclipse.jdt.core.IJavaProject"
+            adaptable="true">
+         <menu id="com.eviware.soapui.project.popup"
+               label="soapUI">
+         </menu>
+      </objectContribution>
+
+      <objectContribution id="com.eviware.soapui.project.actions"
+            objectClass="org.eclipse.jdt.core.IJavaProject"
+            adaptable="true">
+         <visibility>
+            <and>
+               <objectState name="open" value="true"/>
+               <not>
+	              <objectState name="projectNature" value="com.eviware.soapui.soapuiNature"/>
+	           </not>
+            </and>
+         </visibility>
+         <action id="com.eviware.soapui.nature.AddSoapuiNatureAction"
+               label="Add soapUI Nature"
+               class="com.eviware.soapui.eclipse.project.AddSoapuiNatureAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.project.popup/soapuiNature">
+         </action>
+      </objectContribution>
+
+
+
+      <objectContribution id="com.eviware.soapui.eclipse.project.soapui"
+            objectClass="com.eviware.soapui.eclipse.project.ProjectWithSoapUINature"
+            adaptable="true">
+         <menu id="com.eviware.soapui.eclipse.project.popup.soapui"
+               label="soapUI">
+         </menu>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseOpenProjectAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.openProject.soapui"
+               label="Show Project Viewer"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/openProject">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseAddWsdlAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.addWsdl.soapui"
+               label="Add WSDL"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/addInterface">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseAddWadlAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.addWadl.soapui"
+               label="Add WADL"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/addInterface">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseNewRestServiceAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.addRest.soapui"
+               label="New REST Service"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/addRest">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseTestRunnerAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.launchTestRunner.soapui"
+               label="Launch TestRunner"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/launch">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseLoadTestRunnerAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.launchLoadTestRunner.soapui"
+               label="Launch LoadTestRunner"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/launch">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseSecurityTestRunnerAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.launchSecurityTestRunner.soapui"
+               label="Launch SecurityTestRunner"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/launch">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseSoapMonitorAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.launchSoapMonitor.soapui"
+               label="Launch SOAP Monitor"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/launch">
+         </action>
+         <action id="com.eviware.soapui.eclipse.project.newTestSuite.soapui"
+               label="New TestSuite"
+               class="com.eviware.soapui.eclipse.actions.EclipseAddNewTestSuiteAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/new">
+         </action>
+         <action id="com.eviware.soapui.eclipse.project.newMockService.soapui"
+               label="New MockService"
+               class="com.eviware.soapui.eclipse.actions.EclipseAddNewMockServiceAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/new">
+         </action>
+         <action
+               class="com.eviware.soapui.eclipse.actions.EclipseResolveProjectAction"
+               enablesFor="1"
+               id="com.eviware.soapui.eclipse.project.resolveProject.soapui"
+               label="Resolve"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/project">
+         </action>
+         <action id="com.eviware.soapui.eclipse.project.save.soapui"
+               label="Save"
+               class="com.eviware.soapui.eclipse.actions.EclipseSaveProjectAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/save">
+         </action>
+         <action id="com.eviware.soapui.eclipse.project.importTestSuite.soapui"
+               label="Import Test Suite"
+               class="com.eviware.soapui.eclipse.actions.EclipseImportTestSuiteAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/import">
+         </action>
+         <action id="com.eviware.soapui.eclipse.project.onlineHelp.soapui"
+               label="Online Help"
+               class="com.eviware.soapui.eclipse.actions.EclipseOnlineHelpAction"
+               enablesFor="1"
+               menubarPath="com.eviware.soapui.eclipse.project.popup.soapui/help">
+         </action>
+      </objectContribution>
+
+   </extension>
+
+</plugin>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="all">
+	<!--<property name="eclipseLocation" value="e:\java\eclipse-3.4" />
+	<property name="equinoxLauncherPluginVersion" value="1.0.101.R34x_v20080819" />
+	<property name="workspaceDir" value="e:\java\eclipse-3.4\workspace" />
+	<property name="buildDir" value="e:\java\eclipse-3.4\build" />
+	<property name="targetDir" value="e:\java\eclipse-3.4\target" />-->
+	
+	<target name="update-jars">
+		<!--<copy todir="../../plugins/com.eviware.soapui.libs/lib/">
+			<fileset dir="${user.home}/.maven/repository/eviware/jars/">
+				<filename name="soapui-2.5.1.jar" />
+				<filename name="soapui-xmlbeans-2.5.1.jar" />
+			</fileset>
+		</copy>-->
+		<copy todir="../../plugins/com.eviware.soapui.libs/lib/" overwrite="true"  file="${user.home}/.maven/repository/eviware/jars/soapui-2.5.1.jar" />
+		<copy todir="../../plugins/com.eviware.soapui.libs/lib/" overwrite="true"  file="${user.home}/.maven/repository/eviware/jars/soapui-xmlbeans-2.5.1.jar" />
+	</target>
+	
+	<target name="update-workspace">
+		<delete dir="${workspaceDir}/soapui-libs" />
+		<copy todir="${workspaceDir}/soapui-libs" >
+			<fileset dir="../../plugins/com.eviware.soapui.libs"/>
+		</copy>
+		<delete dir="${workspaceDir}/eclipse-core" />
+		<copy todir="${workspaceDir}/eclipse-core" >
+			<fileset dir="../../plugins/com.eviware.soapui.eclipse.core"/>
+		</copy>
+		<delete dir="${workspaceDir}/eclipse-ui" />
+		<copy todir="${workspaceDir}/eclipse-ui" >
+			<fileset dir="../../plugins/com.eviware.soapui.eclipse.ui" />
+		</copy>
+		<delete dir="${workspaceDir}/soapui-feature" />
+		<copy todir="${workspaceDir}/soapui-feature" >
+			<fileset dir="../../features/com.eviware.soapui.soapui_feature" />
+		</copy>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${buildDir}" />
+	</target>
+
+	<target name="build">
+		<mkdir dir="${buildDir}" />
+		<java jar="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" fork="true" failonerror="true">
+			<arg value="-data" />
+			<arg value="${workspaceDir}" />
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${scriptLocation}" />
+			<arg value="feature_export" />
+			<arg value="-DbuildDir=&quot;${buildDir}&quot;" />
+		</java>
+	</target>
+
+	<target name="zip">
+		<mkdir dir="${target}" />
+		<zip destfile="${target}/${filename}.zip" basedir="${buildDir}" />
+	</target>
+
+	<target name="all" depends="update-jars, update-workspace, clean, build, zip" />
+
+	<!--This must be called using the above target, "build"-->
+	<target name="feature_export">
+		<pde.exportFeatures destination="${buildDir}" exportSource="false" exportType="directory" features="com.eviware.soapui.soapui_feature" useJARFormat="true"/>
+	</target>
+	
+	<!--Publish built content onto FTP site-->
+	<target name="publish">
+		<ftp server="${host}"
+			   port="${port}"
+		       userid="${user}"
+		       password="${pass}">
+		    <fileset dir="${fileset}"/>
+		  </ftp>
+	</target>
+
+</project>

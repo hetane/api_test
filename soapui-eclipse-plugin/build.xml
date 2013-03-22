@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Author(s):
+	Dain Nilsson <dain@eviware.com>, Ant build
+	Nenad V. Nikolic <nenadn@eviware.com>, Maven 2 build and refactored Ant build 
+Description:
+	Ant build file for building soapUI Eclipse plugin.
+	In build environment based on Maven 2, Ant build should invoked by using AntRun Maven 2 plugin.
+-->
+<project default="all">
+
+	<target name="all"
+		depends="-init, -load-configuration, update-jars, update-workspace, clean, build-plugin-feature, zip-plugin, post-build-clean"
+		description="Build the soapUI Eclipse plugin and clean up temporary files afterwards.">
+		<echo message="Finished building soapUI Eclipse plugin." />
+	</target>
+
+	<target name="-init" description="Initialize constants used in this build file. Use for testing with a standalone Ant.">
+		<property name="configuration.file" value="build.properties" />
+	</target>
+
+	<target name="-load-configuration" description="Load build configuration. Use for testing with a standalone Ant.">
+		<loadproperties srcFile="${configuration.file}" />
+		<echo message="Loaded configuration properties from ${configuration.file}" />
+	</target>
+
+	<target name="update-jars"
+		description="Copies the latest versions of depedencies from Maven repository.">
+		<echo message="Copying depedency: soapui-${soapui.project.version}.jar" />
+		<copy todir="plugins/com.eviware.soapui.libs/lib/" overwrite="true"
+			file="${soapui.maven2.repository}/eviware/soapui/${soapui.project.version}/soapui-${soapui.project.version}.jar" />
+		<echo message="Copying depedency: soapui-xmlbeans-${soapui.project.version}.jar" />
+		<copy todir="plugins/com.eviware.soapui.libs/lib/" overwrite="true"
+			file="${soapui.maven2.repository}/eviware/soapui-xmlbeans/${soapui.project.version}/soapui-xmlbeans-${soapui.project.version}.jar" />
+		<echo message="Copied depedencies from Maven 2 repository into folders required by plugin." />
+	</target>
+
+	<target name="update-workspace" depends="-init, -load-configuration"
+		description="Updates the Eclipse workspace with projects needed to build Eclipse plugin.">
+		<delete dir="${workspaceDir}/soapui-libs" />
+		<copy todir="${workspaceDir}/soapui-libs">
+			<fileset dir="plugins/com.eviware.soapui.libs" />
+		</copy>
+		<delete dir="${workspaceDir}/eclipse-core" />
+		<copy todir="${workspaceDir}/eclipse-core">
+			<fileset dir="plugins/com.eviware.soapui.eclipse.core" />
+		</copy>
+		<delete dir="${workspaceDir}/eclipse-ui" />
+		<copy todir="${workspaceDir}/eclipse-ui">
+			<fileset dir="plugins/com.eviware.soapui.eclipse.ui" />
+		</copy>
+		<delete dir="${workspaceDir}/soapui-feature" />
+		<copy todir="${workspaceDir}/soapui-feature">
+			<fileset dir="features/com.eviware.soapui.soapui_feature" />
+		</copy>
+		<echo message="NOTE: The Eclipse workspace in ${workspaceDir} MUST contain these plugin-related projects." />
+	</target>
+
+	<target name="clean" depends="-init, -load-configuration"
+		description="Clean temporary folder used for building soapUI Eclipse plugin.">
+		<delete dir="${buildDir}" />
+		<echo message="Deleted temporary folder." />
+	</target>
+
+	<target name="build-plugin-feature" depends="-init, -load-configuration"
+		description="Build plugin's feature using ``headless'' Eclipse.">
+		<mkdir dir="${buildDir}" />
+		<java
+			jar="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"
+			fork="true" failonerror="true">
+			<arg value="-debug" />
+			<arg value="-data" />
+			<arg value="${workspaceDir}" />
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${feature.build.file}" />
+			<arg value="export-plugin-feature" />
+			<arg value="-DbuildDir=&quot;${buildDir}&quot;" />
+		</java>
+		<echo message="Finished building plugin components in ${buildDir}." />
+	</target>
+
+	<target name="zip-plugin">
+		<tstamp>
+			<format property="today.date" pattern="yyyy-MM-dd" />
+		</tstamp>
+		<property name="target.dir" value="${artifacts.dir}/${today.date}/eclipse" />
+		<mkdir dir="${target.dir}" />
+		<zip destfile="${target.dir}/${filename}.zip" basedir="${buildDir}" />
+	</target>
+
+	<target name="post-build-clean" depends="-init, -load-configuration">
+		<antcall target="clean" />
+	</target>
+
+	<target name="publish"
+		description="Publish plugin in the Maven 2 repository via FTP server.">
+		<ftp server="${host}" port="${port}" userid="${user}" password="${pass}">
+			<fileset dir="${fileset}" />
+		</ftp>
+	</target>
+
+</project>
