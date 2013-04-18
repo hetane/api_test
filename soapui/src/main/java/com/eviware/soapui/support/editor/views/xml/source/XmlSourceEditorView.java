@@ -460,7 +460,7 @@ public class XmlSourceEditorView<T extends ModelItem> extends AbstractXmlEditorV
 			context.setRegularExpression( false );
 			context.setMatchCase( caseCheck.isSelected() );
 			context.setSearchForward( forwardButton.isSelected() );
-			context.setWholeWord( false );
+			context.setWholeWord( wholeWordCheck.isSelected() );
 			return context;
 		}
 
