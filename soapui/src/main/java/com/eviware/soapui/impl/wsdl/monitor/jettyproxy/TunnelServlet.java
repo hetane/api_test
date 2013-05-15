@@ -220,6 +220,9 @@ public class TunnelServlet extends ProxyServlet
 
 		}
 
+        ( ( HttpServletResponse )response ).setStatus( postMethod.hasHttpResponse() ? postMethod.getHttpResponse()
+                .getStatusLine().getStatusCode() : null );
+
 		IO.copy( new ByteArrayInputStream( capturedData.getRawResponseBody() ), httpServletResponse.getOutputStream() );
 
 		synchronized( this )
