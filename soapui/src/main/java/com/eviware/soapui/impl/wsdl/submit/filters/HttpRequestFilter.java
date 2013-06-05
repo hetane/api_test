@@ -485,7 +485,13 @@ public class HttpRequestFilter extends AbstractRequestFilter
 		{
 			encoding = System.getProperty("file.encoding");
 		}
-		
+
+		// To avoid NPE when matrix parameters are left empty, this sets the value to empty string if it's null.
+		if(!StringUtils.hasContent( value ))
+		{
+			value = "";
+		}
+
 		if(isAlreadyEncoded(value, encoding ))
 		{
 			// Already encoded so we don't do anything
