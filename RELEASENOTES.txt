@@ -1,5 +1,10 @@
 # Release Notes for SoapUI
 
+## version 4.5.3 - 2013-xx-xx
+
+### Bugs fixed ###
+* (Pro) Fixed getPropertyValue on project level to return null when property does not exist.
+
 ## version 4.5.2 - 2013-05-22
 
 ### Build improvements ###
