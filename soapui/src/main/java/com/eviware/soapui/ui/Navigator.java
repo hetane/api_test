@@ -76,7 +76,6 @@ public class Navigator extends JPanel
 	{
 		super( new BorderLayout() );
 		this.workspace = workspace;
-
 		buildUI();
 	}
 
@@ -95,12 +94,14 @@ public class Navigator extends JPanel
 		mainTree.setBorder( null );
 		mainTree.getSelectionModel().setSelectionMode( TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION );
 		mainTree.addKeyListener( new TreeKeyListener() );
+		mainTree.setName( "Navigator tree" );
 
 		ToolTipManager.sharedInstance().registerComponent( mainTree );
 
 		add( new JScrollPane( mainTree ), BorderLayout.CENTER );
 		add( buildToolbar(), BorderLayout.NORTH );
 		setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 0 ) );
+		setName( "Navigator" );
 	}
 
 	private Component buildToolbar()
