@@ -6,16 +6,13 @@ import org.fest.swing.core.Robot;
 import org.fest.swing.exception.WaitTimedOutError;
 import org.fest.swing.finder.DialogFinder;
 import org.fest.swing.finder.WindowFinder;
-import org.fest.swing.fixture.DialogFixture;
-import org.fest.swing.fixture.FrameFixture;
-import org.fest.swing.fixture.JMenuItemFixture;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.fest.swing.fixture.*;
+import org.junit.*;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static junit.framework.Assert.assertNotNull;
 import static org.fest.swing.finder.WindowFinder.findDialog;
 import static org.fest.swing.finder.WindowFinder.findFrame;
 import static org.fest.swing.launcher.ApplicationLauncher.application;
@@ -26,62 +23,29 @@ public class FESTRunner
 	private Robot robot;
 	private FrameFixture frame;
 
-	@Before
+	private static final String WORKSPACE_NAME = "Default workspace";
+
 	public void startSoapUI()
 	{
+		application( SoapUI.class ).start();
 		robot = BasicRobot.robotWithCurrentAwtHierarchy();
-
-		try
-		{
-			frame = findFrame( new GenericTypeMatcher<Frame>( Frame.class )
-			{
-				protected boolean isMatching( Frame frame )
-				{
-					return frame.getTitle().startsWith( "soapUI" ) && frame.isShowing();
-				}
-			} ).using( robot );
-		}
-		catch( WaitTimedOutError e )
-		{
-			robot.cleanUp();
-			application( SoapUI.class ).start();
-			robot = BasicRobot.robotWithCurrentAwtHierarchy();
-			frame = findFrame( new GenericTypeMatcher<Frame>( Frame.class )
-			{
-				protected boolean isMatching( Frame frame )
-				{
-					return frame.getTitle().startsWith( "soapUI" ) && frame.isShowing();
-				}
-			} ).using( robot );
-		}
+		frame = findFrame( new FrameTitleMatcher( "soapUI" ) ).using( getRobot() );
 	}
 
-	@After
 	public void tearDown()
 	{
 		frame.cleanUp();
 	}
 
-	@Test
-	public void createNewRestProjectTest() throws InterruptedException
+	public boolean projectCreatedWithName( String name )
 	{
-		JMenuItemFixture menuItemFixture = frame.menuItemWithPath( "File", "New REST Project" );
-		menuItemFixture.click();
+		JTreeFixture projectTreeFixture = frame.panel( "Navigator" ).tree( "Navigator tree" ).selectPath( WORKSPACE_NAME + "/" + name );
 
-		DialogFixture dialogFixture = WindowFinder.findDialog( new DialogTitleMatcher( "New REST Project" ) ).using( getRobot() );
-		Thread.sleep( 1000 );
-
-		dialogFixture.textBox().click().setText( "http://maps.googleapis.com/maps/api/geocode/xml?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&sensor=false" );
-		Thread.sleep( 1000 );
-
-		GenericTypeMatcher<JButton> buttonTextMatcher = new ButtonTextMatcher( "OK" );
-		dialogFixture.button( buttonTextMatcher ).click();
-		Thread.sleep( 1000 );
-
-		frame.panel( "Navigator" ).tree( "Navigator tree" ).clickPath("REST Project/maps.googleapis.com");
-		Thread.sleep( 1000 );
+		if( projectTreeFixture == null )
+			return false;
+		else
+			return true;
 	}
-
 
 	public FrameFixture getFrame()
 	{
@@ -112,7 +76,7 @@ public class FESTRunner
 		getRobot().cleanUpWithoutDisposingWindows();
 	}
 
-	private static class ButtonTextMatcher extends GenericTypeMatcher<JButton>
+	protected static class ButtonTextMatcher extends GenericTypeMatcher<JButton>
 	{
 		String buttonText;
 
@@ -129,7 +93,7 @@ public class FESTRunner
 		}
 	}
 
-	private static class DialogTitleMatcher extends GenericTypeMatcher<Dialog>
+	protected static class DialogTitleMatcher extends GenericTypeMatcher<Dialog>
 	{
 		String dialogTitle;
 
@@ -143,6 +107,22 @@ public class FESTRunner
 		protected boolean isMatching( Dialog dialog )
 		{
 			return dialogTitle.equals( dialog.getTitle() ) && dialog.isShowing();
+		}
+	}
+
+	protected static class FrameTitleMatcher extends GenericTypeMatcher<Frame>
+	{
+		String frameTitle;
+
+		public FrameTitleMatcher( String title )
+		{
+			super( Frame.class );
+			this.frameTitle = title;
+		}
+
+		protected boolean isMatching( Frame frame )
+		{
+			return frame.getTitle().startsWith( frameTitle ) && frame.isShowing();
 		}
 	}
 }
