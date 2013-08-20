@@ -140,7 +140,7 @@ public class WebViewBasedBrowserComponent
 
 	public void setContent( String contentAsString, String contextUri )
 	{
-		getWebEngine().loadContent( contentAsString, contextUri );
+		getWebEngine().loadContent( contentAsString);
 	}
 
 	public void setContent( String content )
