@@ -331,7 +331,7 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 			}
 			else if( style.equals( ParameterStyle.MATRIX ) )
 			{
-				setResourcePanelText( getResourcePanelText().replaceAll( oldName + "=" +
+				setResourcePanelText( replaceText( getResourcePanelText(), oldName + "=" +
 						property.getValue(), property.getName() + "=" + property.getValue() ) );
 			}
 			updateFullPathLabel();
@@ -359,13 +359,24 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 			}
 			else if( StringUtils.isNullOrEmpty( newValue ) || !getResourcePanelText().contains( newValueStr ) )
 			{
-				setResourcePanelText( getResourcePanelText().replaceAll( name + "=" + oldValue, newValueStr ) );
+				setResourcePanelText( replaceText( getResourcePanelText(), name + "=" + oldValue, newValueStr ) );
 			}
 		}
 		else if( property.getStyle().equals( ParameterStyle.TEMPLATE ) )
 		{
 			addPropertyForStyle( property, ParameterStyle.TEMPLATE );
 		}
+	}
+
+	private String replaceText( String fullString, String oldString, String replacement )
+	{
+		if (!fullString.contains(oldString))
+		{
+			return fullString;
+		}
+		int startIndex = fullString.indexOf(oldString);
+		return fullString.substring(0, startIndex) + replacement + fullString.substring(startIndex + oldString.length(),
+				fullString.length());
 	}
 
 	private void resetQueryPanelText()
@@ -635,7 +646,7 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 	}
 
 	//TODO: Temporary fix resource panel should be moved to appropriate subclass
-	private String getResourcePanelText()
+	protected String getResourcePanelText()
 	{
 		if( resourcePanel == null )
 			return "";

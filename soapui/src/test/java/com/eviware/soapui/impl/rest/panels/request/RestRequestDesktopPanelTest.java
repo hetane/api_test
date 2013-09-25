@@ -7,7 +7,9 @@ import com.eviware.soapui.impl.rest.RestService;
 import com.eviware.soapui.impl.rest.actions.support.NewRestResourceActionBase;
 import com.eviware.soapui.impl.rest.panels.request.views.content.RestRequestContentView;
 import com.eviware.soapui.impl.rest.support.RestParamProperty;
+import com.eviware.soapui.impl.rest.support.RestParamsPropertyHolder;
 import com.eviware.soapui.impl.support.EndpointsComboBoxModel;
+import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.editor.EditorView;
 import com.eviware.soapui.support.editor.xml.XmlDocument;
@@ -29,6 +31,7 @@ import static com.eviware.soapui.utils.ModelItemFactory.makeRestMethod;
 import static com.eviware.soapui.utils.StubbedDialogs.hasPromptWithValue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 /**
  * Unit tests for RestRequestDesktopPanel.
@@ -97,7 +100,7 @@ public class RestRequestDesktopPanelTest
 		endpointsCombo.setSelectedItem( EndpointsComboBoxModel.EDIT_ENDPOINT );
 
 		waitForSwingThread();
-		assertThat(dialogs.getPrompts(), hasPromptWithValue(otherValue));
+		assertThat(dialogs.getPrompts(), hasPromptWithValue( otherValue ));
 	}
 
 	@Test
@@ -122,6 +125,19 @@ public class RestRequestDesktopPanelTest
 
 		waitForSwingThread();
 		assertThat( getComboTextFieldValue(), is( otherValue ) );
+	}
+
+	@Test
+	public void synchsMatrixParameterWithPropertyExpansionToResourceField() throws Exception
+	{
+		String propertyName = "burger";
+		String paramName = "theParam";
+		restRequest.getParams().addProperty( paramName);
+		RestParamProperty parameter = restRequest.getProperty( paramName );
+		parameter.setStyle( RestParamsPropertyHolder.ParameterStyle.MATRIX );
+		parameter.setValue("${#Project#" + propertyName + "}" );
+
+		assertThat(requestDesktopPanel.getResourcePanelText(), containsString(";" + paramName + "=" + parameter.getValue()));
 	}
 
 	@After
