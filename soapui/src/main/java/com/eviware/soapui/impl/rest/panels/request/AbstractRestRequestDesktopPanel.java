@@ -221,14 +221,7 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 		if( !( getRequest() instanceof RestTestRequestInterface ) )
 		{
 			String path = getRequest().getResource().getPath();
-			resourcePanel = new TextPanelWithTopLabel( "Resource", path, new DocumentListenerAdapter()
-			{
-				@Override
-				public void update( Document document )
-				{
-					getRequest().getResource().setPath( getResourcePanelText().trim() );
-				}
-			} );
+			resourcePanel = new TextPanelWithTopLabel( "Resource", path );
 			toolbar.addWithOnlyMinimumHeight( resourcePanel );
 
 			toolbar.add( Box.createHorizontalStrut( 4 ) );
@@ -282,94 +275,38 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 		@Override
 		public void propertyValueChanged( String name, String oldValue, String newValue )
 		{
-			updateResourceAndQueryString( name, oldValue, newValue );
-			updateFullPathLabel();
+			updateGuiValues();
 		}
 
 		@Override
 		public void propertyAdded( String name )
 		{
-			updateFullPathLabel();
+			updateGuiValues();
 			RestParamProperty property = getRequest().getParams().getProperty( name );
-			updateResourceAndQueryString( name, null, property.getValue() );
 			property.addPropertyChangeListener( restParamPropertyChangeListener );
 		}
 
 		@Override
 		public void propertyRemoved( String name )
 		{
-			resetQueryPanelText();   //query param
-			String resourcePanelText = getResourcePanelText();
-			String paramStartString = ";" + name + "=";
-			if( resourcePanelText.contains( paramStartString ) )   //Matrix param
-			{
-				String substringWithParamValue = resourcePanelText.substring( resourcePanelText.indexOf( paramStartString ) + 1 );
-				int endIndex = substringWithParamValue.indexOf( ";" ) > 0 ? substringWithParamValue.indexOf( ";" ) :
-						substringWithParamValue.length();
-				String paramValue = substringWithParamValue.substring( substringWithParamValue.indexOf( "=" ) + 1, endIndex );
-				setResourcePanelText( getResourcePanelText().replaceAll( ";" + name + "=" + paramValue, "" ) );
-			}
-
-			if( resourcePanelText.contains( "{" + name + "}" ) )    //Template param
-			{
-				setResourcePanelText( resourcePanelText.replaceAll( "\\{" + name + "\\}", "" ) );
-			}
-			updateFullPathLabel();
+			updateGuiValues();
 		}
 
 		@Override
 		public void propertyRenamed( String oldName, String newName )
 		{
-			RestParamProperty property = getRequest().getParams().getProperty( newName );
-			ParameterStyle style = property.getStyle();
-			if( style.equals( QUERY ) )
-			{
-				resetQueryPanelText();
-			}
-			else if( style.equals( ParameterStyle.TEMPLATE ) )
-			{
-				setResourcePanelText( getResourcePanelText().replaceAll( "\\{" + oldName + "\\}", "{" + newName + "}" ) );
-			}
-			else if( style.equals( ParameterStyle.MATRIX ) )
-			{
-				setResourcePanelText( getResourcePanelText().replaceAll( oldName + "=" +
-						property.getValue(), property.getName() + "=" + property.getValue() ) );
-			}
-			updateFullPathLabel();
+			updateGuiValues();
 		}
 	}
 
-	private void updateResourceAndQueryString( String propertyName, String oldValue, String newValue )
+
+	protected void updateGuiValues()
 	{
-		if( resourcePanel == null || queryPanel == null )
-			return;
+		resetQueryPanelText();
+		rebuildResourcePanelText();
+		updateFullPathLabel();
 
-		RestParamProperty property = getRequest().getParams().getProperty( propertyName );
-		ParameterStyle style = property.getStyle();
-		if( style.equals( QUERY ) )
-		{
-			resetQueryPanelText();
-		}
-		else if( style.equals( ParameterStyle.MATRIX ) )
-		{
-			String name = property.getName();
-			String newValueStr = name + "=" + newValue;
-			if( oldValue == null )
-			{
-				addPropertyForStyle( property, ParameterStyle.MATRIX );
-			}
-			else if( StringUtils.isNullOrEmpty( newValue ) || !getResourcePanelText().contains( newValueStr ) )
-			{
-				setResourcePanelText( getResourcePanelText().replaceAll( name + "=" + oldValue, newValueStr ) );
-			}
-		}
-		else if( property.getStyle().equals( ParameterStyle.TEMPLATE ) )
-		{
-			addPropertyForStyle( property, ParameterStyle.TEMPLATE );
-		}
 	}
-
-	//protected abstract void updateGuiValues();
 
 	protected void resetQueryPanelText()
 	{
@@ -408,8 +345,6 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 				if( evt.getPropertyName().equals( XmlBeansRestParamsTestPropertyHolder.PROPERTY_STYLE ) )
 				{
 					RestParamProperty source = ( RestParamProperty )evt.getSource();
-					removeParamForStyle( source, ( ParameterStyle )evt.getOldValue() );
-					addPropertyForStyle( source, ( ParameterStyle )evt.getNewValue() );
 					( ( AbstractModelItem )source.getModelItem() ).notifyPropertyChanged( evt.getPropertyName(),
 							evt.getOldValue(), evt.getNewValue() );
 				}
@@ -429,7 +364,7 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 			{
 				//Do nothing, it must have been removed by another request editor instance under the same resource/method
 			}
-			updateFullPathLabel();
+			updateGuiValues();
 		}
 
 
@@ -483,51 +418,8 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 
 	}
 
-	private void removeParamForStyle( RestParamProperty property, ParameterStyle style )
-	{
-		switch( style )
-		{
-			case QUERY:
-				resetQueryPanelText();
-				break;
-			case TEMPLATE:
-				setResourcePanelText( getResourcePanelText().replaceAll( "\\{" + property.getName() + "\\}", "" ) );
-				break;
-			case MATRIX:
-				String propValueAtRequestLevel = getRequest().getParams().getProperty( property.getName() ).getValue();
-				setResourcePanelText( getResourcePanelText().replaceAll( ";" + property.getName() + "=" +
-						propValueAtRequestLevel, "" ) );
-				break;
-			default:
-				break;
-		}
-	}
 
-	private void addPropertyForStyle( RestParamProperty property, ParameterStyle style )
-	{
-		switch( style )
-		{
-			case QUERY:
-				resetQueryPanelText();
-				break;
-			case TEMPLATE:
-				if( !getResourcePanelText().contains( "{" + property.getName() + "}" ) )
-				{
-					setResourcePanelText( getResourcePanelText() + "{" + property.getName() + "}" );
-				}
-				break;
-			case MATRIX:
-				String propValueAtRequestLevel = getRequest().getParams().getProperty( property.getName() ).getValue();
-				String valueToSet = ";" + property.getName() + "=" + propValueAtRequestLevel;
-				if( !getResourcePanelText().contains( valueToSet ) )
-				{
-					setResourcePanelText( getResourcePanelText() + valueToSet );
-				}
-				break;
-			default:
-				break;
-		}
-	}
+
 
 	private class PathComboBoxModel extends AbstractListModel implements ComboBoxModel
 	{
