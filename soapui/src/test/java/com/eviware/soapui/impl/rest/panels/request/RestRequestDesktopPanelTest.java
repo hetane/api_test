@@ -1,16 +1,22 @@
 package com.eviware.soapui.impl.rest.panels.request;
 
+import com.eviware.soapui.config.RestMethodConfig;
 import com.eviware.soapui.config.RestRequestConfig;
+import com.eviware.soapui.impl.rest.RestMethod;
 import com.eviware.soapui.impl.rest.RestRequest;
 import com.eviware.soapui.impl.rest.RestRequestInterface;
+import com.eviware.soapui.impl.rest.RestResource;
 import com.eviware.soapui.impl.rest.RestService;
 import com.eviware.soapui.impl.rest.actions.support.NewRestResourceActionBase;
 import com.eviware.soapui.impl.rest.panels.request.views.content.RestRequestContentView;
 import com.eviware.soapui.impl.rest.support.RestParamProperty;
+import com.eviware.soapui.impl.rest.support.RestParamsPropertyHolder;
 import com.eviware.soapui.impl.support.EndpointsComboBoxModel;
+import com.eviware.soapui.support.SoapUIException;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.editor.EditorView;
 import com.eviware.soapui.support.editor.xml.XmlDocument;
+import com.eviware.soapui.utils.CommonMatchers;
 import com.eviware.soapui.utils.ContainerWalker;
 import com.eviware.soapui.utils.StubbedDialogs;
 import com.eviware.x.dialogs.XDialogs;
@@ -25,10 +31,13 @@ import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
 import java.util.List;
 
-import static com.eviware.soapui.utils.ModelItemFactory.makeRestMethod;
+import static com.eviware.soapui.utils.CommonMatchers.endsWith;
+import static com.eviware.soapui.utils.CommonMatchers.startsWith;
+import static com.eviware.soapui.utils.ModelItemFactory.makeRestResource;
 import static com.eviware.soapui.utils.StubbedDialogs.hasPromptWithValue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 /**
  * Unit tests for RestRequestDesktopPanel.
@@ -49,13 +58,9 @@ public class RestRequestDesktopPanelTest
 	@Before
 	public void setUp() throws Exception
 	{
-		restRequest = new RestRequest( makeRestMethod(), RestRequestConfig.Factory.newInstance(), false );
-		restRequest.setMethod( RestRequestInterface.RequestMethod.GET);
-		restRequest.getResource().getParams().addProperty( PARAMETER_NAME );
+		makeRequest();
 		restService().addEndpoint( ENDPOINT );
 		restRequest.setEndpoint( ENDPOINT );
-		RestParamProperty restParamProperty = restRequest.getParams().getProperty( PARAMETER_NAME );
-		restParamProperty.setValue( PARAMETER_VALUE );
 		requestDesktopPanel = new RestRequestDesktopPanel( restRequest );
 		originalDialogs = UISupport.getDialogs();
 		dialogs = new StubbedDialogs();
@@ -63,9 +68,27 @@ public class RestRequestDesktopPanelTest
 		endpointsCombo = findEndpointsComboBox();
 	}
 
+	private void makeRequest(  ) throws SoapUIException
+	{
+		RestMethod method = makeRestMethodWithTwoResourceAncestors();
+		restRequest = new RestRequest( method, RestRequestConfig.Factory.newInstance(), false );
+		restRequest.setMethod( RestRequestInterface.RequestMethod.GET);
+		restRequest.getResource().getParams().addProperty( PARAMETER_NAME );
+	}
+
+	private RestMethod makeRestMethodWithTwoResourceAncestors() throws SoapUIException
+	{
+		RestResource parent = makeRestResource();
+		parent.setPath( "/parent" );
+		RestResource childResource = parent.addNewChildResource( "child", "the_child" );
+		return new RestMethod( childResource, RestMethodConfig.Factory.newInstance() );
+	}
+
 	@Test
 	public void retainsParameterValueWhenChangingItsLevel() throws Exception
 	{
+		RestParamProperty restParamProperty = restRequest.getParams().getProperty( PARAMETER_NAME );
+		restParamProperty.setValue( PARAMETER_VALUE );
 		List<? extends EditorView<? extends XmlDocument>> views = requestDesktopPanel.getRequestEditor().getViews();
 		RestRequestContentView restRequestContentView = ( RestRequestContentView )views.get( 0 );
 		JTable paramsTable = restRequestContentView.getParamsTable().getParamsTable();
@@ -124,6 +147,38 @@ public class RestRequestDesktopPanelTest
 		assertThat( getComboTextFieldValue(), is( otherValue ) );
 	}
 
+	@Test
+	public void reactsToResourceChanges() throws Exception
+	{
+		String newResourcePath = "/the/path";
+		restRequest.getResource().setPath( newResourcePath );
+
+		assertThat( resourcePanelText(), endsWith( newResourcePath ));
+	}
+
+	@Test
+	public void reactsToAncestorResourceChanges() throws Exception
+	{
+		RestResource parentResource = restRequest.getResource().getParentResource();
+		String newParentResourcePath = "/new/parent/path";
+		parentResource.setPath( newParentResourcePath );
+
+		assertThat( resourcePanelText(), startsWith( newParentResourcePath ));
+	}
+
+	@Test
+	public void includesMatrixParametersInResourcePath() throws Exception
+	{
+		RestParamProperty restParamProperty = restRequest.getParams().getProperty( PARAMETER_NAME );
+		restParamProperty.setValue( "anything" );
+		restParamProperty.setStyle( RestParamsPropertyHolder.ParameterStyle.MATRIX );
+		String value = "${#TestCase#myprop}";
+		restParamProperty.setValue( value );
+
+
+		assertThat(resourcePanelText(), containsString(value));
+	}
+
 	@After
 	public void resetDialogs()
 	{
@@ -131,6 +186,11 @@ public class RestRequestDesktopPanelTest
 	}
 
 	/* Helpers */
+
+	private String resourcePanelText()
+	{
+		return requestDesktopPanel.resourcePanel.getText();
+	}
 
 	private String getComboTextFieldValue() throws Exception
 	{

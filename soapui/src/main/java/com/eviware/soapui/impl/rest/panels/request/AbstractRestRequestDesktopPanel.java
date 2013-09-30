@@ -68,8 +68,8 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 		AbstractHttpXmlRequestDesktopPanel<T, T2>
 {
 	private static final int STANDARD_TOOLBAR_HEIGHT = 45;
-
-	private TextPanelWithTopLabel resourcePanel;
+	// package protected to facilitate unit testing
+	TextPanelWithTopLabel resourcePanel;
 	private TextPanelWithTopLabel queryPanel;
 	private JLabel pathLabel;
 	private InternalTestPropertyListener testPropertyListener = new InternalTestPropertyListener();
@@ -88,6 +88,7 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 		{
 			( ( RestParamProperty )param ).addPropertyChangeListener( restParamPropertyChangeListener );
 		}
+		requestItem.getResource().addPropertyChangeListener( RestResource.PATH_PROPERTY, new ResourceChangeListener() );
 	}
 
 	private void addPropertyChangeListenerToResource( T2 requestItem )
@@ -368,16 +369,25 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 		}
 	}
 
-	private void resetQueryPanelText()
+	//protected abstract void updateGuiValues();
+
+	protected void resetQueryPanelText()
 	{
 		if( queryPanel != null )
 		{
 			queryPanel.setText( RestUtils.getQueryParamsString( getRequest().getParams(), getRequest() ) );
 		}
-
 	}
 
-	private void updateFullPathLabel()
+	protected void rebuildResourcePanelText()
+	{
+		if( resourcePanel != null )
+		{
+			resourcePanel.setText( getRequest().getResource().getFullPath() );
+		}
+	}
+
+	protected void updateFullPathLabel()
 	{
 		if( pathLabel != null && getRequest().getResource() != null )
 		{
@@ -580,7 +590,7 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 	}
 
 
-	private class TextPanelWithTopLabel extends JPanel
+	class TextPanelWithTopLabel extends JPanel
 	{
 		private final Color MAC_DISABLED_BGCOLOR = new Color( 232, 232, 232 );
 
@@ -668,5 +678,15 @@ public abstract class AbstractRestRequestDesktopPanel<T extends ModelItem, T2 ex
 			}
 		}
 	}
+
+	private class ResourceChangeListener implements PropertyChangeListener {
+
+		@Override
+		public void propertyChange( PropertyChangeEvent evt )
+		{
+			rebuildResourcePanelText();
+		}
+	}
+
 
 }
