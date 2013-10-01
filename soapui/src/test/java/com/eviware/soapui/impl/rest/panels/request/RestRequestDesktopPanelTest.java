@@ -16,7 +16,6 @@ import com.eviware.soapui.support.SoapUIException;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.editor.EditorView;
 import com.eviware.soapui.support.editor.xml.XmlDocument;
-import com.eviware.soapui.utils.CommonMatchers;
 import com.eviware.soapui.utils.ContainerWalker;
 import com.eviware.soapui.utils.StubbedDialogs;
 import com.eviware.x.dialogs.XDialogs;
@@ -40,7 +39,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 /**
- * Unit tests for RestRequestDesktopPanel.
+ * Unit tests for RestRequestDesktopPanel, indirectly testing a great deal of functionality in
+ * AbstractRestRestRequestDesktopPanel.
  */
 public class RestRequestDesktopPanelTest
 {
@@ -62,26 +62,8 @@ public class RestRequestDesktopPanelTest
 		restService().addEndpoint( ENDPOINT );
 		restRequest.setEndpoint( ENDPOINT );
 		requestDesktopPanel = new RestRequestDesktopPanel( restRequest );
-		originalDialogs = UISupport.getDialogs();
-		dialogs = new StubbedDialogs();
-		UISupport.setDialogs( dialogs );
+		stubDialogs();
 		endpointsCombo = findEndpointsComboBox();
-	}
-
-	private void makeRequest(  ) throws SoapUIException
-	{
-		RestMethod method = makeRestMethodWithTwoResourceAncestors();
-		restRequest = new RestRequest( method, RestRequestConfig.Factory.newInstance(), false );
-		restRequest.setMethod( RestRequestInterface.RequestMethod.GET);
-		restRequest.getResource().getParams().addProperty( PARAMETER_NAME );
-	}
-
-	private RestMethod makeRestMethodWithTwoResourceAncestors() throws SoapUIException
-	{
-		RestResource parent = makeRestResource();
-		parent.setPath( "/parent" );
-		RestResource childResource = parent.addNewChildResource( "child", "the_child" );
-		return new RestMethod( childResource, RestMethodConfig.Factory.newInstance() );
 	}
 
 	@Test
@@ -101,7 +83,7 @@ public class RestRequestDesktopPanelTest
 
 	@Test
 	public void displaysEndpoint() {
-		assertThat(requestDesktopPanel.getEndpointsModel().getSelectedItem(), is((Object)ENDPOINT));
+		assertThat(requestDesktopPanel.getEndpointsModel().getSelectedItem(), is( ( Object )ENDPOINT ));
 	}
 
 	@Test
@@ -120,7 +102,7 @@ public class RestRequestDesktopPanelTest
 		endpointsCombo.setSelectedItem( EndpointsComboBoxModel.EDIT_ENDPOINT );
 
 		waitForSwingThread();
-		assertThat(dialogs.getPrompts(), hasPromptWithValue(otherValue));
+		assertThat(dialogs.getPrompts(), hasPromptWithValue( otherValue ));
 	}
 
 	@Test
@@ -172,11 +154,11 @@ public class RestRequestDesktopPanelTest
 		RestParamProperty restParamProperty = restRequest.getParams().getProperty( PARAMETER_NAME );
 		restParamProperty.setValue( "anything" );
 		restParamProperty.setStyle( RestParamsPropertyHolder.ParameterStyle.MATRIX );
-		String value = "${#TestCase#myprop}";
+		String value = "something_else";
 		restParamProperty.setValue( value );
 
 
-		assertThat(resourcePanelText(), containsString(value));
+		assertThat(resourcePanelText(), containsString("daValue"));
 	}
 
 	@After
@@ -186,6 +168,32 @@ public class RestRequestDesktopPanelTest
 	}
 
 	/* Helpers */
+
+	private void stubDialogs()
+	{
+		originalDialogs = UISupport.getDialogs();
+		dialogs = new StubbedDialogs();
+		UISupport.setDialogs( dialogs );
+	}
+
+	private void makeRequest(  ) throws SoapUIException
+	{
+		RestMethod method = makeRestMethodWithTwoResourceAncestors();
+		restRequest = new RestRequest( method, RestRequestConfig.Factory.newInstance(), false );
+		restRequest.setMethod( RestRequestInterface.RequestMethod.GET);
+		restRequest.getResource().getParams().addProperty( PARAMETER_NAME );
+		RestParamProperty property = restRequest.getResource().getParams().getProperty( PARAMETER_NAME );
+		property.setStyle( RestParamsPropertyHolder.ParameterStyle.MATRIX );
+		property.setValue("daValue");
+	}
+
+	private RestMethod makeRestMethodWithTwoResourceAncestors() throws SoapUIException
+	{
+		RestResource parent = makeRestResource();
+		parent.setPath( "/parent" );
+		RestResource childResource = parent.addNewChildResource( "child", "the_child" );
+		return new RestMethod( childResource, RestMethodConfig.Factory.newInstance() );
+	}
 
 	private String resourcePanelText()
 	{
