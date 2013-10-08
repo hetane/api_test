@@ -21,6 +21,7 @@ import com.eviware.soapui.actions.VersionUpdateAction;
 import com.eviware.soapui.impl.WorkspaceImpl;
 import com.eviware.soapui.impl.actions.ImportWsdlProjectAction;
 import com.eviware.soapui.impl.actions.NewGenericProjectAction;
+import com.eviware.soapui.impl.actions.NewRestProjectAction;
 import com.eviware.soapui.impl.actions.NewWsdlProjectAction;
 import com.eviware.soapui.impl.rest.actions.project.NewRestServiceAction;
 import com.eviware.soapui.impl.support.actions.ShowOnlineHelpAction;
@@ -332,7 +333,9 @@ public class SoapUI
 		mainToolbar.setFloatable( false );
 		mainToolbar.setRollover( true );
 		mainToolbar.putClientProperty( Options.HEADER_STYLE_KEY, HeaderStyle.BOTH );
-		mainToolbar.add( new NewWsdlProjectActionDelegate() );
+		mainToolbar.add( new NewGenericProjectActionDelegate() );
+		mainToolbar.add( new NewRestProjectActionDelegate() );
+		mainToolbar.add( new NewSoapProjectActionDelegate() );
 		mainToolbar.add( new ImportWsdlProjectActionDelegate() );
 		mainToolbar.add( new SaveAllActionDelegate() );
 		mainToolbar.addSpace( 2 );
@@ -1573,9 +1576,9 @@ public class SoapUI
 		SoapUI.isStandalone = standalone;
 	}
 
-	private static class NewWsdlProjectActionDelegate extends AbstractAction
+	private static class NewGenericProjectActionDelegate extends AbstractAction // TODO: remove?
 	{
-		public NewWsdlProjectActionDelegate()
+		public NewGenericProjectActionDelegate()
 		{
 			putValue( Action.SMALL_ICON, UISupport.createImageIcon( "/project.gif" ) );
 			putValue( Action.SHORT_DESCRIPTION, "Creates a new generic project" );
@@ -1584,6 +1587,34 @@ public class SoapUI
 		public void actionPerformed( ActionEvent e )
 		{
 			SoapUI.getActionRegistry().getAction( NewGenericProjectAction.SOAPUI_ACTION_ID ).perform( workspace, null );
+		}
+	}
+
+	private static class NewRestProjectActionDelegate extends AbstractAction
+	{
+		public NewRestProjectActionDelegate()
+		{
+			putValue( Action.SMALL_ICON, UISupport.createImageIcon( "/rest_request.gif" ) ); //TODO: replace icon
+			putValue( Action.SHORT_DESCRIPTION, "Creates a new REST project" );
+		}
+
+		public void actionPerformed( ActionEvent e )
+		{
+			SoapUI.getActionRegistry().getAction( NewRestProjectAction.SOAPUI_ACTION_ID ).perform( workspace, null );
+		}
+	}
+
+	private static class NewSoapProjectActionDelegate extends AbstractAction
+	{
+		public NewSoapProjectActionDelegate()
+		{
+			putValue( Action.SMALL_ICON, UISupport.createImageIcon( "/request.gif" ) ); //TODO: replace icon
+			putValue( Action.SHORT_DESCRIPTION, "Creates a new SOAP project" );
+		}
+
+		public void actionPerformed( ActionEvent e )
+		{
+			SoapUI.getActionRegistry().getAction( NewWsdlProjectAction.SOAPUI_ACTION_ID ).perform( workspace, null );
 		}
 	}
 
