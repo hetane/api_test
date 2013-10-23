@@ -12,6 +12,36 @@
 
 package com.eviware.soapui.support;
 
+import com.eviware.soapui.SoapUI;
+import com.eviware.soapui.SwingPluginSoapUICore;
+import com.eviware.soapui.impl.wsdl.actions.iface.tools.support.ToolHost;
+import com.eviware.soapui.model.ModelItem;
+import com.eviware.soapui.model.settings.Settings;
+import com.eviware.soapui.model.testsuite.TestProperty;
+import com.eviware.soapui.settings.UISettings;
+import com.eviware.soapui.support.action.swing.ActionList;
+import com.eviware.soapui.support.components.ConfigurationDialog;
+import com.eviware.soapui.support.components.JButtonBar;
+import com.eviware.soapui.support.components.JXToolBar;
+import com.eviware.soapui.support.components.PreviewCorner;
+import com.eviware.soapui.support.components.SwingConfigurationDialogImpl;
+import com.eviware.soapui.support.swing.GradientPanel;
+import com.eviware.soapui.support.swing.SoapUISplitPaneUI;
+import com.eviware.soapui.support.swing.SwingUtils;
+import com.eviware.soapui.ui.desktop.DesktopPanel;
+import com.eviware.soapui.ui.desktop.SoapUIDesktop;
+import com.eviware.x.dialogs.XDialogs;
+import com.eviware.x.dialogs.XFileDialogs;
+import com.eviware.x.impl.swing.SwingDialogs;
+import com.eviware.x.impl.swing.SwingFileDialogs;
+import com.jgoodies.looks.HeaderStyle;
+import com.jgoodies.looks.Options;
+import org.syntax.jedit.InputHandler;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -37,57 +67,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JProgressBar;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-
-import org.syntax.jedit.InputHandler;
-
-import com.eviware.soapui.SoapUI;
-import com.eviware.soapui.SwingPluginSoapUICore;
-import com.eviware.soapui.impl.wsdl.actions.iface.tools.support.ToolHost;
-import com.eviware.soapui.model.ModelItem;
-import com.eviware.soapui.model.settings.Settings;
-import com.eviware.soapui.model.testsuite.TestProperty;
-import com.eviware.soapui.settings.UISettings;
-import com.eviware.soapui.support.action.swing.ActionList;
-import com.eviware.soapui.support.components.ConfigurationDialog;
-import com.eviware.soapui.support.components.JButtonBar;
-import com.eviware.soapui.support.components.JXToolBar;
-import com.eviware.soapui.support.components.PreviewCorner;
-import com.eviware.soapui.support.components.SwingConfigurationDialogImpl;
-import com.eviware.soapui.support.swing.GradientPanel;
-import com.eviware.soapui.support.swing.SoapUISplitPaneUI;
-import com.eviware.soapui.support.swing.SwingUtils;
-import com.eviware.soapui.ui.desktop.DesktopPanel;
-import com.eviware.soapui.ui.desktop.SoapUIDesktop;
-import com.eviware.x.dialogs.XDialogs;
-import com.eviware.x.dialogs.XFileDialogs;
-import com.eviware.x.impl.swing.SwingDialogs;
-import com.eviware.x.impl.swing.SwingFileDialogs;
-import com.jgoodies.looks.HeaderStyle;
-import com.jgoodies.looks.Options;
-
 /**
  * Facade for common UI-related tasks
  * 
@@ -110,6 +89,7 @@ public class UISupport
 	public static Dimension TOOLBAR_BUTTON_DIMENSION;
 	private static Boolean isWindows;
 	private static Boolean isMac;
+	private static Boolean isLinux;
 
 	private static XDialogs dialogs;
 	private static XFileDialogs fileDialogs;
@@ -117,10 +97,11 @@ public class UISupport
 	private static ToolHost toolHost;
 	private static Cursor hourglassCursor;
 	private static Cursor defaultCursor;
-	private static Boolean isHeadless;
 
+	private static Boolean isHeadless;
 	public static final String DEFAULT_EDITOR_FONT = "Courier plain";
 	public static final int DEFAULT_EDITOR_FONT_SIZE = 11;
+
 	public static final Color MAC_BACKGROUND_COLOR = new Color( 229, 229, 229 );
 
 	static
@@ -131,7 +112,6 @@ public class UISupport
 		if( !isHeadless() )
 			TOOLBAR_BUTTON_DIMENSION = new Dimension( 22, 21 );
 	}
-
 	public static ImageIcon TOOL_ICON = UISupport.createImageIcon( TOOL_ICON_PATH );
 	public static ImageIcon OPTIONS_ICON = UISupport.createImageIcon( OPTIONS_ICON_PATH );
 	public static ImageIcon LOADUI_ICON = UISupport.createImageIcon( LOADUI_ICON_PATH );
@@ -665,17 +645,17 @@ public class UISupport
 	public static boolean isWindows()
 	{
 		if( isWindows == null )
-			isWindows = new Boolean( System.getProperty( "os.name" ).indexOf( "Windows" ) >= 0 );
+			isWindows = System.getProperty( "os.name" ).contains( "Windows" );
 
-		return isWindows.booleanValue();
+		return isWindows;
 	}
 
 	public static boolean isMac()
 	{
 		if( isMac == null )
-			isMac = new Boolean( System.getProperty( "os.name" ).indexOf( "Mac" ) >= 0 );
+			isMac = System.getProperty( "os.name" ).contains( "Mac" );
 
-		return isMac.booleanValue();
+		return isMac;
 	}
 
 	public static void setHourglassCursor()
@@ -1023,6 +1003,14 @@ public class UISupport
 	public static char[] promptPassword( String question, String title )
 	{
 		return dialogs.promptPassword( question, title );
+	}
+
+	public static boolean isLinux()
+	{
+		if( isLinux == null )
+			isLinux = System.getProperty( "os.name" ).contains( "Linux" );
+
+		return isLinux;
 	}
 
 	private static final class ItemListenerImplementation implements ItemListener

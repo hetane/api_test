@@ -117,7 +117,24 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.JTree;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -285,6 +302,11 @@ public class SoapUI
 		frame.getContentPane().add( mainInspector.getComponent(), BorderLayout.CENTER );
 		frame.setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 		frame.setSize( 1000, 750 );
+		// workaround for a window positioning problem on Ubuntu with extended display mode
+		if (UISupport.isLinux())
+		{
+			 frame.setLocation(100, 100);
+		}
 
 		mainInspector.setDividerLocation( 250 );
 		mainInspector.setResizeWeight( 0.1 );
