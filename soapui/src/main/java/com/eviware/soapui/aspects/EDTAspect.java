@@ -15,13 +15,19 @@ public class EDTAspect
 			"call (javax.swing..*+.new(..))")
 	public void swingMethods() {}
 
-	@Pointcut("call (* javax.swing..*+.add*Listener(..)) || " +
-			"call (* javax.swing..*+.remove*Listener(..)) || " +
-			"call (void javax.swing.JComponent+.setText(java.lang.String)) ||" +
-			"call (* javax.swing.SwingUtilities.invoke*(..))")
+	@Pointcut("call (* javax.swing..*+.add*Listener(..)) || "
+			+ "call (* javax.swing..*+.remove*Listener(..)) || "
+			+ "call (* javax.swing..*+.getListeners(..)) || "
+			+ "call (* javax.swing..*+.revalidate()) || "
+			+ "call (* javax.swing..*+.invalidate()) || "
+			+ "call (* javax.swing..*+.repaint()) || "
+			+ "target (javax.swing.SwingWorker+) || "
+			+ "call (* javax.swing.SwingUtilities+.invoke*(..)) || "
+			+ "call (* javax.swing.SwingUtilities+.isEventDispatchThread()) || "
+			+ "call (void javax.swing.JComponent+.setText(java.lang.String))")
 	public void safeMethods() {}
 
-	@Before("swingMethods() && !safeMethods()")
+	@Before("swingMethods() && !safeMethods() && !within(EDTCheck)")
 	public void checkCallingThread(JoinPoint.StaticPart thisJoinPointStatic) {
 		if(!EventQueue.isDispatchThread()) {
 			System.err.println(
