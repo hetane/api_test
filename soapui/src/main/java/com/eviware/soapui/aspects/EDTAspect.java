@@ -17,7 +17,8 @@ public class EDTAspect
 
 	@Pointcut("call (* javax.swing..*+.add*Listener(..)) || " +
 			"call (* javax.swing..*+.remove*Listener(..)) || " +
-			"call (void javax.swing.JComponent+.setText(java.lang.String))")
+			"call (void javax.swing.JComponent+.setText(java.lang.String)) ||" +
+			"call (* javax.swing.SwingUtilities.invoke*(..))")
 	public void safeMethods() {}
 
 	@Before("swingMethods() && !safeMethods()")
