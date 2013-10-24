@@ -1,0 +1,8 @@
+<aspectj>
+    <aspects>
+        <aspect name="EDTAspect"/>
+    </aspects>
+    <weaver options="-verbose">
+        <include within="com.*" />
+    </weaver>
+</aspectj>
