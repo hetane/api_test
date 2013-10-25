@@ -28,7 +28,7 @@ public class EDTAspect
 			+ "call (void javax.swing.JComponent+.setText(java.lang.String))")
 	public void safeMethods() {}
 
-	@Before("swingMethods() && !safeMethods() && !within(EDTCheck)")
+	@Before("swingMethods() && !safeMethods() && !within(EDTAspect)")
 	public void checkCallingThread(JoinPoint.StaticPart thisJoinPointStatic) {
 		if(!EventQueue.isDispatchThread()) {
 			System.err.println("Swing EDT violation: " + thisJoinPointStatic.getSignature()
