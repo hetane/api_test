@@ -21,6 +21,7 @@ public class EDTAspect
 			+ "call (* javax.swing..*+.revalidate()) || "
 			+ "call (* javax.swing..*+.invalidate()) || "
 			+ "call (* javax.swing..*+.repaint()) || "
+			+ "call (* javax.swing..*+.isEnabled()) || "
 			+ "target (javax.swing.SwingWorker+) || "
 			+ "call (* javax.swing.SwingUtilities+.invoke*(..)) || "
 			+ "call (* javax.swing.SwingUtilities+.isEventDispatchThread()) || "

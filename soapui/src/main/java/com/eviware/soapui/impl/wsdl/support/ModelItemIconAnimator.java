@@ -12,21 +12,19 @@
 
 package com.eviware.soapui.impl.wsdl.support;
 
-import java.util.concurrent.Future;
-
-import javax.swing.ImageIcon;
-
-import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.model.support.AbstractAnimatableModelItem;
 import com.eviware.soapui.support.UISupport;
 
+import javax.swing.*;
+import java.util.List;
+
 /**
  * Class to animate the icon of a ModelItem
- * 
+ *
  * @author ole.matzura
  */
 
-public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>> implements Runnable
+public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>>
 {
 	private final T target;
 	private int index = 0;
@@ -34,7 +32,8 @@ public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>> imp
 	private boolean enabled = true;
 	private ImageIcon baseIcon;
 	private ImageIcon[] animateIcons;
-	private Future<?> future;
+
+	SwingWorker<Void, ImageIcon> worker;
 
 	public ModelItemIconAnimator( T target, String baseIcon, String animationBaseIcon, int num, String type )
 	{
@@ -44,12 +43,19 @@ public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>> imp
 		animateIcons = new ImageIcon[num];
 
 		for( int c = 0; c < animateIcons.length; c++ )
-			animateIcons[c] = UISupport.createImageIcon( animationBaseIcon + "_" + ( c + 1 ) + "." + type );
+		{
+			animateIcons[c] = UISupport.createImageIcon( createImageName( animationBaseIcon, type, c ) );
+		}
+	}
+
+	private String createImageName( String animationBaseIcon, String type, int c )
+	{
+		return String.format("%s_%d.%s", animationBaseIcon, c + 1, type);
 	}
 
 	public void stop()
 	{
-		stopped = true;
+		worker.cancel( true );
 	}
 
 	public int getIndex()
@@ -59,7 +65,7 @@ public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>> imp
 
 	public boolean isStopped()
 	{
-		return stopped;
+		return worker == null || worker.getState() == SwingWorker.StateValue.DONE;
 	}
 
 	public void start()
@@ -77,22 +83,48 @@ public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>> imp
 		 */
 		if( isStopped() )
 		{
-			if( future != null && !future.isDone() )
+			worker = new SwingWorker<Void, ImageIcon>()
 			{
-				future.cancel( true );
-				while( future != null )
-					try
+				@Override
+				protected Void doInBackground() throws Exception
+				{
+					if( System.getProperty( "soapui.enablenamedthreads" ) != null )
+						Thread.currentThread().setName( "ModelItemIconAnimator for " + target.getName() );
+
+					while( !stopped )
 					{
-						Thread.sleep( 500 );
+						try
+						{
+							index = index >= animateIcons.length - 1 ? 0 : index + 1;
+
+							publish( getIcon() );
+							Thread.sleep( 500 );
+						}
+						catch( InterruptedException e )
+						{
+							stopped = true;
+						}
 					}
-					catch( InterruptedException e )
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
+
+					return null;
+				}
+
+				@Override
+				protected void process( List<ImageIcon> chunks )
+				{
+					ImageIcon imageIcon = chunks.get( chunks.size() - 1 );
+					target.setIcon( imageIcon );
+				}
+
+				@Override
+				protected void done()
+				{
+					target.setIcon( getIcon() );
+				}
+
+			};
 			stopped = false;
-			future = SoapUI.getThreadPool().submit( this );
+			worker.execute();
 		}
 	}
 
@@ -109,37 +141,6 @@ public class ModelItemIconAnimator<T extends AbstractAnimatableModelItem<?>> imp
 		}
 
 		return baseIcon;
-	}
-
-	public void run()
-	{
-		if( future != null )
-		{
-			if( System.getProperty( "soapui.enablenamedthreads" ) != null )
-				Thread.currentThread().setName( "ModelItemIconAnimator for " + target.getName() );
-		}
-
-		while( !stopped )
-		{
-			try
-			{
-				if( stopped )
-					break;
-
-				index = index >= animateIcons.length - 1 ? 0 : index + 1;
-				target.setIcon( getIcon() );
-				Thread.sleep( 500 );
-			}
-			catch( InterruptedException e )
-			{
-//				SoapUI.log( "Mock Service Force Stopped!" );
-				stopped = true;
-			}
-		}
-
-		target.setIcon( getIcon() );
-		future = null;
-		// iconAnimationThread = null;
 	}
 
 	public T getTarget()

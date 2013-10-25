@@ -116,6 +116,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import sun.awt.AppContext;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -771,6 +772,9 @@ public class SoapUI
 	{
 		System.setProperty( "apple.laf.useScreenMenuBar", "true" );
 		System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "SoapUI" );
+
+		// use our own threadpool/classloader for swing workers
+		AppContext.getAppContext().put( SwingWorker.class, threadPool );
 
 		frame = new JFrame( title );
 
