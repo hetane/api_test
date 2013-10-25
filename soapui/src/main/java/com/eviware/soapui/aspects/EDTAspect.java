@@ -30,9 +30,8 @@ public class EDTAspect
 	@Before("swingMethods() && !safeMethods() && !within(EDTCheck)")
 	public void checkCallingThread(JoinPoint.StaticPart thisJoinPointStatic) {
 		if(!EventQueue.isDispatchThread()) {
-			System.err.println(
-					"Swing single thread rule violation: "
-							+ thisJoinPointStatic);
+			System.err.println("Swing EDT violation: " + thisJoinPointStatic.getSignature()
+					+ " (" + thisJoinPointStatic.getSourceLocation() + ")");
 			Thread.dumpStack();
 		}
 	}
