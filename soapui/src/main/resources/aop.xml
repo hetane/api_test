@@ -3,6 +3,6 @@
         <aspect name="EDTAspect"/>
     </aspects>
     <weaver options="-verbose">
-        <include within="com.*" />
+        <include within="com.eviware*" />
     </weaver>
 </aspectj>
