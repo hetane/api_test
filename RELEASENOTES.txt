@@ -1,6 +1,7 @@
 # SoapUI 4.6.1 maintenance
 
 ### Bugs fixed ###
+* Can not deploy project as war (SOAP-906)
 
 -------------------------------------------------------------------------------
 
