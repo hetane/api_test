@@ -2,7 +2,7 @@
 
 ### Bugs fixed ###
 * Can not deploy project as war (SOAP-906)
-
+* Opening files or URLs fails in certain environments (SOAP-928)
 -------------------------------------------------------------------------------
 
 # SoapUI 4.6.1
