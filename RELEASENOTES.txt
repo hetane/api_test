@@ -3,6 +3,8 @@
 ### Bugs fixed ###
 * Can not deploy project as war (SOAP-906)
 * Opening files or URLs fails in certain environments (SOAP-928)
+* REST resource base path is duplicated each time Request is opened (SOAP-941)
+
 -------------------------------------------------------------------------------
 
 # SoapUI 4.6.1
