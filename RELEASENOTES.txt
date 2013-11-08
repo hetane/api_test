@@ -4,6 +4,7 @@
 * Can not deploy project as war (SOAP-906)
 * Opening files or URLs fails in certain environments (SOAP-928)
 * REST resource base path is duplicated each time Request is opened (SOAP-941)
+* Change content-type for css files from application/x-pointplus to text/css in mocks (SOAP-966)
 
 -------------------------------------------------------------------------------
 
