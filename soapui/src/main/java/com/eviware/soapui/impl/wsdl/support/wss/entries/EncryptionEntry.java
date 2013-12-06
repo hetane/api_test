@@ -12,24 +12,6 @@
 
 package com.eviware.soapui.impl.wsdl.support.wss.entries;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.StringWriter;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
-import org.apache.ws.security.WSConstants;
-import org.apache.ws.security.WSEncryptionPart;
-import org.apache.ws.security.WSSConfig;
-import org.apache.ws.security.components.crypto.Crypto;
-import org.apache.ws.security.message.WSSecEncrypt;
-import org.apache.ws.security.message.WSSecHeader;
-import org.w3c.dom.Document;
-
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.config.WSSEntryConfig;
 import com.eviware.soapui.impl.wsdl.support.wss.OutgoingWss;
@@ -45,6 +27,20 @@ import com.eviware.soapui.support.xml.XmlObjectConfigurationBuilder;
 import com.eviware.soapui.support.xml.XmlObjectConfigurationReader;
 import com.eviware.soapui.support.xml.XmlUtils;
 import com.jgoodies.binding.PresentationModel;
+import org.apache.ws.security.WSConstants;
+import org.apache.ws.security.WSEncryptionPart;
+import org.apache.ws.security.WSSConfig;
+import org.apache.ws.security.components.crypto.Crypto;
+import org.apache.ws.security.message.WSSecEncrypt;
+import org.apache.ws.security.message.WSSecHeader;
+import org.w3c.dom.Document;
+
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.StringWriter;
+import java.util.List;
+import java.util.Vector;
 
 public class EncryptionEntry extends WssEntryBase
 {
@@ -96,7 +92,9 @@ public class EncryptionEntry extends WssEntryBase
 		form.appendPasswordField( "password", "Password",
 				"The password for the key to use for encryption (if it is private)" );
 
-		form.appendComboBox( "keyIdentifierType", "Key Identifier Type", new Integer[] { 0, 1, 3, 4, 5, 6, 8 },
+		form.appendComboBox( "keyIdentifierType", "Key Identifier Type", new Integer[] { WSConstants.ISSUER_SERIAL,
+				WSConstants.BST_DIRECT_REFERENCE, WSConstants.X509_KEY_IDENTIFIER, WSConstants.SKI_KEY_IDENTIFIER,
+				WSConstants.EMBEDDED_KEYNAME, WSConstants.EMBED_SECURITY_TOKEN_REF, WSConstants.THUMBPRINT_IDENTIFIER },
 				"Sets which key identifier to use" ).setRenderer( new KeyIdentifierTypeRenderer() );
 
 		( embeddedKeyNameTextField = form.appendTextField( "embeddedKeyName", "Embedded Key Name",
@@ -131,7 +129,13 @@ public class EncryptionEntry extends WssEntryBase
 	protected void load( XmlObjectConfigurationReader reader )
 	{
 		crypto = reader.readString( "crypto", null );
-		keyIdentifierType = reader.readInt( "keyIdentifierType", 0 );
+		keyIdentifierType = reader.readInt( "keyIdentifierType", WSConstants.ISSUER_SERIAL );
+
+		// 0 used to be default. Should be WSConstants.ISSUER_SERIAL.
+		if (keyIdentifierType == 0) {
+			keyIdentifierType = WSConstants.ISSUER_SERIAL;
+		}
+
 		symmetricEncAlgorithm = reader.readString( "symmetricEncAlgorithm", null );
 		encKeyTransport = reader.readString( "encKeyTransport", null );
 		embeddedKeyName = reader.readString( "embeddedKeyName", null );
@@ -267,12 +271,7 @@ public class EncryptionEntry extends WssEntryBase
 
 			wsEncrypt.setUserInfo( context.expand( getUsername() ) );
 
-			// default is
-			// http://ws.apache.org/wss4j/apidocs/org/apache/ws/security/WSConstants.html#ISSUER_SERIAL
-			if( getKeyIdentifierType() != 0 )
-			{
-				wsEncrypt.setKeyIdentifierType( getKeyIdentifierType() );
-			}
+			wsEncrypt.setKeyIdentifierType( getKeyIdentifierType() );
 
 			if( getKeyIdentifierType() == WSConstants.EMBEDDED_KEYNAME )
 			{

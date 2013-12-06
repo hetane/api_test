@@ -12,24 +12,6 @@
 
 package com.eviware.soapui.impl.wsdl.support.wss.entries;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-
-import org.apache.ws.security.WSConstants;
-import org.apache.ws.security.WSEncryptionPart;
-import org.apache.ws.security.message.WSSecHeader;
-import org.apache.ws.security.message.WSSecSignature;
-import org.apache.xml.security.algorithms.MessageDigestAlgorithm;
-import org.apache.xml.security.signature.XMLSignature;
-import org.w3c.dom.Document;
-
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.config.WSSEntryConfig;
 import com.eviware.soapui.impl.wsdl.support.wss.OutgoingWss;
@@ -45,6 +27,21 @@ import com.eviware.soapui.support.xml.XmlObjectConfigurationBuilder;
 import com.eviware.soapui.support.xml.XmlObjectConfigurationReader;
 import com.eviware.soapui.support.xml.XmlUtils;
 import com.jgoodies.binding.PresentationModel;
+import org.apache.ws.security.WSConstants;
+import org.apache.ws.security.WSEncryptionPart;
+import org.apache.ws.security.message.WSSecHeader;
+import org.apache.ws.security.message.WSSecSignature;
+import org.apache.xml.security.algorithms.MessageDigestAlgorithm;
+import org.apache.xml.security.signature.XMLSignature;
+import org.w3c.dom.Document;
+
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class SignatureEntry extends WssEntryBase
 {
@@ -89,7 +86,8 @@ public class SignatureEntry extends WssEntryBase
 
 		form.appendPasswordField( "password", "Password", "The certificate password" );
 
-		form.appendComboBox( "keyIdentifierType", "Key Identifier Type", new Integer[] { 0, 1, 3, 4 },
+		form.appendComboBox( "keyIdentifierType", "Key Identifier Type", new Integer[] { WSConstants.ISSUER_SERIAL, WSConstants.BST_DIRECT_REFERENCE,
+				WSConstants.X509_KEY_IDENTIFIER, WSConstants.SKI_KEY_IDENTIFIER },
 				"Sets which key identifier to use" ).setRenderer( new KeyIdentifierTypeRenderer() );
 		form.appendComboBox( "signatureAlgorithm", "Signature Algorithm", new String[] { DEFAULT_OPTION, WSConstants.RSA,
 				WSConstants.DSA, XMLSignature.ALGO_ID_MAC_HMAC_SHA1, XMLSignature.ALGO_ID_MAC_HMAC_SHA256,
@@ -127,7 +125,13 @@ public class SignatureEntry extends WssEntryBase
 	protected void load( XmlObjectConfigurationReader reader )
 	{
 		crypto = reader.readString( "crypto", null );
-		keyIdentifierType = reader.readInt( "keyIdentifierType", 0 );
+
+		keyIdentifierType = reader.readInt( "keyIdentifierType", WSConstants.ISSUER_SERIAL );
+		// 0 used to be default. Should be WSConstants.ISSUER_SERIAL.
+		if (keyIdentifierType == 0) {
+			keyIdentifierType = WSConstants.ISSUER_SERIAL;
+		}
+
 		signatureAlgorithm = reader.readString( "signatureAlgorithm", null );
 		signatureCanonicalization = reader.readString( "signatureCanonicalization", null );
 		useSingleCert = reader.readBoolean( "useSingleCert", false );

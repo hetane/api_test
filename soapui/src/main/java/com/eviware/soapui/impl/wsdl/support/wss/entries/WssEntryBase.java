@@ -27,6 +27,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
+import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.WSEncryptionPart;
 import org.apache.ws.security.WSSecurityException;
 import org.apache.ws.security.components.crypto.Merlin;
@@ -232,23 +233,23 @@ public abstract class WssEntryBase implements WssEntry, PropertyExpansionContain
 		{
 			Component result = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
 
-			if( value.equals( 0 ) )
+			if( value.equals( WSConstants.ISSUER_SERIAL ) )
 				setText( "Issuer Name and Serial Number" );
-			else if( value.equals( 1 ) )
+			else if( value.equals( WSConstants.BST_DIRECT_REFERENCE ) )
 				setText( "Binary Security Token" );
-			else if( value.equals( 3 ) )
+			else if( value.equals( WSConstants.X509_KEY_IDENTIFIER ) )
 				setText( "X509 Certificate" );
-			else if( value.equals( 4 ) )
+			else if( value.equals( WSConstants.SKI_KEY_IDENTIFIER ) )
 				setText( "Subject Key Identifier" );
-			else if( value.equals( 5 ) )
+			else if( value.equals( WSConstants.EMBEDDED_KEYNAME ) )
 				setText( "Embedded KeyInfo" );
-			else if( value.equals( 6 ) )
+			else if( value.equals( WSConstants.EMBED_SECURITY_TOKEN_REF ) )
 				setText( "Embed SecurityToken Reference" );
-			else if( value.equals( 7 ) )
+			else if( value.equals( WSConstants.UT_SIGNING ) )
 				setText( "UsernameToken Signature" );
-			else if( value.equals( 8 ) )
+			else if( value.equals( WSConstants.THUMBPRINT_IDENTIFIER ) )
 				setText( "Thumbprint SHA1 Identifier" );
-			else if( value.equals( 9 ) )
+			else if( value.equals( WSConstants.CUSTOM_SYMM_SIGNING ) )
 				setText( "Custom Reference" );
 
 			return result;
