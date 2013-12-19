@@ -17,10 +17,7 @@ import com.eviware.soapui.config.RestRequestConfig;
 import com.eviware.soapui.impl.rest.OAuth2Profile;
 import com.eviware.soapui.impl.rest.RestRequest;
 import com.eviware.soapui.impl.rest.support.RestParamProperty;
-import com.eviware.soapui.impl.rest.support.RestParamsPropertyHolder;
-import com.eviware.soapui.impl.rest.support.RestUtils;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
-import com.eviware.soapui.model.testsuite.TestProperty;
 import com.eviware.soapui.support.SoapUIException;
 import com.eviware.soapui.utils.ModelItemFactory;
 import org.apache.oltu.oauth2.client.OAuthClient;
@@ -46,7 +43,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.junit.matchers.JUnitMatchers.hasItem;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -143,12 +139,12 @@ public class OltuOAuth2ClientFacadeTest
 	public void updatesProfileAccessTokenStatus() throws Exception
 	{
 		final List<OAuth2Profile.AccessTokenStatus> statusValues = new ArrayList<OAuth2Profile.AccessTokenStatus>(  );
-		profile.addPropertyChangeListener(OAuth2Profile.ACCESS_TOKEN_STATUS_PROPERTY, new PropertyChangeListener()
+		profile.addPropertyChangeListener( OAuth2Profile.ACCESS_TOKEN_STATUS_PROPERTY, new PropertyChangeListener()
 		{
 			@Override
 			public void propertyChange( PropertyChangeEvent evt )
 			{
-				statusValues.add(( OAuth2Profile.AccessTokenStatus )evt.getNewValue());
+				statusValues.add( ( OAuth2Profile.AccessTokenStatus )evt.getNewValue() );
 			}
 		} );
 
@@ -252,6 +248,13 @@ public class OltuOAuth2ClientFacadeTest
 	public void rejectsNonHttpRedirectURI() throws Exception
 	{
 		profile.setRedirectURI( "ftp://ftp.sunet.se" );
+		oltuClientFacade.requestAccessToken( profile );
+	}
+
+	@Test
+	public void acceptsURNASRedirectURI() throws Exception
+	{
+		profile.setRedirectURI( "urn:oob:bla" );
 		oltuClientFacade.requestAccessToken( profile );
 	}
 

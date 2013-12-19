@@ -94,13 +94,36 @@ public class OltuOAuth2ClientFacade implements OAuth2ClientFacade
 	{
 
 		validateHttpUrl( parameters.authorizationUri, "Authorization URI " );
-		if( !parameters.redirectUri.equals( OAUTH_2_OOB_URN ) )
-		{
-			validateHttpUrl( parameters.redirectUri, "Redirect URI" );
-		}
 		validateHttpUrl( parameters.accessTokenUri, "Access token URI" );
+		validateRedirectUri( parameters.redirectUri );
 		validateRequiredStringValue( parameters.clientId, "Client ID" );
 		validateRequiredStringValue( parameters.clientSecret, "Client secret" );
+	}
+
+	private void validateRedirectUri( String redirectUri )
+	{
+		validateRequiredStringValue( redirectUri, "Redirect URI" );
+		if( !( isValidUrn( redirectUri ) || isValidHttpUrl( redirectUri ) ) )
+		{
+			throw new InvalidOAuth2ParametersException( "Redirect URI " + redirectUri + " is not a valid HTTP URL or URN" );
+		}
+	}
+
+	private boolean isValidUrn( String uriString )
+	{
+		if( !uriString.startsWith( "urn:" ) )
+		{
+			return false;
+		}
+		try
+		{
+			new URI( uriString );
+			return true;
+		}
+		catch( URISyntaxException e )
+		{
+			return false;
+		}
 	}
 
 	private String expandProperty( OAuth2Profile profile, String value )
@@ -167,7 +190,7 @@ public class OltuOAuth2ClientFacade implements OAuth2ClientFacade
 			@Override
 			public void locationChanged( String newLocation )
 			{
-				if( !parameters.redirectUri.contains( OAUTH_2_OOB_URN ) )
+				if( isValidHttpUrl( parameters.redirectUri ) )
 				{
 					getAccessTokenAndSaveToProfile( parameters, extractAuthorizationCode( newLocation ) );
 				}
@@ -176,7 +199,7 @@ public class OltuOAuth2ClientFacade implements OAuth2ClientFacade
 			@Override
 			public void contentChanged( String newContent )
 			{
-				if( parameters.redirectUri.contains( OAUTH_2_OOB_URN ) )
+				if( !isValidHttpUrl( parameters.redirectUri ) )
 				{
 					int titlePosition = newContent.indexOf( TITLE );
 					if( titlePosition != -1 )
