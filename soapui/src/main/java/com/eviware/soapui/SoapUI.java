@@ -111,6 +111,7 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -135,6 +136,13 @@ public class SoapUI
 	public static final String CURRENT_SOAPUI_WORKSPACE = SoapUI.class.getName() + "@workspace";
 	public final static Logger log = Logger.getLogger( SoapUI.class );
 	public final static String SOAPUI_VERSION = getVersion( SoapUISystemProperties.VERSION );
+
+	public static final String COPYRIGHT_PREFIX = "Copyright (C) ";
+	public static final String COPYRIGHT_SUFIX = " SmartBear Software";
+	private static final String COPYRIGHT_FROM_YEAR = "2004";
+	private static final String COPYRIGHT_TO_YEAR = "2014";
+	private static final  String COPYRIGHT = COPYRIGHT_PREFIX + COPYRIGHT_FROM_YEAR + "-" + COPYRIGHT_TO_YEAR + COPYRIGHT_SUFIX;
+
 	public static final String DEFAULT_WORKSPACE_FILE = "default-soapui-workspace.xml";
 	public static final String SOAPUI_SPLASH = "soapui-splash.png";
 	public static final String SOAPUI_TITLE = "/branded/branded.properties";
@@ -148,7 +156,6 @@ public class SoapUI
 
 	public static String PUSH_PAGE_ERROR_URL = "file://" + System.getProperty( "soapui.home", "." )
 			+ "/starter-page.html";
-
 	private static final int DEFAULT_DESKTOP_ACTIONS_COUNT = 3;
 	private static final int DEFAULT_MAX_THREADPOOL_SIZE = 200;
 
@@ -196,7 +203,8 @@ public class SoapUI
 	private static Logger groovyLogger;
 	private static CmdLineRunner soapUIRunner;
 
-	static {
+	static
+	{
 		Platform.setImplicitExit( false );
 	}
 
@@ -642,7 +650,8 @@ public class SoapUI
 					} );
 				}
 
-				if( isAutoUpdateVersion() ){
+				if( isAutoUpdateVersion() )
+				{
 					new Thread( new Runnable()
 					{
 						@Override
@@ -1341,7 +1350,6 @@ public class SoapUI
 
 	private static class AboutAction extends AbstractAction
 	{
-		private static final String COPYRIGHT = "2004-2013 smartbear.com";
 		private static final String SOAPUI_WEBSITE = "http://www.soapui.org";
 		private static final String SMARTBEAR_WEBSITE = "http://www.smartbear.com";
 
@@ -1379,10 +1387,10 @@ public class SoapUI
 					null,
 					"<html><body><p align=center> <font face=\"Verdana,Arial,Helvetica\"><strong><img src=\"" + splashURI
 							+ "\"><br>SoapUI " + SOAPUI_VERSION + "<br>"
-							+ "Copyright (C) " + COPYRIGHT + "<br>"
+							+ COPYRIGHT + "<br>"
 							+ "<a href=\"" + SOAPUI_WEBSITE + "\">" + SOAPUI_WEBSITE + "</a> | "
 							+ "<a href=\"" + SMARTBEAR_WEBSITE + "\">" + SMARTBEAR_WEBSITE + "</a><br>"
-							+ "Build Date: " + Objects.firstNonNull( buildInfoProperties.getProperty( "build.date" ), "UNKNOWN BUILD DATE" )
+							+ "Build Date: " + Objects.firstNonNull( buildInfoProperties.getProperty( SoapUISystemProperties.BUILD_DATE ), "UNKNOWN BUILD DATE" )
 							+ "</strong></font></p></body></html>",
 
 					new Dimension( 646, 480 ) );   //Splash screen width + 70px, height + 175px
