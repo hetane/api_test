@@ -141,7 +141,7 @@ public class SoapUI
 	public static final String COPYRIGHT_SUFIX = " SmartBear Software";
 	private static final String COPYRIGHT_FROM_YEAR = "2004";
 	private static final String COPYRIGHT_TO_YEAR = "2014";
-	private static final  String COPYRIGHT = COPYRIGHT_PREFIX + COPYRIGHT_FROM_YEAR + "-" + COPYRIGHT_TO_YEAR + COPYRIGHT_SUFIX;
+	private static final String COPYRIGHT = COPYRIGHT_PREFIX + COPYRIGHT_FROM_YEAR + "-" + COPYRIGHT_TO_YEAR + COPYRIGHT_SUFIX;
 
 	public static final String DEFAULT_WORKSPACE_FILE = "default-soapui-workspace.xml";
 	public static final String SOAPUI_SPLASH = "soapui-splash.png";
@@ -1352,6 +1352,7 @@ public class SoapUI
 	{
 		private static final String SOAPUI_WEBSITE = "http://www.soapui.org";
 		private static final String SMARTBEAR_WEBSITE = "http://www.smartbear.com";
+		private static final String BUILD_DATE_PROPERTY_NAME = "build.date";
 
 		public AboutAction()
 		{
@@ -1390,7 +1391,7 @@ public class SoapUI
 							+ COPYRIGHT + "<br>"
 							+ "<a href=\"" + SOAPUI_WEBSITE + "\">" + SOAPUI_WEBSITE + "</a> | "
 							+ "<a href=\"" + SMARTBEAR_WEBSITE + "\">" + SMARTBEAR_WEBSITE + "</a><br>"
-							+ "Build Date: " + Objects.firstNonNull( buildInfoProperties.getProperty( SoapUISystemProperties.BUILD_DATE ), "UNKNOWN BUILD DATE" )
+							+ "Build Date: " + Objects.firstNonNull( buildInfoProperties.getProperty( BUILD_DATE_PROPERTY_NAME ), "UNKNOWN BUILD DATE" )
 							+ "</strong></font></p></body></html>",
 
 					new Dimension( 646, 480 ) );   //Splash screen width + 70px, height + 175px

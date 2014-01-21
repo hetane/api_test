@@ -27,7 +27,6 @@ public final class SoapUISystemProperties
 	public static final String SOAPUI_SSL_KEYSTORE_PASSWORD = "soapui.ssl.keystore.password";
 
 	public static final String VERSION = "soapui.version";
-	public static final String BUILD_DATE = "build.date";
 
 	public static final String SOAPUI_LOG4j_CONFIG_FILE = "soapui.log4j.config";
 
