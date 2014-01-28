@@ -111,7 +111,6 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -138,10 +137,10 @@ public class SoapUI
 	public final static String SOAPUI_VERSION = getVersion( SoapUISystemProperties.VERSION );
 
 	public static final String COPYRIGHT_PREFIX = "Copyright (C) ";
-	public static final String COPYRIGHT_SUFIX = " SmartBear Software";
+	public static final String COPYRIGHT_SUFFIX = " SmartBear Software";
 	private static final String COPYRIGHT_FROM_YEAR = "2004";
 	private static final String COPYRIGHT_TO_YEAR = "2014";
-	private static final String COPYRIGHT = COPYRIGHT_PREFIX + COPYRIGHT_FROM_YEAR + "-" + COPYRIGHT_TO_YEAR + COPYRIGHT_SUFIX;
+	public static final String COPYRIGHT = COPYRIGHT_PREFIX + COPYRIGHT_FROM_YEAR + "-" + COPYRIGHT_TO_YEAR + COPYRIGHT_SUFFIX;
 
 	public static final String DEFAULT_WORKSPACE_FILE = "default-soapui-workspace.xml";
 	public static final String SOAPUI_SPLASH = "soapui-splash.png";

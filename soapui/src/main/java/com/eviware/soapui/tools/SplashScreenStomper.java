@@ -1,5 +1,7 @@
 package com.eviware.soapui.tools;
 
+import com.eviware.soapui.SoapUI;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,7 +16,7 @@ public class SplashScreenStomper
 		String inputFilePath = arg[1];
 		String outputFilePath = arg[2];
 
-		String fullText = String.format( "%s\n\nCopyright SmartBear Software\n\nwww.soapui.org\nwww.smartbear.com", version );
+		String fullText = String.format( "%s\n\n" + SoapUI.COPYRIGHT + "\n\nwww.soapui.org\nwww.smartbear.com", version );
 		BufferedImage bufferedImage = ImageIO.read( new File( inputFilePath ) );
 		Graphics2D graphics = bufferedImage.createGraphics();
 		graphics.setColor( new Color( 0x66, 0x66, 0x66 ) );
