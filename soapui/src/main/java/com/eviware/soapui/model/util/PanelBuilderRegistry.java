@@ -22,7 +22,13 @@ import com.eviware.soapui.impl.rest.RestMethod;
 import com.eviware.soapui.impl.rest.RestRequest;
 import com.eviware.soapui.impl.rest.RestResource;
 import com.eviware.soapui.impl.rest.RestService;
+import com.eviware.soapui.impl.rest.mock.RestMockAction;
+import com.eviware.soapui.impl.rest.mock.RestMockResponse;
+import com.eviware.soapui.impl.rest.mock.RestMockService;
 import com.eviware.soapui.impl.rest.panels.method.RestMethodPanelBuilder;
+import com.eviware.soapui.impl.rest.panels.mock.RestMockActionPanelBuilder;
+import com.eviware.soapui.impl.rest.panels.mock.RestMockResponsePanelBuilder;
+import com.eviware.soapui.impl.rest.panels.mock.RestMockServicePanelBuilder;
 import com.eviware.soapui.impl.rest.panels.request.RestRequestPanelBuilder;
 import com.eviware.soapui.impl.rest.panels.resource.RestResourcePanelBuilder;
 import com.eviware.soapui.impl.rest.panels.service.RestServicePanelBuilder;
@@ -76,6 +82,7 @@ import com.eviware.soapui.model.ModelItem;
 import com.eviware.soapui.model.PanelBuilder;
 import com.eviware.soapui.security.SecurityTest;
 import com.eviware.soapui.security.panels.SecurityTestPanelBuilder;
+import com.eviware.soapui.support.SoapUIException;
 
 /**
  * Registry of PanelBuilders
@@ -90,7 +97,14 @@ public class PanelBuilderRegistry
 	@SuppressWarnings( "unchecked" )
 	public static <T extends ModelItem> PanelBuilder<T> getPanelBuilder( T modelItem )
 	{
-		return ( PanelBuilder<T> )builders.get( modelItem.getClass() );
+		PanelBuilder<T> panelBuilder = ( PanelBuilder<T> )builders.get( modelItem.getClass() );
+
+		if( panelBuilder == null)
+		{
+			SoapUI.logError( new SoapUIException( "No mapping panel builder found for: " + modelItem.getClass().getName() ) );
+		}
+
+		return panelBuilder;
 	}
 
 	public static <T extends ModelItem> void register( Class<T> modelItemClass, PanelBuilder<T> panelBuilder )
@@ -115,6 +129,9 @@ public class PanelBuilderRegistry
 		register( WsdlMockService.class, new WsdlMockServicePanelBuilder() );
 		register( WsdlMockOperation.class, new WsdlMockOperationPanelBuilder() );
 		register( WsdlMockResponse.class, new WsdlMockResponsePanelBuilder() );
+		register( RestMockService.class, new RestMockServicePanelBuilder() );
+		register( RestMockAction.class, new RestMockActionPanelBuilder() );
+		register( RestMockResponse.class, new RestMockResponsePanelBuilder() );
 		register( WsdlGotoTestStep.class, new GotoStepPanelBuilder() );
 		register( WsdlDelayTestStep.class, new DelayTestStepPanelBuilder() );
 		register( ManualTestStep.class, new ManualTestStepPanelBuilder() );

@@ -17,6 +17,9 @@ import com.eviware.soapui.config.*;
 import com.eviware.soapui.config.TestSuiteRunTypesConfig.Enum;
 import com.eviware.soapui.impl.WorkspaceImpl;
 import com.eviware.soapui.impl.WsdlInterfaceFactory;
+import com.eviware.soapui.impl.rest.DefaultOAuth2ProfileContainer;
+import com.eviware.soapui.impl.rest.OAuth2ProfileContainer;
+import com.eviware.soapui.impl.rest.mock.RestMockService;
 import com.eviware.soapui.impl.rest.support.RestRequestConverter.RestConversionException;
 import com.eviware.soapui.impl.settings.XmlBeansSettingsImpl;
 import com.eviware.soapui.impl.support.AbstractInterface;
@@ -46,7 +49,11 @@ import com.eviware.soapui.model.propertyexpansion.PropertyExpansionContainer;
 import com.eviware.soapui.model.propertyexpansion.PropertyExpansionContext;
 import com.eviware.soapui.model.settings.Settings;
 import com.eviware.soapui.model.support.ModelSupport;
-import com.eviware.soapui.model.testsuite.*;
+import com.eviware.soapui.model.testsuite.ProjectRunContext;
+import com.eviware.soapui.model.testsuite.ProjectRunListener;
+import com.eviware.soapui.model.testsuite.ProjectRunner;
+import com.eviware.soapui.model.testsuite.TestRunnable;
+import com.eviware.soapui.model.testsuite.TestSuite;
 import com.eviware.soapui.model.testsuite.TestSuite.TestSuiteRunType;
 import com.eviware.soapui.settings.ProjectSettings;
 import com.eviware.soapui.settings.UISettings;
@@ -67,7 +74,7 @@ import org.apache.xmlbeans.XmlError;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import javax.xml.namespace.QName;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -75,7 +82,14 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * WSDL project implementation
@@ -96,7 +110,8 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 	protected String path;
 	protected List<AbstractInterface<?>> interfaces = new ArrayList<AbstractInterface<?>>();
 	protected List<WsdlTestSuite> testSuites = new ArrayList<WsdlTestSuite>();
-	protected List<WsdlMockService> mockServices = new ArrayList<WsdlMockService>();
+    protected List<WsdlMockService> mockServices = new ArrayList<WsdlMockService>();
+    protected List<RestMockService> restMockServices = new ArrayList<RestMockService>();
 	protected Set<ProjectListener> projectListeners = new HashSet<ProjectListener>();
 	protected SoapuiProjectDocumentConfig projectDocument;
 	private ImageIcon disabledIcon;
@@ -113,6 +128,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 	private SoapUIScriptEngine beforeSaveScriptEngine;
 	private PropertyExpansionContext context = new DefaultPropertyExpansionContext( this );
 	protected DefaultWssContainer wssContainer;
+	protected OAuth2ProfileContainer oAuth2ProfileContainer;
 	private String projectPassword = null;
 	private String hermesConfig;
 	private boolean wrongPasswordSupplied;
@@ -246,6 +262,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 
 				setPropertiesConfig( getConfig().addNewProperties() );
 				wssContainer = new DefaultWssContainer( this, getConfig().addNewWssContainer() );
+				oAuth2ProfileContainer = new DefaultOAuth2ProfileContainer( this, getConfig().addNewOAuth2ProfileContainer() );
 				// setResourceRoot("${projectDir}");
 			}
 
@@ -284,7 +301,9 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 
 			UrlWsdlLoader loader = new UrlWsdlLoader( file.toString(), this );
 			loader.setUseWorker( false );
-			projectDocument = SoapuiProjectDocumentConfig.Factory.parse( loader.load() );
+			InputStream inputStream = loader.load();
+			projectDocument = SoapuiProjectDocumentConfig.Factory.parse( inputStream );
+			inputStream.close();
 
 			// see if there is encoded data
 			this.encrypted = checkForEncodedData( projectDocument.getSoapuiProject() );
@@ -337,10 +356,23 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 				mockServices.add( new WsdlMockService( this, config ) );
 			}
 
+			List<RESTMockServiceConfig> restMockServiceConfigs = getConfig().getRestMockServiceList();
+			for( RESTMockServiceConfig config : restMockServiceConfigs )
+			{
+				restMockServices.add( new RestMockService( this, config ) );
+			}
+
 			if( !getConfig().isSetWssContainer() )
 				getConfig().addNewWssContainer();
 
 			wssContainer = new DefaultWssContainer( this, getConfig().getWssContainer() );
+
+			if( !getConfig().isSetOAuth2ProfileContainer() )
+			{
+				getConfig().addNewOAuth2ProfileContainer();
+			}
+			oAuth2ProfileContainer = new DefaultOAuth2ProfileContainer( this, getConfig().getOAuth2ProfileContainer() );
+
 
 			endpointStrategy.init( this );
 
@@ -820,13 +852,6 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 				FileOutputStream projectOut = new FileOutputStream( projectFile );
 				projectDocument.save( projectOut, options );
 				projectOut.close();
-				// delete tempFile here so we have it as backup in case second save
-				// fails
-				if( !tempFile.delete() )
-				{
-					SoapUI.getErrorLog().warn( "Failed to delete temporary project file; " + tempFile.getAbsolutePath() );
-					tempFile.deleteOnExit();
-				}
 			}
 
 			// delete tempFile here so we have it as backup in case second save fails
@@ -948,6 +973,11 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		}
 
 		for( WsdlMockService mockService : mockServices )
+		{
+			mockService.beforeSave();
+		}
+
+		for( RestMockService mockService : restMockServices )
 		{
 			mockService.beforeSave();
 		}
@@ -1074,7 +1104,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		}
 	}
 
-	public void fireMockServiceAdded( WsdlMockService mockService )
+	public void fireMockServiceAdded( MockService mockService )
 	{
 		ProjectListener[] listeners = projectListeners.toArray( new ProjectListener[projectListeners.size()] );
 
@@ -1084,7 +1114,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		}
 	}
 
-	public void fireMockServiceRemoved( WsdlMockService mockService )
+	public void fireMockServiceRemoved( MockService mockService )
 	{
 		ProjectListener[] listeners = projectListeners.toArray( new ProjectListener[projectListeners.size()] );
 
@@ -1222,7 +1252,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 
 		String oldPath = path;
 		path = fileName;
-		SaveStatus result = save();
+		SaveStatus result = save(); // if remote is true this won't save the file
 		if( result == SaveStatus.SUCCESS )
 		{
 			remote = false;
@@ -1256,6 +1286,11 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 				mockService.release();
 			}
 
+			for( RestMockService mockService : restMockServices )
+			{
+				mockService.release();
+			}
+
 			for( AbstractInterface<?> iface : interfaces )
 			{
 				iface.release();
@@ -1266,6 +1301,13 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 				wssContainer.release();
 				wssContainer = null;
 			}
+
+			if( oAuth2ProfileContainer != null )
+			{
+				oAuth2ProfileContainer.release();
+				oAuth2ProfileContainer = null;
+			}
+
 		}
 
 		projectListeners.clear();
@@ -1289,6 +1331,16 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		return mockService;
 	}
 
+	public RestMockService addNewRestMockService( String name )
+	{
+		RestMockService mockService = new RestMockService( this, getConfig().addNewRestMockService() );
+		mockService.setName( name );
+		restMockServices.add( mockService );
+		fireMockServiceAdded( mockService );
+
+		return mockService;
+	}
+
 	public WsdlMockService getMockServiceAt( int index )
 	{
 		return mockServices.get( index );
@@ -1304,10 +1356,31 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		return mockServices.size();
 	}
 
-	public void removeMockService( WsdlMockService mockService )
+	public RestMockService getRestMockServiceAt( int index )
+	{
+		return restMockServices.get( index );
+	}
+
+	public RestMockService getRestMockServiceByName( String mockServiceName )
+   {
+		return ( RestMockService )getWsdlModelItemByName( restMockServices, mockServiceName );
+   }
+
+	public int getRestMockServiceCount()
+	{
+		return restMockServices.size();
+	}
+
+	public void removeMockService( MockService mockService )
 	{
 		int ix = mockServices.indexOf( mockService );
-		mockServices.remove( ix );
+		boolean isRestMockService = ix == -1;
+
+		if( isRestMockService )
+		{
+			ix = restMockServices.indexOf( mockService );
+		}
+		removeMockServiceFromList( ix, isRestMockService );
 
 		try
 		{
@@ -1316,6 +1389,30 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		finally
 		{
 			mockService.release();
+			removeMockServiceFromConfig( ix, isRestMockService );
+		}
+	}
+
+	private void removeMockServiceFromList( int ix, boolean isRestMockService )
+	{
+		if( isRestMockService )
+		{
+			restMockServices.remove( ix );
+		}
+		else
+		{
+			mockServices.remove( ix );
+		}
+	}
+
+	private void removeMockServiceFromConfig( int ix, boolean isRestMockService )
+	{
+		if( isRestMockService )
+		{
+			getConfig().removeRestMockService( ix );
+		}
+		else
+		{
 			getConfig().removeMockService( ix );
 		}
 	}
@@ -1325,12 +1422,17 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		return new ArrayList<TestSuite>( testSuites );
 	}
 
-	public List<MockService> getMockServiceList()
+	public List<WsdlMockService> getMockServiceList()
 	{
-		return new ArrayList<MockService>( mockServices );
+		return new ArrayList<WsdlMockService>( mockServices );
 	}
 
-	public List<Interface> getInterfaceList()
+    public List<RestMockService> getRestMockServiceList()
+    {
+        return restMockServices;
+    }
+
+    public List<Interface> getInterfaceList()
 	{
 		return new ArrayList<Interface>( interfaces );
 	}
@@ -1488,6 +1590,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		list.addAll( getInterfaceList() );
 		list.addAll( getTestSuiteList() );
 		list.addAll( getMockServiceList() );
+		list.addAll( getRestMockServiceList() );
 		return list;
 	}
 
@@ -1575,6 +1678,11 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		return wssContainer;
 	}
 
+	public OAuth2ProfileContainer getOAuth2ProfileContainer()
+	{
+		return oAuth2ProfileContainer;
+	}
+
 	@Override
 	public void resolve( ResolveContext<?> context )
 	{
@@ -1588,6 +1696,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 		List<PropertyExpansion> result = new ArrayList<PropertyExpansion>();
 
 		result.addAll( Arrays.asList( wssContainer.getPropertyExpansions() ) );
+		result.addAll( Arrays.asList( oAuth2ProfileContainer.getPropertyExpansions() ) );
 
 		return result.toArray( new PropertyExpansion[result.size()] );
 
@@ -2089,4 +2198,5 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 	{
 		environmentListeners.remove( listener );
 	}
+
 }
