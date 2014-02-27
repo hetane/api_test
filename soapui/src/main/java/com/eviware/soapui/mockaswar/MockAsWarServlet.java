@@ -91,6 +91,17 @@ public class MockAsWarServlet extends HttpServlet
 
 				mockService.start();
 			}
+
+			for( MockService mockService : project.getRestMockServiceList() )
+			{
+				logger.info( "Starting mockService [" + mockService.getName() + "]" );
+				if( StringUtils.hasContent( mockServiceEndpoint ) )
+				{
+					//( ( WsdlMockService )mockService ).setMockServiceEndpoint( mockServiceEndpoint );
+				}
+
+				mockService.start();
+			}
 		}
 		catch( Exception ex )
 		{

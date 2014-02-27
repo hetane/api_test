@@ -28,14 +28,16 @@ import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.mock.DispatchException;
 import com.eviware.soapui.impl.wsdl.mock.WsdlMockRunner;
 import com.eviware.soapui.impl.wsdl.mock.WsdlMockService;
+import com.eviware.soapui.model.mock.MockRunner;
+import com.eviware.soapui.model.mock.MockService;
 
 /**
  * @author ole
  */
 public class SoapUIMockServlet extends HttpServlet
 {
-	private WsdlMockRunner mockRunner;
-	private WsdlMockService mockService;
+	private MockRunner mockRunner;
+	private MockService mockService;
 	private WsdlProject project;
 	private static Logger logger = Logger.getLogger( SoapUIMockServlet.class.getName() );
 
@@ -53,7 +55,26 @@ public class SoapUIMockServlet extends HttpServlet
 			project = new WsdlProject( getInitParameter( "projectFile" ), getInitParameter( "projectPassword" ) );
 
 			logger.info( "Starting MockService" );
-			mockService = project.getMockServiceByName( getInitParameter( "mockService" ) );
+
+			logger.log( Level.SEVERE, "Starting mock service" );
+
+			logger.log( Level.SEVERE, " Mock service count"+ project.getMockServiceCount() );
+
+			logger.log( Level.SEVERE, " REST Mock service count"+ project.getRestMockServiceCount() );
+
+			if(project.getMockServiceCount() > 0)
+			{
+				mockService = project.getMockServiceByName( getInitParameter( "mockService" ) );
+
+				logger.log( Level.SEVERE, " Actual soap Mock service "+mockService.getName().toString() );
+			}
+			else if(project.getRestMockServiceCount() > 0)
+			{
+				mockService = project.getRestMockServiceByName( getInitParameter( "restMockService" ) );
+
+				logger.log( Level.SEVERE, " Actual rest Mock service " + mockService.getName().toString() );
+			}
+
 			mockRunner = mockService.start();
 		}
 		catch( Exception ex )
