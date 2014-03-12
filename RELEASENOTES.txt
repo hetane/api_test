@@ -1,5 +1,5 @@
 # SoapUI 5.0.0-beta
-#### Released 2014-??-?? ####
+#### Released 2014-03-12 ####
 
 ### Major new features ###
 * REST Mocking - Easily create REST MockServices without the need for scripting and test unavailable/prototype APIs.
