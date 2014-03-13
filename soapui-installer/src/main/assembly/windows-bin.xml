@@ -74,6 +74,7 @@
             </includes>
             <fileMode>0755</fileMode>
             <filtered>true</filtered>
+            <lineEnding>crlf</lineEnding>
         </fileSet>
         <fileSet>
             <directory>${basedir}/src/dist/bin</directory>

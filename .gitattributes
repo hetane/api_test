@@ -1,5 +1,0 @@
-# Always use LF for .sh files
-*.sh eol=lf
-
-# Always use CRLF for .bat files
-*.bat eol=crlf

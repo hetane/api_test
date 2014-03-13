@@ -78,6 +78,7 @@ bundled or none -->
             </includes>
             <fileMode>0755</fileMode>
             <filtered>true</filtered>
+            <lineEnding>lf</lineEnding>
         </fileSet>
         <fileSet>
             <directory>${basedir}/src/dist/bin</directory>

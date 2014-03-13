@@ -73,15 +73,17 @@
             </includes>
             <fileMode>0755</fileMode>
             <filtered>true</filtered>
+            <lineEnding>crlf</lineEnding>
         </fileSet>
         <fileSet>
-            <directory>${basedir}/src/dist/bin</directory>
-            <outputDirectory>bin</outputDirectory>
+            <directory>${basedir}/src/install4j</directory>
+            <outputDirectory>install4j</outputDirectory>
             <includes>
                 <include>*.sh</include>
             </includes>
             <fileMode>0755</fileMode>
             <filtered>true</filtered>
+            <lineEnding>lf</lineEnding>
         </fileSet>
         <fileSet>
             <directory>${basedir}/src/dist/bin</directory>
