@@ -12,11 +12,17 @@
 
 package com.eviware.soapui.impl.wsdl.actions.mockservice;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.SwingUtilities;
 
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.impl.support.AbstractMockService;
 import com.eviware.soapui.impl.wsdl.mock.WsdlMockService;
+import com.eviware.soapui.model.mock.MockResult;
+import com.eviware.soapui.model.mock.MockRunListener;
+import com.eviware.soapui.model.mock.MockRunner;
+import com.eviware.soapui.model.support.MockRunListenerAdapter;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 import com.eviware.soapui.ui.desktop.DesktopPanel;
@@ -37,22 +43,34 @@ public class StartMinimizedMockServiceAction<MockServiceType extends AbstractMoc
 		super( "Start Minimized", "Starts this MockService and minimizes its desktop window" );
 	}
 
-	public void perform( MockServiceType mockService, Object param )
+	public void perform( final MockServiceType mockService, Object param )
 	{
 		try
 		{
 			UISupport.setHourglassCursor();
-			final DesktopPanel desktopPanel = UISupport.showDesktopPanel( mockService );
 			if( mockService.getMockRunner() == null )
-				mockService.start();
-
-			SwingUtilities.invokeLater( new Runnable()
 			{
-				public void run()
+				mockService.addMockRunListener( new MockRunListenerAdapter()
 				{
-					SoapUI.getDesktop().minimize( desktopPanel );
-				}
-			} );
+					@Override
+					public void onMockRunnerStart( MockRunner mockRunner )
+					{
+						final MockRunListener listener = this;
+						SwingUtilities.invokeLater( new Runnable()
+						{
+							public void run()
+							{
+								DesktopPanel desktopPanel = UISupport.showDesktopPanel( mockService );
+								SoapUI.getDesktop().minimize( desktopPanel );
+								mockService.removeMockRunListener( listener );
+							}
+						} );
+					}
+
+				} );
+				mockService.start();
+			}
+
 		}
 		catch( Exception e )
 		{

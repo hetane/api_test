@@ -62,8 +62,6 @@ public class WsdlMockRunner implements MockRunner
 
 		mockContext = new WsdlMockRunContext( mockService, context );
 		dispatcher = mockService.createDispatcher(mockContext);
-
-		start();
 	}
 
 	public WsdlMockRunContext getMockContext()
@@ -219,23 +217,28 @@ public class WsdlMockRunner implements MockRunner
 	}
 
 
-	public void start() throws Exception
+	public boolean start() throws Exception
 	{
 		if( running )
-			return;
+		{
+			return true;
+		}
 
 		mockContext.reset();
 		getMockService().runStartScript( mockContext, this );
 
-		SoapUI.getMockEngine().startMockService( this );
-		running = true;
-
-		MockRunListener[] mockRunListeners = getMockService().getMockRunListeners();
-
-		for( MockRunListener listener : mockRunListeners )
+		if( SoapUI.getMockEngine().startMockService( this ) )
 		{
-			listener.onMockRunnerStart( this );
+			running = true;
+
+			MockRunListener[] mockRunListeners = getMockService().getMockRunListeners();
+
+			for( MockRunListener listener : mockRunListeners )
+			{
+				listener.onMockRunnerStart( this );
+			}
 		}
+		return running;
 	}
 
 	public void setLogEnabled( boolean logEnabled )

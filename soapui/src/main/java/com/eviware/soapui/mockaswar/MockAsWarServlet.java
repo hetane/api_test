@@ -358,9 +358,10 @@ public class MockAsWarServlet extends HttpServlet
 			return false;
 		}
 
-		public void startMockService( MockRunner runner ) throws Exception
+		public boolean startMockService( MockRunner runner ) throws Exception
 		{
 			mockRunners.add( runner );
+			return true;
 		}
 
 		public void stopMockService( MockRunner runner )

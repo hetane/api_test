@@ -26,7 +26,7 @@ public interface MockRunner extends MockDispatcher, Releasable
 	/**
 	 * Start this runner. If already started - do nothing.
 	 */
-	public void start() throws Exception;
+	public boolean start() throws Exception;
 
 	/**
 	 * Stop this runner. If not running - do nothing.

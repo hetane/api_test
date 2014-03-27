@@ -237,7 +237,6 @@ public abstract class AbstractMockService<MockOperationType extends MockOperatio
 		getConfig().setBindToHostOnly( bindToHostOnly );
 	}
 
-	// TODO: think about naming - this does not start nothing.....
 	public WsdlMockRunner start( WsdlTestRunContext context ) throws Exception
 	{
 		String path = getPath();
@@ -245,6 +244,10 @@ public abstract class AbstractMockService<MockOperationType extends MockOperatio
 			throw new Exception( "Invalid path; must start with '/'" );
 
 		mockRunner = new WsdlMockRunner( this, context );
+		if( !mockRunner.start() )
+		{
+			mockRunner = null;
+		}
 		return mockRunner;
 	}
 

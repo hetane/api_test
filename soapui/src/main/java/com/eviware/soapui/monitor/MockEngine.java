@@ -19,7 +19,7 @@ public interface MockEngine
 {
 	public boolean hasRunningMock( MockService mockService );
 
-	public void startMockService( MockRunner runner ) throws Exception;
+	public boolean startMockService( MockRunner runner ) throws Exception;
 
 	public void stopMockService( MockRunner runner );
 

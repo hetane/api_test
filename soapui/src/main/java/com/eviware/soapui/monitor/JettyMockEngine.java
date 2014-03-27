@@ -97,7 +97,7 @@ public class JettyMockEngine implements MockEngine
 		return false;
 	}
 
-	public synchronized void startMockService( MockRunner runner ) throws Exception
+	public synchronized boolean startMockService( MockRunner runner ) throws Exception
 	{
 		if( server == null )
 			initServer();
@@ -106,7 +106,17 @@ public class JettyMockEngine implements MockEngine
 		{
 			MockService mockService = runner.getMockContext().getMockService();
 			int port = mockService.getPort();
-
+			if (runners.containsKey( port ))
+			{
+				String message = "Could not start mock service [" + mockService.getName() + "] on port " + port +
+						" because another mock service is already running on that port";
+				log.error( message );
+				if (SoapUI.usingGraphicalEnvironment())
+				{
+					UISupport.showErrorMessage( message );
+				}
+				return false;
+			}
 			if( SoapUI.getSettings().getBoolean( SSLSettings.ENABLE_MOCK_SSL ) && !addedSslConnector )
 			{
 				updateSslConnectorSettings();
@@ -161,7 +171,7 @@ public class JettyMockEngine implements MockEngine
 					if( wasRunning )
 					{
 						server.start();
-						return;
+						return false;
 					}
 				}
 
@@ -179,6 +189,7 @@ public class JettyMockEngine implements MockEngine
 			mockRunners.add( runner );
 
 			log.info( "Started mockService [" + mockService.getName() + "] on port [" + port + "] at path [" + path + "]" );
+			return true;
 		}
 	}
 
@@ -230,7 +241,7 @@ public class JettyMockEngine implements MockEngine
 			}
 
 			mockRunners.remove( runner );
-
+			runners.remove(port);
 			log.info( "Stopped MockService [" + mockService.getName() + "] on port [" + port + "]" );
 
 			if( map.isEmpty() && !SoapUI.getSettings().getBoolean( HttpSettings.LEAVE_MOCKENGINE ) )
@@ -263,12 +274,6 @@ public class JettyMockEngine implements MockEngine
 					{
 						log.info( "No more connectors.. stopping server" );
 						server.stop();
-						if( sslConnector != null )
-						{
-							// server.removeConnector( sslConnector );
-							// sslConnector.stop();
-							// sslConnector = null;
-						}
 					}
 					catch( Exception e )
 					{
@@ -455,9 +460,9 @@ public class JettyMockEngine implements MockEngine
 			getBuffer().close();
 		}
 
-		public void mark( int readlimit )
+		public void mark( int readLimit )
 		{
-			// buffer.mark( readlimit );
+
 		}
 
 		public boolean markSupported()
