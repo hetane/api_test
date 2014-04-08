@@ -34,6 +34,8 @@ public abstract class AbstractMockOperation
         <BaseMockOperationConfigType extends BaseMockOperationConfig, MockResponseType extends MockResponse>
         extends AbstractWsdlModelItem<BaseMockOperationConfigType>
         implements MockOperation, PropertyChangeListener {
+
+	 public final static String DEFAULT_RESPONSE_PROPERTY = MockOperation.class.getName() + "@defaultresponse";
     public final static String DISPATCH_PATH_PROPERTY = MockOperation.class.getName() + "@dispatchpath";
     public final static String DISPATCH_STYLE_PROPERTY = MockOperation.class.getName() + "@dispatchstyle";
 
@@ -121,7 +123,7 @@ public abstract class AbstractMockOperation
     public void setDefaultResponse(String defaultResponse) {
         String old = getDefaultResponse();
         getConfig().setDefaultResponse(defaultResponse);
-        // noone is listening? notifyPropertyChanged( WsdlMockOperation.DEFAULT_RESPONSE_PROPERTY, old, defaultResponse );
+        notifyPropertyChanged( DEFAULT_RESPONSE_PROPERTY, old, defaultResponse );
     }
 
     @Override

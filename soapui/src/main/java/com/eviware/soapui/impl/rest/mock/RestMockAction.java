@@ -103,8 +103,8 @@ public class RestMockAction extends AbstractMockOperation<RESTMockActionConfig, 
         addMockResponse(mockResponse);
 
 
-        if (getMockResponseCount() == 1 && restMockResponseConfig.getResponseContent() != null) {
-            setDefaultResponse(restMockResponseConfig.getResponseContent().toString());
+        if (getMockResponseCount() == 1) {
+            setDefaultResponse(name);
         }
 
         (getMockService()).fireMockResponseAdded(mockResponse);
