@@ -23,18 +23,7 @@ import com.eviware.soapui.support.StringUtils;
 import com.eviware.soapui.support.UISupport;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.text.Document;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -50,7 +39,7 @@ import java.util.List;
  */
 class RestResourceEditorPopupWindow extends JDialog {
 
-    private static final ImageIcon CONNECTOR_ICON = UISupport.createImageIcon("/connector.png");
+    private static final Icon CONNECTOR_ICON = UISupport.createImageIcon("/connector.png");
 
     // package protected fields to facilitate unit testing
     JTextField basePathTextField;

@@ -72,10 +72,10 @@ public class AMFRequest extends AbstractModelItem implements Assertable, TestReq
 
     // icon related
     private RequestIconAnimator<?> iconAnimator;
-    private ImageIcon validRequestIcon;
-    private ImageIcon failedRequestIcon;
-    private ImageIcon disabledRequestIcon;
-    private ImageIcon unknownRequestIcon;
+    private Icon validRequestIcon;
+    private Icon failedRequestIcon;
+    private Icon disabledRequestIcon;
+    private Icon unknownRequestIcon;
 
     public AMFRequest(AMFRequestTestStep testStep, boolean forLoadTest) {
         this.testStep = testStep;
@@ -275,7 +275,7 @@ public class AMFRequest extends AbstractModelItem implements Assertable, TestReq
         addSubmitListener(this.iconAnimator);
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (forLoadTest || getIconAnimator() == null) {
             return null;
         }
@@ -287,7 +287,7 @@ public class AMFRequest extends AbstractModelItem implements Assertable, TestReq
             return disabledRequestIcon;
         }
 
-        ImageIcon icon = getIconAnimator().getIcon();
+        Icon icon = getIconAnimator().getIcon();
         if (icon == getIconAnimator().getBaseIcon()) {
             AssertionStatus status = getAssertionStatus();
             if (status == AssertionStatus.VALID) {
@@ -303,7 +303,7 @@ public class AMFRequest extends AbstractModelItem implements Assertable, TestReq
     }
 
     @Override
-    public void setIcon(ImageIcon icon) {
+    public void setIcon(Icon icon) {
         getTestStep().setIcon(icon);
     }
 

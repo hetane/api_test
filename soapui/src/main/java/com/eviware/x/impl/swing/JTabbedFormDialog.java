@@ -22,13 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.action.swing.ActionList;
@@ -46,7 +40,7 @@ public class JTabbedFormDialog extends SwingXFormDialog {
     private JTabbedPane tabs;
     private JButtonBar buttons;
 
-    public JTabbedFormDialog(String name, XForm[] forms, ActionList actions, String description, ImageIcon icon) {
+    public JTabbedFormDialog(String name, XForm[] forms, ActionList actions, String description, Icon icon) {
         dialog = new JDialog(UISupport.getMainFrame(), name, true);
         tabs = new JTabbedPane();
         for (XForm form : forms) {

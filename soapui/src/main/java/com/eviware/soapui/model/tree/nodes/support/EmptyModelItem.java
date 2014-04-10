@@ -19,7 +19,7 @@ package com.eviware.soapui.model.tree.nodes.support;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.model.ModelItem;
@@ -34,9 +34,9 @@ import com.eviware.soapui.model.support.AbstractModelItem;
 
 public class EmptyModelItem extends AbstractModelItem {
     private String name;
-    private ImageIcon icon;
+    private Icon icon;
 
-    public EmptyModelItem(String name, ImageIcon icon) {
+    public EmptyModelItem(String name, Icon icon) {
         this.name = name;
         this.icon = icon;
     }
@@ -52,7 +52,7 @@ public class EmptyModelItem extends AbstractModelItem {
         return name;
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return icon;
     }
 

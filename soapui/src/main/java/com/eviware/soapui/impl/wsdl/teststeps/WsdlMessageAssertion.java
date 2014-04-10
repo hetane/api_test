@@ -18,7 +18,7 @@ package com.eviware.soapui.impl.wsdl.teststeps;
 
 import java.util.List;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import org.apache.xmlbeans.XmlObject;
 
@@ -57,9 +57,9 @@ public abstract class WsdlMessageAssertion extends AbstractModelItem implements 
     private Assertable assertable;
     protected AssertionStatus assertionStatus = AssertionStatus.UNKNOWN;
     protected com.eviware.soapui.model.testsuite.AssertionError[] assertionErrors;
-    private ImageIcon validIcon;
-    private ImageIcon failedIcon;
-    private ImageIcon unknownIcon;
+    private Icon validIcon;
+    private Icon failedIcon;
+    private Icon unknownIcon;
 
     private final boolean cloneable;
     private final boolean configurable;
@@ -135,7 +135,7 @@ public abstract class WsdlMessageAssertion extends AbstractModelItem implements 
     public AssertionStatus assertResponse(MessageExchange messageExchange, SubmitContext context) {
         AssertionStatus oldStatus = assertionStatus;
         AssertionError[] oldErrors = getErrors();
-        ImageIcon oldIcon = getIcon();
+        Icon oldIcon = getIcon();
 
         if (isDisabled()) {
             assertionStatus = AssertionStatus.UNKNOWN;
@@ -171,7 +171,7 @@ public abstract class WsdlMessageAssertion extends AbstractModelItem implements 
 
     public AssertionStatus assertRequest(MessageExchange messageExchange, SubmitContext context) {
         AssertionStatus oldStatus = assertionStatus;
-        ImageIcon oldIcon = getIcon();
+        Icon oldIcon = getIcon();
 
         if (!messageExchange.hasRequest(true)) {
             assertionStatus = AssertionStatus.FAILED;
@@ -202,7 +202,7 @@ public abstract class WsdlMessageAssertion extends AbstractModelItem implements 
     public AssertionStatus assertProperty(TestPropertyHolder source, String propertyName,
                                           MessageExchange messageExchange, SubmitContext context) {
         AssertionStatus oldStatus = assertionStatus;
-        ImageIcon oldIcon = getIcon();
+        Icon oldIcon = getIcon();
 
         if (!propertyName.equals("Group") && !source.hasProperty(propertyName)) {
             assertionStatus = AssertionStatus.FAILED;
@@ -277,7 +277,7 @@ public abstract class WsdlMessageAssertion extends AbstractModelItem implements 
      *
      * @see com.eviware.soapui.impl.wsdl.teststeps.TestAssertion#getIcon()
      */
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         switch (getStatus()) {
             case FAILED:
                 return failedIcon;

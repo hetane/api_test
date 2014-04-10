@@ -23,10 +23,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JSplitPane;
+import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
@@ -40,10 +37,10 @@ import com.eviware.soapui.support.UISupport;
 
 public class SoapUISplitPaneUI extends BasicSplitPaneUI {
     private boolean hasBeenDragged;
-    private final static ImageIcon upArrow = UISupport.createImageIcon("/up_arrow.gif");
-    private final static ImageIcon leftArrow = UISupport.createImageIcon("/left_arrow.gif");
-    private final static ImageIcon rightArrow = UISupport.createImageIcon("/right_arrow.gif");
-    private final static ImageIcon downArrow = UISupport.createImageIcon("/down_arrow.gif");
+    private final static Icon upArrow = UISupport.createImageIcon("/up_arrow.gif");
+    private final static Icon leftArrow = UISupport.createImageIcon("/left_arrow.gif");
+    private final static Icon rightArrow = UISupport.createImageIcon("/right_arrow.gif");
+    private final static Icon downArrow = UISupport.createImageIcon("/down_arrow.gif");
 
     public SoapUISplitPaneUI() {
         super();

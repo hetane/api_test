@@ -21,9 +21,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlObject;
@@ -49,7 +47,7 @@ public abstract class AbstractLoadTestAssertion implements LoadTestAssertion {
     private LoadTestAssertionConfig assertionConfig;
     @SuppressWarnings("unused")
     private final static Logger log = Logger.getLogger(AbstractLoadTestAssertion.class);
-    private ImageIcon icon;
+    private Icon icon;
     private final WsdlLoadTest loadTest;
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private String testStepName;
@@ -128,7 +126,7 @@ public abstract class AbstractLoadTestAssertion implements LoadTestAssertion {
         }
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return icon;
     }
 

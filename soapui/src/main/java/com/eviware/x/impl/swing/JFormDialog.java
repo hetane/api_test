@@ -41,7 +41,7 @@ public class JFormDialog extends SwingXFormDialog {
     private ActionList actions;
     private JPanel panel;
 
-    public JFormDialog(String name, SwingXFormImpl form, ActionList actions, String description, ImageIcon icon) {
+    public JFormDialog(String name, SwingXFormImpl form, ActionList actions, String description, Icon icon) {
         dialog = new JDialog(UISupport.getMainFrame(), name, true);
         dialog.setName(name);
         this.actions = actions;

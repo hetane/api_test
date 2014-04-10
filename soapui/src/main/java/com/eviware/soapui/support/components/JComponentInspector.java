@@ -19,8 +19,7 @@ package com.eviware.soapui.support.components;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.*;
 
 public class JComponentInspector<T extends JComponent> implements Inspector {
     private final T component;
@@ -28,7 +27,7 @@ public class JComponentInspector<T extends JComponent> implements Inspector {
     private String description;
     private boolean enabled;
     private PropertyChangeSupport propertyChangeSupport;
-    private ImageIcon imageIcon;
+    private Icon imageIcon;
     private String id;
 
     public JComponentInspector(T component, String title, String description, boolean enabled) {
@@ -108,12 +107,12 @@ public class JComponentInspector<T extends JComponent> implements Inspector {
         }
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return imageIcon;
     }
 
-    public void setIcon(ImageIcon imageIcon) {
-        ImageIcon old = this.imageIcon;
+    public void setIcon(Icon imageIcon) {
+        Icon old = this.imageIcon;
 
         this.imageIcon = imageIcon;
         if (propertyChangeSupport != null) {

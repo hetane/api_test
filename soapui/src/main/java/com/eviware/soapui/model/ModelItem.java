@@ -20,7 +20,7 @@ import com.eviware.soapui.model.project.Project;
 import com.eviware.soapui.model.settings.Settings;
 import com.eviware.soapui.support.PropertyChangeNotifier;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -39,7 +39,7 @@ public interface ModelItem extends PropertyChangeNotifier {
 
     public String getId();
 
-    public ImageIcon getIcon();
+    public Icon getIcon();
 
     public String getDescription();
 

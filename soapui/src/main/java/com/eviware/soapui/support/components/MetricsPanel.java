@@ -21,14 +21,7 @@ import com.eviware.soapui.support.swing.JTableFactory;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.VerticalLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.Color;
@@ -86,11 +79,11 @@ public class MetricsPanel extends JPanel {
             setContentPanel(form.getPanel());
         }
 
-        public Metric addMetric(ImageIcon icon, String label, MetricType type) {
+        public Metric addMetric(Icon icon, String label, MetricType type) {
             return form.addMetric(label, icon, type == MetricType.URL);
         }
 
-        public Metric addMetric(ImageIcon icon, String label) {
+        public Metric addMetric(Icon icon, String label) {
             return addMetric(icon, label, MetricType.STRING);
         }
 
@@ -190,7 +183,7 @@ public class MetricsPanel extends JPanel {
             return formPanel;
         }
 
-        public Metric addMetric(String labelText, ImageIcon icon, boolean isHyperlink) {
+        public Metric addMetric(String labelText, Icon icon, boolean isHyperlink) {
             return addMetric(labelText, "", icon, isHyperlink);
         }
 
@@ -198,7 +191,7 @@ public class MetricsPanel extends JPanel {
             return addMetric(labelText, "", icon, false);
         }
 
-        public Metric addMetric(String labelText, String text, ImageIcon icon, boolean isHyperlink) {
+        public Metric addMetric(String labelText, String text, Icon icon, boolean isHyperlink) {
             JLabel label = new JLabel(labelText, icon, SwingConstants.LEFT);
             UISupport.setFixedSize(label, labelDimensions);
             label.setIconTextGap(5);

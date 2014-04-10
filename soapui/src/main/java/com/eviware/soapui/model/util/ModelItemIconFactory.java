@@ -69,7 +69,7 @@ public class ModelItemIconFactory {
         modelItemIcons.put(Interface.class, "/interface.gif");
     }
 
-    public static ImageIcon getIcon(Class<? extends ModelItem> clazz) {
+    public static Icon getIcon(Class<?> clazz) {
         if (modelItemIcons.containsKey(clazz)) {
             return UISupport.createImageIcon(modelItemIcons.get(clazz));
         }
@@ -106,7 +106,7 @@ public class ModelItemIconFactory {
         return getIconPath(modelItem.getClass());
     }
 
-    public static <T extends ModelItem> ImageIcon getIcon(T modelItem) {
+    public static <T extends ModelItem> Icon getIcon(T modelItem) {
         return getIcon(modelItem.getClass());
     }
 }

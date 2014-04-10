@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.model.testsuite.TestStepResult;
 import com.eviware.soapui.support.action.swing.ActionList;
@@ -35,13 +35,13 @@ public class LoadTestLogErrorEntry implements LoadTestLogEntry {
     private final String error;
     private TestStepResult result;
     private String type;
-    private ImageIcon icon;
+    private Icon icon;
     private long timestamp;
     private boolean discarded;
     private String targetStepName;
     private final int threadIndex;
 
-    public LoadTestLogErrorEntry(String type, String error, TestStepResult result, ImageIcon icon, int threadIndex) {
+    public LoadTestLogErrorEntry(String type, String error, TestStepResult result, Icon icon, int threadIndex) {
         this.icon = icon;
         this.type = type;
         this.error = error;
@@ -52,7 +52,7 @@ public class LoadTestLogErrorEntry implements LoadTestLogEntry {
         timestamp = result == null ? System.currentTimeMillis() : result.getTimeStamp();
     }
 
-    public LoadTestLogErrorEntry(String type, String message, ImageIcon icon, int threadIndex) {
+    public LoadTestLogErrorEntry(String type, String message, Icon icon, int threadIndex) {
         this.type = type;
         this.error = message;
         this.icon = icon;
@@ -83,7 +83,7 @@ public class LoadTestLogErrorEntry implements LoadTestLogEntry {
         return targetStepName;
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return icon;
     }
 

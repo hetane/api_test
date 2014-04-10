@@ -22,23 +22,13 @@ import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.*;
 
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.impl.support.actions.ShowOnlineHelpAction;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.action.swing.ActionList;
 import com.eviware.soapui.support.action.swing.DefaultActionList;
-import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * Utility for creating simple configuration dialogs
@@ -57,9 +47,9 @@ public class SwingConfigurationDialogImpl implements ConfigurationDialog {
     private JComponent content;
     private ActionList actions;
     private String description;
-    private ImageIcon icon;
+    private Icon icon;
 
-    public SwingConfigurationDialogImpl(String title, String helpUrl, String description, ImageIcon icon) {
+    public SwingConfigurationDialogImpl(String title, String helpUrl, String description, Icon icon) {
         this.title = title;
         this.description = description;
         this.icon = icon;

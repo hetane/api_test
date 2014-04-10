@@ -51,8 +51,8 @@ public class WsdlGroovyScriptTestStep extends WsdlTestStepWithProperties impleme
     private final static Logger logger = Logger.getLogger("groovy.log");
     private String scriptText = "";
     private Object scriptResult;
-    private ImageIcon failedIcon;
-    private ImageIcon okIcon;
+    private Icon failedIcon;
+    private Icon okIcon;
     private SoapUIScriptEngine scriptEngine;
 
     public WsdlGroovyScriptTestStep(WsdlTestCase testCase, TestStepConfig config, boolean forLoadTest) {

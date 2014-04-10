@@ -90,10 +90,10 @@ public class WsdlMockResponseTestStep extends WsdlTestStepWithProperties impleme
     private AssertionStatus oldStatus;
 
     private IconAnimator<WsdlMockResponseTestStep> iconAnimator;
-    private ImageIcon validRequestIcon;
-    private ImageIcon failedRequestIcon;
-    private ImageIcon disabledRequestIcon;
-    private ImageIcon unknownRequestIcon;
+    private Icon validRequestIcon;
+    private Icon failedRequestIcon;
+    private Icon disabledRequestIcon;
+    private Icon unknownRequestIcon;
 
     private WsdlMockResponse testMockResponse;
     private WsdlTestStep startTestStep;
@@ -160,7 +160,7 @@ public class WsdlMockResponseTestStep extends WsdlTestStepWithProperties impleme
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (forLoadTest || iconAnimator == null) {
             return null;
         }
@@ -171,7 +171,7 @@ public class WsdlMockResponseTestStep extends WsdlTestStepWithProperties impleme
             return disabledRequestIcon;
         }
 
-        ImageIcon icon = iconAnimator.getIcon();
+        Icon icon = iconAnimator.getIcon();
         if (icon == iconAnimator.getBaseIcon()) {
             AssertionStatus status = getAssertionStatus();
             if (status == AssertionStatus.VALID) {
@@ -882,7 +882,7 @@ public class WsdlMockResponseTestStep extends WsdlTestStepWithProperties impleme
 
     private class PropertyChangeNotifier {
         private AssertionStatus oldStatus;
-        private ImageIcon oldIcon;
+        private Icon oldIcon;
 
         public PropertyChangeNotifier() {
             oldStatus = getAssertionStatus();
@@ -891,7 +891,7 @@ public class WsdlMockResponseTestStep extends WsdlTestStepWithProperties impleme
 
         public void notifyChange() {
             AssertionStatus newStatus = getAssertionStatus();
-            ImageIcon newIcon = getIcon();
+            Icon newIcon = getIcon();
 
             if (oldStatus != newStatus) {
                 notifyPropertyChanged(STATUS_PROPERTY, oldStatus, newStatus);

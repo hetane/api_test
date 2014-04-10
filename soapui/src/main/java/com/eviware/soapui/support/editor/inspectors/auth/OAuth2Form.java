@@ -29,16 +29,7 @@ import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.Bindings;
 
 import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -69,9 +60,9 @@ public class OAuth2Form extends AbstractAuthenticationForm implements OAuth2Acce
     private final Color SUCCESS_COLOR = new Color(0xccffcb);
     private final Color FAIL_COLOR = new Color(0xffcccc);
 
-    static final ImageIcon SUCCESS_ICON = UISupport.createImageIcon("/check.png");
-    static final ImageIcon WAIT_ICON = UISupport.createImageIcon("/waiting-spinner.gif");
-    static final ImageIcon FAIL_ICON = UISupport.createImageIcon("/alert.png");
+    static final Icon SUCCESS_ICON = UISupport.createImageIcon("/check.png");
+    static final Icon WAIT_ICON = UISupport.createImageIcon("/waiting-spinner.gif");
+    static final Icon FAIL_ICON = UISupport.createImageIcon("/alert.png");
 
     private final AbstractXmlInspector inspector;
     private final OAuth2AccessTokenStatusChangeManager statusChangeManager;

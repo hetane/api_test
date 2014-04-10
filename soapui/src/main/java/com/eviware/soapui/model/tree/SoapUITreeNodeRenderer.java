@@ -18,8 +18,7 @@ package com.eviware.soapui.model.tree;
 
 import java.awt.Component;
 
-import javax.swing.ImageIcon;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import com.eviware.soapui.model.ModelItem;
@@ -49,7 +48,7 @@ public class SoapUITreeNodeRenderer extends DefaultTreeCellRenderer {
 
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-        ImageIcon icon = modelItem.getIcon();
+        Icon icon = modelItem.getIcon();
         setIcon(icon);
 
         if (modelItem instanceof TestStep && ((TestStep) modelItem).isDisabled()) {

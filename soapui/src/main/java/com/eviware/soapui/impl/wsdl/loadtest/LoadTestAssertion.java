@@ -16,7 +16,7 @@
 
 package com.eviware.soapui.impl.wsdl.loadtest;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import org.apache.xmlbeans.XmlObject;
 
@@ -44,7 +44,7 @@ public interface LoadTestAssertion extends PropertyChangeNotifier {
 
     public String getName();
 
-    public ImageIcon getIcon();
+    public Icon getIcon();
 
     public XmlObject getConfiguration();
 

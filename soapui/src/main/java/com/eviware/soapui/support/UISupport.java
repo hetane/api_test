@@ -16,6 +16,7 @@
 
 package com.eviware.soapui.support;
 
+import com.bulenkov.iconloader.IconLoader;
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.SwingPluginSoapUICore;
 import com.eviware.soapui.impl.wsdl.actions.iface.tools.support.ToolHost;
@@ -46,6 +47,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +70,7 @@ public class UISupport {
     private static List<ClassLoader> secondaryResourceLoaders = new ArrayList<ClassLoader>();
 
     private static Component frame;
-    private static Map<String, ImageIcon> iconCache = new HashMap<String, ImageIcon>();
+    private static Map<String, Icon> iconCache = new HashMap<String, Icon>();
     public static Dimension TOOLBAR_BUTTON_DIMENSION;
     private static boolean isWindows = System.getProperty("os.name").contains("Windows");
     private static boolean isMac = System.getProperty("os.name").contains("Mac");
@@ -97,9 +99,9 @@ public class UISupport {
         }
     }
 
-    public static ImageIcon TOOL_ICON = UISupport.createImageIcon(TOOL_ICON_PATH);
-    public static ImageIcon OPTIONS_ICON = UISupport.createImageIcon(OPTIONS_ICON_PATH);
-    public static ImageIcon HELP_ICON = UISupport.createImageIcon("/help-browser.png");
+    public static Icon TOOL_ICON = UISupport.createImageIcon(TOOL_ICON_PATH);
+    public static Icon OPTIONS_ICON = UISupport.createImageIcon(OPTIONS_ICON_PATH);
+    public static Icon HELP_ICON = UISupport.createImageIcon("/help-browser.png");
     private static EditorFactory editorFactory = new DefaultEditorFactory();
 
     /**
@@ -348,7 +350,7 @@ public class UISupport {
         dialog.setVisible(true);
     }
 
-    public static ImageIcon createImageIcon(String path) {
+    public static Icon createImageIcon(String path) {
         if (StringUtils.isNullOrEmpty(path)) {
             return null;
         }
@@ -359,7 +361,6 @@ public class UISupport {
 
         String orgPath = path;
         java.net.URL imgURL = null;
-
         try {
             File file = new File(path);
             if (file.exists()) {
@@ -387,7 +388,12 @@ public class UISupport {
 
         if (imgURL != null) {
             try {
-                ImageIcon imageIcon = new ImageIcon(imgURL);
+                Icon icon = IconLoader.getIcon(imgURL.getPath().substring(imgURL.getPath().indexOf("/com/eviware/soapui/resources/images")));
+
+                Method imageIconLoader = icon.getClass().getDeclaredMethod("getRealIcon");
+                imageIconLoader.setAccessible(true);
+                ImageIcon imageIcon = (ImageIcon) imageIconLoader.invoke(icon, null);
+
                 iconCache.put(orgPath, imageIcon);
                 return imageIcon;
             } catch (Throwable e) {
@@ -666,7 +672,7 @@ public class UISupport {
         return KeyStroke.getKeyStroke(keyStroke);
     }
 
-    public static DescriptionPanel buildDescription(String title, String string, ImageIcon icon) {
+    public static DescriptionPanel buildDescription(String title, String string, Icon icon) {
         return new DescriptionPanel(title, string, icon);
     }
 
@@ -810,7 +816,7 @@ public class UISupport {
     }
 
     public static PreviewCorner addPreviewCorner(JScrollPane scrollPane, boolean forceScrollbars) {
-        ImageIcon previewIcon = UISupport.createImageIcon("/previewscroller.gif");
+        Icon previewIcon = UISupport.createImageIcon("/previewscroller.gif");
         PreviewCorner previewCorner = new PreviewCorner(scrollPane, previewIcon, true, JScrollPane.LOWER_RIGHT_CORNER);
         scrollPane.setCorner(JScrollPane.LOWER_RIGHT_CORNER, previewCorner);
 
@@ -842,16 +848,16 @@ public class UISupport {
         column.setMinWidth(width);
     }
 
-    public static JButton createToolbarButton(ImageIcon icon) {
+    public static JButton createToolbarButton(Icon icon) {
         JButton result = new JButton(icon);
         result.setPreferredSize(TOOLBAR_BUTTON_DIMENSION);
         return result;
     }
 
-    public static String getIconPath(ImageIcon icon) {
+    public static String getIconPath(Icon icon) {
         String path = "";
         for (String icnPath : iconCache.keySet()) {
-            ImageIcon icn = iconCache.get(icnPath);
+            Icon icn = iconCache.get(icnPath);
             if (icon.equals(icn)) {
                 path = icnPath;
                 break;

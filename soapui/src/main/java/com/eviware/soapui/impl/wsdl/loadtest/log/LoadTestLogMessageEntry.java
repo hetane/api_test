@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.action.swing.ActionList;
@@ -34,7 +34,7 @@ import com.eviware.soapui.support.action.swing.ActionList;
 public class LoadTestLogMessageEntry implements LoadTestLogEntry {
     private final String message;
     private long timestamp;
-    private ImageIcon icon;
+    private Icon icon;
     private boolean discarded;
 
     public LoadTestLogMessageEntry(String message) {
@@ -56,7 +56,7 @@ public class LoadTestLogMessageEntry implements LoadTestLogEntry {
         return null;
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return icon;
     }
 

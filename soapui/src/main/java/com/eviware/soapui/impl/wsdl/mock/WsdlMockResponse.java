@@ -134,7 +134,7 @@ public class WsdlMockResponse extends AbstractMockResponse<MockResponseConfig> i
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return iconAnimator.getIcon();
     }
 

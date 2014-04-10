@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.xml.namespace.QName;
 
 import org.apache.log4j.Logger;
@@ -568,7 +568,7 @@ public class RestTestRequestStep extends WsdlTestStepWithProperties implements R
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return testRequest == null ? null : testRequest.getIcon();
     }
 

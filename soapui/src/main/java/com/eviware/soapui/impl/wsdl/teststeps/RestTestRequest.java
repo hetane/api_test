@@ -39,16 +39,16 @@ import com.eviware.soapui.monitor.TestMonitor;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.resolver.ResolveContext;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class RestTestRequest extends RestRequest implements RestTestRequestInterface {
-    private ImageIcon validRequestIcon;
-    private ImageIcon failedRequestIcon;
-    private ImageIcon disabledRequestIcon;
-    private ImageIcon unknownRequestIcon;
+    private Icon validRequestIcon;
+    private Icon failedRequestIcon;
+    private Icon disabledRequestIcon;
+    private Icon unknownRequestIcon;
 
     private RestTestRequestStep testStep;
 
@@ -147,7 +147,7 @@ public class RestTestRequest extends RestRequest implements RestTestRequestInter
 
     private class PropertyChangeNotifier {
         private AssertionStatus oldStatus;
-        private ImageIcon oldIcon;
+        private Icon oldIcon;
 
         public PropertyChangeNotifier() {
             oldStatus = getAssertionStatus();
@@ -156,7 +156,7 @@ public class RestTestRequest extends RestRequest implements RestTestRequestInter
 
         public void notifyChange() {
             AssertionStatus newStatus = getAssertionStatus();
-            ImageIcon newIcon = getIcon();
+            Icon newIcon = getIcon();
 
             if (oldStatus != newStatus) {
                 notifyPropertyChanged(STATUS_PROPERTY, oldStatus, newStatus);
@@ -229,7 +229,7 @@ public class RestTestRequest extends RestRequest implements RestTestRequestInter
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (forLoadTest || getIconAnimator() == null) {
             return null;
         }
@@ -241,7 +241,7 @@ public class RestTestRequest extends RestRequest implements RestTestRequestInter
             return disabledRequestIcon;
         }
 
-        ImageIcon icon = getIconAnimator().getIcon();
+        Icon icon = getIconAnimator().getIcon();
         if (icon == getIconAnimator().getBaseIcon()) {
             AssertionStatus status = getAssertionStatus();
             if (status == AssertionStatus.VALID) {

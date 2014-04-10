@@ -18,7 +18,7 @@ package com.eviware.x.form;
 
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.support.action.swing.ActionList;
 import com.jgoodies.forms.layout.FormLayout;
@@ -39,9 +39,9 @@ public abstract class XFormDialogBuilder {
 
     public abstract XForm createForm(String name);
 
-    public abstract XFormDialog buildDialog(ActionList actions, String description, ImageIcon icon);
+    public abstract XFormDialog buildDialog(ActionList actions, String description, Icon icon);
 
-    public abstract XFormDialog buildWizard(String description, ImageIcon icon, String helpURL);
+    public abstract XFormDialog buildWizard(String description, Icon icon, String helpURL);
 
     public abstract ActionList buildOkCancelActions();
 

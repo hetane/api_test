@@ -33,7 +33,7 @@ import com.eviware.soapui.support.resolver.ResolveContext;
 import com.eviware.soapui.support.types.StringToStringsMap;
 import org.apache.log4j.Logger;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.util.List;
 
 public interface AbstractHttpRequestInterface<T extends AbstractRequestConfig> extends Request,
@@ -81,7 +81,7 @@ public interface AbstractHttpRequestInterface<T extends AbstractRequestConfig> e
 
     public abstract void setRequestHeaders(StringToStringsMap map);
 
-    public abstract ImageIcon getIcon();
+    public abstract Icon getIcon();
 
     public abstract String getUsername();
 

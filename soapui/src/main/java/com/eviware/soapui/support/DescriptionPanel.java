@@ -19,11 +19,7 @@ package com.eviware.soapui.support;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 import com.eviware.soapui.support.swing.GradientPanel;
 
@@ -31,7 +27,7 @@ public class DescriptionPanel extends GradientPanel {
     private JLabel titleLabel;
     private JLabel descriptionLabel;
 
-    public DescriptionPanel(String title, String description, ImageIcon icon) {
+    public DescriptionPanel(String title, String description, Icon icon) {
         super(new BorderLayout());
         setBackground(UIManager.getColor("control"));
         setForeground(Color.WHITE);

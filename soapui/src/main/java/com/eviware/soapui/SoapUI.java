@@ -121,24 +121,7 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JTree;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.ToolTipManager;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -824,7 +807,8 @@ public class SoapUI {
     public static List<Image> getFrameIcons() {
         List<Image> iconList = new ArrayList<Image>();
         for (String iconPath : FRAME_ICON.split(";")) {
-            iconList.add(UISupport.createImageIcon(iconPath).getImage());
+            UISupport.createImageIcon(iconPath);
+            iconList.add(((ImageIcon)UISupport.createImageIcon(iconPath)).getImage());
         }
         return iconList;
     }

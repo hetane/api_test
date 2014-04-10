@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.xml.namespace.QName;
 
 import org.apache.log4j.Logger;
@@ -34,7 +34,6 @@ import com.eviware.soapui.config.TestStepConfig;
 import com.eviware.soapui.impl.rest.support.RestParamProperty;
 import com.eviware.soapui.impl.rest.support.RestRequestConverter;
 import com.eviware.soapui.impl.support.AbstractHttpRequest;
-import com.eviware.soapui.impl.support.AbstractHttpRequestInterface;
 import com.eviware.soapui.impl.support.http.HttpRequest;
 import com.eviware.soapui.impl.wsdl.AbstractWsdlModelItem;
 import com.eviware.soapui.impl.wsdl.WsdlSubmit;
@@ -199,7 +198,7 @@ public class HttpTestRequestStep extends WsdlTestStepWithProperties implements H
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return testRequest == null ? null : testRequest.getIcon();
     }
 

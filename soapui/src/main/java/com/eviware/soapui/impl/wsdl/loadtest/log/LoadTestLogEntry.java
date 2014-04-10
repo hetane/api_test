@@ -18,7 +18,7 @@ package com.eviware.soapui.impl.wsdl.loadtest.log;
 
 import java.io.IOException;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.support.action.swing.ActionList;
 
@@ -39,7 +39,7 @@ public interface LoadTestLogEntry {
 
     public ActionList getActions();
 
-    public ImageIcon getIcon();
+    public Icon getIcon();
 
     public boolean isError();
 

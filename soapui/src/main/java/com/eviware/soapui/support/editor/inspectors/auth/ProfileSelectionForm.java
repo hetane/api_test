@@ -56,7 +56,7 @@ public class ProfileSelectionForm<T extends AbstractHttpRequest> extends Abstrac
     private static final String OAUTH_2_FORM_LABEL = "OAuth 2 form";
     public static final String EMPTY_PANEL = "EmptyPanel";
 
-    static final ImageIcon AUTH_ENABLED_ICON = UISupport.createImageIcon("/lock.png");
+    static final Icon AUTH_ENABLED_ICON = UISupport.createImageIcon("/lock.png");
     private static final ImageIcon AUTH_NOT_ENABLED_ICON = null;
 
     private static final Map<String, ShowOnlineHelpAction> helpActions = new HashMap<String, ShowOnlineHelpAction>();

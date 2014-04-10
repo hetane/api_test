@@ -27,7 +27,7 @@ import com.eviware.soapui.support.editor.xml.XmlEditor;
 import com.eviware.soapui.support.editor.xml.XmlInspector;
 import org.apache.log4j.Logger;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -47,7 +47,7 @@ public abstract class AbstractXmlInspector implements XmlInspector {
     private XmlEditor editor;
     private final String inspectorId;
     private boolean active;
-    private ImageIcon imageIcon;
+    private Icon imageIcon;
 
     protected AbstractXmlInspector(String title, String description, boolean enabled, String inspectorId) {
         this.title = title;
@@ -67,12 +67,12 @@ public abstract class AbstractXmlInspector implements XmlInspector {
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return this.imageIcon;
     }
 
-    public void setIcon(ImageIcon imageIcon) {
-        ImageIcon old = this.imageIcon;
+    public void setIcon(Icon imageIcon) {
+        Icon old = this.imageIcon;
         this.imageIcon = imageIcon;
         propertySupport.firePropertyChange(Inspector.ICON_PROPERTY, old, imageIcon);
     }

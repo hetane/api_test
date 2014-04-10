@@ -63,7 +63,7 @@ public class WorkspaceImpl extends AbstractModelItem implements Workspace {
     private SoapuiWorkspaceDocumentConfig workspaceConfig;
     private String path = null;
     private Set<WorkspaceListener> listeners = new HashSet<WorkspaceListener>();
-    private ImageIcon workspaceIcon;
+    private Icon workspaceIcon;
     private XmlBeansSettingsImpl settings;
     private StringToStringMap projectOptions;
     private ResolveDialog resolver;
@@ -481,7 +481,7 @@ public class WorkspaceImpl extends AbstractModelItem implements Workspace {
         }
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return workspaceIcon;
     }
 

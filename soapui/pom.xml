@@ -528,6 +528,13 @@
             <artifactId>proxy-vole</artifactId>
             <version>20131209</version>
         </dependency>
+        <dependency>
+            <groupId>com.bulenkov</groupId>
+            <artifactId>iconloader</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/iconloader.jar</systemPath>
+        </dependency>
 
 
         <!--  old http client needed by some 3rd party components -->

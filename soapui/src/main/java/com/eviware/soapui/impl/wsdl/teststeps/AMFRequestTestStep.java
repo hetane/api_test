@@ -290,7 +290,7 @@ public class AMFRequestTestStep extends WsdlTestStepWithProperties implements As
 
     private class PropertyChangeNotifier {
         private AssertionStatus oldStatus;
-        private ImageIcon oldIcon;
+        private Icon oldIcon;
 
         public PropertyChangeNotifier() {
             oldStatus = getAssertionStatus();
@@ -299,7 +299,7 @@ public class AMFRequestTestStep extends WsdlTestStepWithProperties implements As
 
         public void notifyChange() {
             AssertionStatus newStatus = getAssertionStatus();
-            ImageIcon newIcon = getIcon();
+            Icon newIcon = getIcon();
 
             if (oldStatus != newStatus) {
                 notifyPropertyChanged(STATUS_PROPERTY, oldStatus, newStatus);
@@ -394,7 +394,7 @@ public class AMFRequestTestStep extends WsdlTestStepWithProperties implements As
         return amfRequest.getAssertionStatus();
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return amfRequest.getIcon();
     }
 

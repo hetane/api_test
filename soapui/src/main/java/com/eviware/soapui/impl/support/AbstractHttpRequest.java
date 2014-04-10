@@ -53,7 +53,7 @@ import com.eviware.soapui.support.types.StringToStringMap;
 import com.eviware.soapui.support.types.StringToStringsMap;
 import org.apache.xmlbeans.impl.values.XmlValueOutOfRangeException;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -412,7 +412,7 @@ public abstract class AbstractHttpRequest<T extends AbstractRequestConfig> exten
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return iconAnimator == null ? null : iconAnimator.getIcon();
     }
 

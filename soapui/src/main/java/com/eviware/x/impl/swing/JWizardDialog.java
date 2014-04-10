@@ -27,13 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.actions.UpdateableAction;
@@ -64,7 +58,7 @@ public class JWizardDialog extends SwingXFormDialog {
     private DefaultActionList actions;
     private JButtonBar buttons;
 
-    public JWizardDialog(String name, XForm[] forms, Action helpAction, String description, ImageIcon icon) {
+    public JWizardDialog(String name, XForm[] forms, Action helpAction, String description, Icon icon) {
         this.name = name;
 
         // Use JFrame instead of JDialog to get maximize button.

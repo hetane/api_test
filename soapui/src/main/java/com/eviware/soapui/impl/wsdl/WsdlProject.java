@@ -78,7 +78,7 @@ import org.apache.xmlbeans.XmlError;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.xml.namespace.QName;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -118,10 +118,10 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
     protected List<RestMockService> restMockServices = new ArrayList<RestMockService>();
     protected Set<ProjectListener> projectListeners = new HashSet<ProjectListener>();
     protected SoapuiProjectDocumentConfig projectDocument;
-    private ImageIcon disabledIcon;
-    private ImageIcon closedIcon;
-    private ImageIcon remoteIcon;
-    private ImageIcon openEncyptedIcon;
+    private Icon disabledIcon;
+    private Icon closedIcon;
+    private Icon remoteIcon;
+    private Icon openEncyptedIcon;
     protected EndpointStrategy endpointStrategy = new DefaultEndpointStrategy();
     protected long lastModified;
     private boolean remote;
@@ -146,7 +146,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 	 */
 
     protected int encrypted;
-    private ImageIcon closedEncyptedIcon;
+    private Icon closedEncyptedIcon;
     private SoapUIScriptEngine afterRunScriptEngine;
     private SoapUIScriptEngine beforeRunScriptEngine;
     private Set<ProjectRunListener> runListeners = new HashSet<ProjectRunListener>();
@@ -513,7 +513,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (isDisabled()) {
             return disabledIcon;
         } else if (getEncrypted() != 0) {

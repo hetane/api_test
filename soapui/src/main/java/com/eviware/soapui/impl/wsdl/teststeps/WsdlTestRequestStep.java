@@ -69,7 +69,7 @@ import org.apache.log4j.Logger;
 import org.apache.xmlbeans.SchemaType;
 import org.apache.xmlbeans.XmlString;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.xml.namespace.QName;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -285,7 +285,7 @@ public class WsdlTestRequestStep extends WsdlTestStepWithProperties implements O
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return testRequest == null ? null : testRequest.getIcon();
     }
 

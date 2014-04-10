@@ -21,21 +21,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.eviware.soapui.support.UISupport;
 
 public class JCollapsiblePanel extends JPanel {
     private static final String HIGHLIGHT_SIGN = "* ";
 
-    private ImageIcon minusIcon;
-    private ImageIcon plusIcon;
+    private Icon minusIcon;
+    private Icon plusIcon;
 
     private JPanel contentPanel;
     private JXToolBar toolbar;
@@ -137,19 +131,19 @@ public class JCollapsiblePanel extends JPanel {
         return toolbar;
     }
 
-    public ImageIcon getMinusIcon() {
+    public Icon getMinusIcon() {
         return minusIcon;
     }
 
-    public void setMinusIcon(ImageIcon minusIcon) {
+    public void setMinusIcon(Icon minusIcon) {
         this.minusIcon = minusIcon;
     }
 
-    public ImageIcon getPlusIcon() {
+    public Icon getPlusIcon() {
         return plusIcon;
     }
 
-    public void setPlusIcon(ImageIcon plusIcon) {
+    public void setPlusIcon(Icon plusIcon) {
         this.plusIcon = plusIcon;
     }
 

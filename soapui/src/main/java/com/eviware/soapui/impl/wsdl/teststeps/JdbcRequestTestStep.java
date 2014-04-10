@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.xml.namespace.QName;
 
 import org.apache.log4j.Logger;
@@ -322,7 +322,7 @@ public class JdbcRequestTestStep extends WsdlTestStepWithProperties implements A
 
     private class PropertyChangeNotifier {
         private AssertionStatus oldStatus;
-        private ImageIcon oldIcon;
+        private Icon oldIcon;
 
         public PropertyChangeNotifier() {
             oldStatus = getAssertionStatus();
@@ -331,7 +331,7 @@ public class JdbcRequestTestStep extends WsdlTestStepWithProperties implements A
 
         public void notifyChange() {
             AssertionStatus newStatus = getAssertionStatus();
-            ImageIcon newIcon = getIcon();
+            Icon newIcon = getIcon();
 
             if (oldStatus != newStatus) {
                 notifyPropertyChanged(STATUS_PROPERTY, oldStatus, newStatus);
@@ -433,7 +433,7 @@ public class JdbcRequestTestStep extends WsdlTestStepWithProperties implements A
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return jdbcRequest.getIcon();
     }
 

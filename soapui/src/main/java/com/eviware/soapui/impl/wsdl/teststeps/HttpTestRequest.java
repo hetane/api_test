@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.config.HttpRequestConfig;
@@ -49,10 +49,10 @@ public class HttpTestRequest extends HttpRequest implements HttpTestRequestInter
     private PropertyChangeNotifier notifier;
     private AssertionStatus currentStatus;
 
-    private ImageIcon validRequestIcon;
-    private ImageIcon failedRequestIcon;
-    private ImageIcon disabledRequestIcon;
-    private ImageIcon unknownRequestIcon;
+    private Icon validRequestIcon;
+    private Icon failedRequestIcon;
+    private Icon disabledRequestIcon;
+    private Icon unknownRequestIcon;
 
     protected HttpTestRequest(HttpRequestConfig config, HttpTestRequestStep testStep, boolean forLoadTest) {
         super(config, forLoadTest);
@@ -130,7 +130,7 @@ public class HttpTestRequest extends HttpRequest implements HttpTestRequestInter
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (forLoadTest || getIconAnimator() == null) {
             return null;
         }
@@ -142,7 +142,7 @@ public class HttpTestRequest extends HttpRequest implements HttpTestRequestInter
             return disabledRequestIcon;
         }
 
-        ImageIcon icon = getIconAnimator().getIcon();
+        Icon icon = getIconAnimator().getIcon();
         if (icon == getIconAnimator().getBaseIcon()) {
             AssertionStatus status = getAssertionStatus();
             if (status == AssertionStatus.VALID) {
@@ -159,7 +159,7 @@ public class HttpTestRequest extends HttpRequest implements HttpTestRequestInter
 
     private class PropertyChangeNotifier {
         private AssertionStatus oldStatus;
-        private ImageIcon oldIcon;
+        private Icon oldIcon;
 
         public PropertyChangeNotifier() {
             oldStatus = getAssertionStatus();
@@ -168,7 +168,7 @@ public class HttpTestRequest extends HttpRequest implements HttpTestRequestInter
 
         public void notifyChange() {
             AssertionStatus newStatus = getAssertionStatus();
-            ImageIcon newIcon = getIcon();
+            Icon newIcon = getIcon();
 
             if (oldStatus != newStatus) {
                 notifyPropertyChanged(STATUS_PROPERTY, oldStatus, newStatus);

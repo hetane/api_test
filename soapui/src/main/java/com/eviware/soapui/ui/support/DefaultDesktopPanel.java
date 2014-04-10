@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import com.eviware.soapui.model.ModelItem;
@@ -40,7 +39,7 @@ public class DefaultDesktopPanel implements DesktopPanel {
     private String title;
     private JComponent component;
     private Set<ModelItem> depends = new HashSet<ModelItem>();
-    private ImageIcon icon;
+    private Icon icon;
     private final String description;
 
     public DefaultDesktopPanel(String title, String description, JComponent component) {

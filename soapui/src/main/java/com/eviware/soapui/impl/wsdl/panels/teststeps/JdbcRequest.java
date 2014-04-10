@@ -46,10 +46,10 @@ public class JdbcRequest extends AbstractModelItem implements Assertable, TestRe
     private Set<SubmitListener> submitListeners = new HashSet<SubmitListener>();
     private JdbcResponse response;
     final static Logger logger = Logger.getLogger(JdbcRequest.class);
-    private ImageIcon validRequestIcon;
-    private ImageIcon failedRequestIcon;
-    private ImageIcon disabledRequestIcon;
-    private ImageIcon unknownRequestIcon;
+    private Icon validRequestIcon;
+    private Icon failedRequestIcon;
+    private Icon disabledRequestIcon;
+    private Icon unknownRequestIcon;
     private RequestIconAnimator<?> iconAnimator;
     private boolean forLoadTest;
     private AssertionStatus currentStatus;
@@ -319,7 +319,7 @@ public class JdbcRequest extends AbstractModelItem implements Assertable, TestRe
         addSubmitListener(this.iconAnimator);
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (forLoadTest || getIconAnimator() == null) {
             return null;
         }
@@ -331,7 +331,7 @@ public class JdbcRequest extends AbstractModelItem implements Assertable, TestRe
             return disabledRequestIcon;
         }
 
-        ImageIcon icon = getIconAnimator().getIcon();
+        Icon icon = getIconAnimator().getIcon();
         if (icon == getIconAnimator().getBaseIcon()) {
             AssertionStatus status = getAssertionStatus();
             if (status == AssertionStatus.VALID) {
@@ -347,7 +347,7 @@ public class JdbcRequest extends AbstractModelItem implements Assertable, TestRe
     }
 
     @Override
-    public void setIcon(ImageIcon icon) {
+    public void setIcon(Icon icon) {
         getTestStep().setIcon(icon);
     }
 

@@ -19,8 +19,7 @@ package com.eviware.soapui.support.components;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.*;
 
 public class JFocusableComponentInspector<T extends JComponent> implements Inspector {
     private final T component;
@@ -112,7 +111,7 @@ public class JFocusableComponentInspector<T extends JComponent> implements Inspe
         }
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return imageIcon;
     }
 

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.config.PropertyTransferConfig;
 import com.eviware.soapui.config.PropertyTransfersStepConfig;
@@ -53,8 +53,8 @@ public class PropertyTransfersTestStep extends WsdlTestStepWithProperties implem
     private PropertyTransfersStepConfig transferStepConfig;
     private boolean canceled;
     private List<PropertyTransfer> transfers = new ArrayList<PropertyTransfer>();
-    private ImageIcon failedIcon;
-    private ImageIcon okIcon;
+    private Icon failedIcon;
+    private Icon okIcon;
 
     public PropertyTransfersTestStep(WsdlTestCase testCase, TestStepConfig config, boolean forLoadTest) {
         super(testCase, config, true, forLoadTest);

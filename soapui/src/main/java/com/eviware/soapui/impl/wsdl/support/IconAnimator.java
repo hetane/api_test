@@ -34,8 +34,8 @@ public class IconAnimator<T extends AnimatableItem> implements Runnable {
     private int index = 0;
     private volatile boolean stopped = true;
     private boolean enabled = true;
-    private ImageIcon baseIcon;
-    private ImageIcon[] animateIcons;
+    private Icon baseIcon;
+    private Icon[] animateIcons;
     private volatile Future<?> future;
 
     public IconAnimator(T target, String iconName, String animationBaseIconName, int num) {
@@ -50,7 +50,7 @@ public class IconAnimator<T extends AnimatableItem> implements Runnable {
         String baseName = parts[0];
         String type = parts[1];
 
-        animateIcons = new ImageIcon[num];
+        animateIcons = new Icon[num];
 
         for (int c = 0; c < animateIcons.length; c++) {
             animateIcons[c] = UISupport.createImageIcon(baseName + "_" + (c + 1) + "." + type);
@@ -104,11 +104,11 @@ public class IconAnimator<T extends AnimatableItem> implements Runnable {
         }
     }
 
-    public ImageIcon getBaseIcon() {
+    public Icon getBaseIcon() {
         return baseIcon;
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (!isStopped()) {
             return animateIcons[getIndex()];
         }

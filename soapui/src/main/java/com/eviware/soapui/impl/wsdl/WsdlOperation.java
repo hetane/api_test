@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.wsdl.BindingInput;
 import javax.wsdl.BindingOperation;
 import javax.wsdl.BindingOutput;
@@ -76,11 +76,11 @@ public class WsdlOperation extends AbstractWsdlModelItem<OperationConfig> implem
     public static final String ICON_NAME = "/operation.gif";
     private List<WsdlRequest> requests = new ArrayList<WsdlRequest>();
     private WsdlInterface iface;
-    private ImageIcon oneWayIcon;
+    private Icon oneWayIcon;
 
-    private ImageIcon notificationIcon;
+    private Icon notificationIcon;
 
-    private ImageIcon solicitResponseIcon;
+    private Icon solicitResponseIcon;
 
     public WsdlOperation(WsdlInterface iface, OperationConfig operationConfig) {
         super(operationConfig, iface, ICON_NAME);
@@ -118,7 +118,7 @@ public class WsdlOperation extends AbstractWsdlModelItem<OperationConfig> implem
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (isOneWay()) {
             return oneWayIcon;
         } else if (isSolicitResponse()) {

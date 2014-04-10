@@ -18,8 +18,7 @@ package com.eviware.soapui.support.components;
 
 import java.beans.PropertyChangeListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.*;
 
 public interface Inspector {
     public final static String TITLE_PROPERTY = Inspector.class.getName() + "@title";
@@ -29,7 +28,7 @@ public interface Inspector {
 
     public abstract String getTitle();
 
-    public abstract ImageIcon getIcon();
+    public abstract Icon getIcon();
 
     public abstract JComponent getComponent();
 

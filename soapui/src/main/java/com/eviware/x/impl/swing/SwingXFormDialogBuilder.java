@@ -18,10 +18,7 @@ package com.eviware.x.impl.swing;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 
 import com.eviware.soapui.support.HelpActionMarker;
 import com.eviware.soapui.support.Tools;
@@ -58,7 +55,7 @@ public class SwingXFormDialogBuilder extends XFormDialogBuilder {
     }
 
     @Override
-    public XFormDialog buildDialog(ActionList actions, String description, ImageIcon icon) {
+    public XFormDialog buildDialog(ActionList actions, String description, Icon icon) {
         XForm[] forms = getForms();
         dialog = forms.length > 1 ? new JTabbedFormDialog(name, forms, actions, description, icon) : new JFormDialog(
                 name, (SwingXFormImpl) forms[0], actions, description, icon);
@@ -67,7 +64,7 @@ public class SwingXFormDialogBuilder extends XFormDialogBuilder {
     }
 
     @Override
-    public XFormDialog buildWizard(String description, ImageIcon icon, String helpURL) {
+    public XFormDialog buildWizard(String description, Icon icon, String helpURL) {
         Action helpAction = (helpURL.length() > 0 ? new HelpAction(helpURL) : null);
         XForm[] forms = getForms();
         dialog = new JWizardDialog(name, forms, helpAction, description, icon);

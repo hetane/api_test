@@ -20,7 +20,7 @@ import javax.swing.*;
 
 public interface AnimatableItem {
 
-    void setIcon(ImageIcon icon);
+    void setIcon(Icon icon);
 
     String getName();
 

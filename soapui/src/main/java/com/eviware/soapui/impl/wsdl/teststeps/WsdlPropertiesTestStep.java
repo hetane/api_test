@@ -25,7 +25,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.config.PropertiesStepConfig;
 import com.eviware.soapui.config.TestStepConfig;
@@ -55,8 +55,8 @@ import com.eviware.soapui.support.types.StringList;
 
 public class WsdlPropertiesTestStep extends WsdlTestStep implements MutableTestPropertyHolder {
     private PropertiesStepConfig propertiesStepConfig;
-    private ImageIcon okIcon;
-    private ImageIcon failedIcon;
+    private Icon okIcon;
+    private Icon failedIcon;
     private XmlBeansPropertiesTestPropertyHolder propertyHolderSupport;
     private BeanPathPropertySupport sourceProperty;
     private BeanPathPropertySupport targetProperty;

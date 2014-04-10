@@ -59,9 +59,9 @@ public class WsdlMockOperation extends AbstractMockOperation<MockOperationConfig
     private WsdlOperation operation;
     private InterfaceListener interfaceListener = new InternalInterfaceListener();
     private ProjectListener projectListener = new InternalProjectListener();
-    private ImageIcon oneWayIcon;
-    private ImageIcon notificationIcon;
-    private ImageIcon solicitResponseIcon;
+    private Icon oneWayIcon;
+    private Icon notificationIcon;
+    private Icon solicitResponseIcon;
 
     public WsdlMockOperation(WsdlMockService mockService, MockOperationConfig config) {
         super(config, mockService, ICON_NAME);
@@ -120,7 +120,7 @@ public class WsdlMockOperation extends AbstractMockOperation<MockOperationConfig
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (operation != null) {
             if (isOneWay()) {
                 return oneWayIcon;

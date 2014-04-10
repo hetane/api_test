@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.config.AttachmentConfig;
@@ -57,10 +57,10 @@ public class WsdlTestRequest extends WsdlRequest implements Assertable, TestRequ
     public static final String RESPONSE_PROPERTY = WsdlTestRequest.class.getName() + "@response";
     public static final String STATUS_PROPERTY = WsdlTestRequest.class.getName() + "@status";
 
-    private static ImageIcon validRequestIcon;
-    private static ImageIcon failedRequestIcon;
-    private static ImageIcon disabledRequestIcon;
-    private static ImageIcon unknownRequestIcon;
+    private static Icon validRequestIcon;
+    private static Icon failedRequestIcon;
+    private static Icon disabledRequestIcon;
+    private static Icon unknownRequestIcon;
 
     private AssertionStatus currentStatus;
     private final WsdlTestRequestStep testStep;
@@ -182,7 +182,7 @@ public class WsdlTestRequest extends WsdlRequest implements Assertable, TestRequ
 
     private class PropertyChangeNotifier {
         private AssertionStatus oldStatus;
-        private ImageIcon oldIcon;
+        private Icon oldIcon;
 
         public PropertyChangeNotifier() {
             oldStatus = getAssertionStatus();
@@ -191,7 +191,7 @@ public class WsdlTestRequest extends WsdlRequest implements Assertable, TestRequ
 
         public void notifyChange() {
             AssertionStatus newStatus = getAssertionStatus();
-            ImageIcon newIcon = getIcon();
+            Icon newIcon = getIcon();
 
             if (oldStatus != newStatus) {
                 notifyPropertyChanged(STATUS_PROPERTY, oldStatus, newStatus);
@@ -290,7 +290,7 @@ public class WsdlTestRequest extends WsdlRequest implements Assertable, TestRequ
     }
 
     @Override
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         if (forLoadTest || getIconAnimator() == null) {
             return null;
         }
@@ -300,7 +300,7 @@ public class WsdlTestRequest extends WsdlRequest implements Assertable, TestRequ
             return disabledRequestIcon;
         }
 
-        ImageIcon icon = getIconAnimator().getIcon();
+        Icon icon = getIconAnimator().getIcon();
         if (icon == getIconAnimator().getBaseIcon()) {
             AssertionStatus status = getAssertionStatus();
             if (status == AssertionStatus.VALID) {

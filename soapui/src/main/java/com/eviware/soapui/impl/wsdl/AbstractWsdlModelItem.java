@@ -45,7 +45,7 @@ public abstract class AbstractWsdlModelItem<T extends ModelItemConfig>
         implements Releasable, AnimatableItem {
     private XmlBeansSettingsImpl settings;
     private T config;
-    private ImageIcon icon;
+    private Icon icon;
     private final ModelItem parent;
 
     protected AbstractWsdlModelItem(T config, ModelItem parent, String icon) {
@@ -67,17 +67,17 @@ public abstract class AbstractWsdlModelItem<T extends ModelItemConfig>
         return parent;
     }
 
-    public ImageIcon getIcon() {
+    public Icon getIcon() {
         return icon;
     }
 
     @Override
-    public void setIcon(ImageIcon icon) {
+    public void setIcon(Icon icon) {
         if (icon == this.icon) {
             return;
         }
 
-        ImageIcon oldIcon = this.icon;
+        Icon oldIcon = this.icon;
         this.icon = icon;
         notifyPropertyChanged(ICON_PROPERTY, oldIcon, icon);
     }

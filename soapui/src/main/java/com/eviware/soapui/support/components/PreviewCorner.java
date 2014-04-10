@@ -34,17 +34,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-import javax.swing.MenuSelectionManager;
+import javax.swing.*;
 
 import com.eviware.soapui.support.UISupport;
 
@@ -71,7 +61,7 @@ public class PreviewCorner extends JButton implements ActionListener {
      *                          <code>JScrollPane.UPPER_LEFT_CORNER</code> will be used instead.
      */
 
-    public PreviewCorner(JScrollPane scrollPane, ImageIcon zoomIcon, boolean doCloseAfterClick, String corner) {
+    public PreviewCorner(JScrollPane scrollPane, Icon zoomIcon, boolean doCloseAfterClick, String corner) {
 
         super(zoomIcon);
         this._corner = corner;
