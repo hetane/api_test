@@ -20,7 +20,6 @@ import com.eviware.soapui.SoapUI;
 import com.eviware.soapui.config.TestAssertionConfig;
 import com.eviware.soapui.impl.rest.RestRequestInterface;
 import com.eviware.soapui.impl.support.actions.ShowOnlineHelpAction;
-import com.eviware.soapui.impl.support.http.HttpRequest;
 import com.eviware.soapui.impl.wsdl.panels.assertions.AssertionCategoryMapping;
 import com.eviware.soapui.impl.wsdl.panels.assertions.AssertionListEntry;
 import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockResponseMessageExchange;
@@ -364,36 +363,18 @@ public class GroovyScriptAssertion extends WsdlMessageAssertion implements Reque
 
 			public void actionPerformed( ActionEvent event )
 			{
-				TestStep testStep = getAssertable().getTestStep();
-				MessageExchange exchange = null;
+                TestStep testStep = getAssertable().getTestStep();
+                MessageExchange exchange = null;
 
-				if( testStep instanceof WsdlTestRequestStep )
-				{
-					WsdlTestRequestStep testRequestStep = ( WsdlTestRequestStep )testStep;
-					exchange = new WsdlResponseMessageExchange( testRequestStep.getTestRequest() );
-					( ( WsdlResponseMessageExchange )exchange ).setResponse( testRequestStep.getTestRequest().getResponse() );
-				}
-				else if( testStep instanceof RestTestRequestStepInterface )
-				{
-					RestTestRequestStepInterface testRequestStep = ( RestTestRequestStepInterface )testStep;
-					exchange = new RestResponseMessageExchange( ( RestRequestInterface )testRequestStep.getTestRequest() );
-					( ( RestResponseMessageExchange )exchange )
-							.setResponse( ((HttpRequest )testRequestStep.getTestRequest()) /* cast makes code compile with Java 6 */
-									.getResponse() );
-				}
-				else if( testStep instanceof HttpTestRequestStepInterface )
-				{
-					HttpTestRequestStepInterface testRequestStep = ( HttpTestRequestStepInterface )testStep;
-					exchange = new HttpResponseMessageExchange( testRequestStep.getTestRequest() );
-					( ( HttpResponseMessageExchange )exchange )
-							.setResponse( ((HttpRequest )testRequestStep.getTestRequest()) /* cast makes code compile with Java 6 */
-									.getResponse() );
-				}
-				else if( testStep instanceof WsdlMockResponseTestStep )
-				{
-					WsdlMockResponseTestStep mockResponseStep = ( WsdlMockResponseTestStep )testStep;
-					exchange = new WsdlMockResponseMessageExchange( mockResponseStep.getMockResponse() );
-				}
+                if (testStep instanceof WsdlTestRequestStep) {
+                    exchange = new WsdlResponseMessageExchange(((WsdlTestRequestStep) testStep).getTestRequest());
+                } else if (testStep instanceof RestTestRequestStepInterface) {
+                    exchange = new RestResponseMessageExchange(((RestRequestInterface) ((RestTestRequestStepInterface) testStep).getTestRequest()));
+                } else if (testStep instanceof HttpTestRequestStepInterface) {
+                    exchange = new HttpResponseMessageExchange(((HttpTestRequestStepInterface) testStep).getTestRequest());
+                } else if (testStep instanceof WsdlMockResponseTestStep) {
+                    exchange = new WsdlMockResponseMessageExchange(((WsdlMockResponseTestStep) testStep).getMockResponse());
+                }
 
 				try
 				{
