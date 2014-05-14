@@ -129,7 +129,7 @@ public class GroovyEditor extends JPanel implements JEditorStatusBarTarget, Prop
         popup.add(goToLineAction);
         popup.add(enableLineNumbersAction);
 
-        showCodeCompletionAction = new ShowCodeCompletionAction(editArea);
+        showCodeCompletionAction = new ShowCodeCompletionAction(model, editArea);
         popup.add(showCodeCompletionAction);
 
         if (UISupport.isMac()) {

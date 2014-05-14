@@ -5,7 +5,6 @@ import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
-import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.AbstractAction;
@@ -18,15 +17,17 @@ import java.awt.event.ActionEvent;
 public class ShowCodeCompletionAction extends AbstractAction {
 
     private RSyntaxTextArea editArea;
+    private GroovyEditorModel model;
     private AutoCompletion ac;
 
-    public ShowCodeCompletionAction(RSyntaxTextArea editArea) {
+    public ShowCodeCompletionAction(GroovyEditorModel model, RSyntaxTextArea editArea) {
         super("Code Completion");
         if (UISupport.isMac()) {
             putValue(Action.ACCELERATOR_KEY, UISupport.getKeyStroke("esc"));
         } else {
             putValue(Action.ACCELERATOR_KEY, UISupport.getKeyStroke("control space"));
         }
+        this.model = model;
         this.editArea = editArea;
     }
 
@@ -39,6 +40,11 @@ public class ShowCodeCompletionAction extends AbstractAction {
         // that is needed in the majority of cases.
         DefaultCompletionProvider provider = new DefaultCompletionProvider();
 
+        String[] keywords = model.getKeywords();
+        for (int i=0; i<keywords.length; i++)
+            provider.addCompletion(new BasicCompletion(provider, keywords[i]));
+
+        /*
         // Add completions for all Java keywords. A BasicCompletion is just
         // a straightforward word completion.
         provider.addCompletion(new BasicCompletion(provider, "abstract"));
@@ -58,7 +64,7 @@ public class ShowCodeCompletionAction extends AbstractAction {
                 "System.out.println(", "System.out.println("));
         provider.addCompletion(new ShorthandCompletion(provider, "syserr",
                 "System.err.println(", "System.err.println("));
-
+        */
         return provider;
 
     }
