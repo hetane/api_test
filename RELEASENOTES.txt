@@ -4,8 +4,7 @@
 * REST Mock now reads the payload (SOAP-2173)
 * Wildcard in XPath assertions (SOAP-1299)
 * Mock Response test step works again (SOAP-2207)
-* New REST mock service were missing in composite project menu (SOAP-2266)
-* (Pro only) REST discovery service were missing in composite project menu (SOAP-2266)
+* (Pro only) REST discovery/ New REST mock service were missing in composite project menu (SOAP-2266)
 * (Pro only) Excel DataSink now works on Mac (SOAP-1890)
 * (Pro only) Changing environments now also changes the connection string in JDBC test steps (SOAP-268)
 
