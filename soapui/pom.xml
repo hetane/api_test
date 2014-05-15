@@ -537,6 +537,13 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.fifesoft</groupId>
+            <artifactId>autocomplete</artifactId>
+            <version>2.0.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
