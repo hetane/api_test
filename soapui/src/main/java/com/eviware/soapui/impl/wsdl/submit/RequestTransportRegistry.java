@@ -63,6 +63,7 @@ public class RequestTransportRegistry
 		httpTransport.addRequestFilter( new WsrmRequestFilter() );
 		httpTransport.addRequestFilter( new WssRequestFilter() );
 		httpTransport.addRequestFilter( new OAuth2RequestFilter() );
+        httpTransport.addRequestFilter( new GlobalHttpHeadersRequestFilter());
 
 		for( RequestFilter filter : SoapUI.getListenerRegistry().getListeners( RequestFilter.class ) )
 		{

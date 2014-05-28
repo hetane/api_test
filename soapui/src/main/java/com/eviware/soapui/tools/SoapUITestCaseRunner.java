@@ -174,6 +174,11 @@ public class SoapUITestCaseRunner extends AbstractSoapUITestRunner
 			setSystemProperties( cmd.getOptionValues( "D" ) );
 		}
 
+        if( cmd.hasOption( "H" ) )
+        {
+            setCustomHeaders( cmd.getOptionValues( "H" ) );
+        }
+
 		if( cmd.hasOption( "G" ) )
 		{
 			setGlobalProperties( cmd.getOptionValues( "G" ) );
@@ -266,7 +271,8 @@ public class SoapUITestCaseRunner extends AbstractSoapUITestRunner
 		options.addOption( "G", true, "Sets global property with name=value" );
 		options.addOption( "P", true, "Sets or overrides project property with name=value" );
 		options.addOption( "I", false, "Do not stop if error occurs, ignore them" );
-		options.addOption( "S", false, "Saves the project after running the tests" );
+		options.addOption( "S", false , "Saves the project after running the tests" );
+        options.addOption( "H", false , "Adds a custom HTTP Header to all outgoing requests (name=value), can be specified multiple times" );
 
 		return options;
 	}
