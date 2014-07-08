@@ -41,6 +41,11 @@ public class PropertyExpansionsResult extends ArrayList<PropertyExpansion> {
         return addAll(PropertyExpansionUtils.extractPropertyExpansions(modelItem, defaultTarget, propertyName));
     }
 
+    public boolean extractCustomPropertyByIndexAndAdd(int index)
+    {
+        return addAll(PropertyExpansionUtils.extractCustomPropertyExpansionsByIndex(modelItem, defaultTarget, index));
+    }
+
     public PropertyExpansion[] toArray() {
         return toArray(new PropertyExpansion[size()]);
     }

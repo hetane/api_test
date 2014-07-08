@@ -21,12 +21,24 @@ import org.apache.commons.beanutils.PropertyUtils;
 import com.eviware.soapui.model.testsuite.TestProperty;
 
 public class MutablePropertyExpansionImpl extends PropertyExpansionImpl implements MutablePropertyExpansion {
+    public final static int UNKNOWNED_PROPERTY_INDEX = -1;
     private final Object container;
     private final String propertyName;
     private String stringRep;
+    private int         m_propertyIndex;
 
     public MutablePropertyExpansionImpl(TestProperty tp, String xpath, Object container, String propertyName) {
         super(tp, xpath);
+        this.m_propertyIndex = UNKNOWNED_PROPERTY_INDEX;
+        this.container = container;
+        this.propertyName = propertyName;
+
+        stringRep = toString();
+    }
+
+    public MutablePropertyExpansionImpl(TestProperty tp, String xpath, Object container, String propertyName, int index) {
+        super(tp, xpath);
+        this.m_propertyIndex = index;
         this.container = container;
         this.propertyName = propertyName;
 
@@ -49,7 +61,13 @@ public class MutablePropertyExpansionImpl extends PropertyExpansionImpl implemen
             return;
         }
 
-        Object obj = PropertyUtils.getProperty(container, propertyName);
+        Object obj;
+        if(this.m_propertyIndex != UNKNOWNED_PROPERTY_INDEX && container instanceof CustomPropertyExpansion)
+            obj = ((CustomPropertyExpansion) container).getCustomPropertyValue(m_propertyIndex);
+        else
+            obj = PropertyUtils.getProperty(container, propertyName);
+
+
         if (obj == null) {
             throw new Exception("property value is null");
         }
@@ -65,7 +83,10 @@ public class MutablePropertyExpansionImpl extends PropertyExpansionImpl implemen
             ix = str.indexOf(stringRep, ix + rep.length());
         }
 
-        PropertyUtils.setProperty(container, propertyName, str);
+        if(this.m_propertyIndex != UNKNOWNED_PROPERTY_INDEX && container instanceof CustomPropertyExpansion)
+            ((CustomPropertyExpansion) container).setCustomPropertyValue(m_propertyIndex, str);
+        else
+            PropertyUtils.setProperty(container, propertyName, str);
 
         stringRep = rep;
     }

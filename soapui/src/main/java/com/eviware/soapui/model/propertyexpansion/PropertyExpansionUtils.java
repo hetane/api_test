@@ -319,8 +319,47 @@ public class PropertyExpansionUtils {
         return result;
     }
 
-    public static MutablePropertyExpansionImpl createMutablePropertyExpansion(String pe, ModelItem modelItem,
-                                                                              Object target, String propertyName) {
+    public static Collection<? extends PropertyExpansion> extractCustomPropertyExpansionsByIndex(ModelItem modelItem, Object target, int index) {
+        List<PropertyExpansion> result = new ArrayList<PropertyExpansion>();
+        Set<String> expansions = new HashSet<String>();
+
+        if( target instanceof CustomPropertyExpansion)
+        try {
+            Object property = ((CustomPropertyExpansion) target).getCustomPropertyValue(index);
+            if (property instanceof String) {
+                String str = property.toString();
+
+                if (!StringUtils.isNullOrEmpty(str)) {
+                    int ix = str.indexOf("${");
+                    while (ix != -1) {
+                        // TODO handle nested property-expansions..
+                        int ix2 = str.indexOf('}', ix + 2);
+                        if (ix2 == -1) {
+                            break;
+                        }
+
+                        String expansion = str.substring(ix + 2, ix2);
+                        if (!expansions.contains(expansion)) {
+                            MutablePropertyExpansion tp = createMutablePropertyExpansion(expansion, modelItem, target, "", index);
+                            if (tp != null) {
+                                result.add(tp);
+                                expansions.add(expansion);
+                            }
+                        }
+
+                        str = str.substring(ix2);
+                        ix = str.indexOf("${");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            SoapUI.logError(e);
+        }
+
+        return result;
+    }
+
+    public static MutablePropertyExpansionImpl createMutablePropertyExpansion(String pe, ModelItem modelItem, Object target, String propertyName, int index) {
         WsdlTestStep testStep = null;
         WsdlTestCase testCase = null;
         WsdlTestSuite testSuite = null;
@@ -407,7 +446,11 @@ public class PropertyExpansionUtils {
         }
 
         TestProperty tp = holder.getProperty(pe);
-        return tp == null ? null : new MutablePropertyExpansionImpl(tp, xpath, target, propertyName);
+        return tp == null ? null : new MutablePropertyExpansionImpl(tp, xpath, target, propertyName, index);
+    }
+
+    public static MutablePropertyExpansionImpl createMutablePropertyExpansion(String pe, ModelItem modelItem, Object target, String propertyName) {
+        return createMutablePropertyExpansion(pe, modelItem, target, propertyName, MutablePropertyExpansionImpl.UNKNOWNED_PROPERTY_INDEX);
     }
 
     /**
