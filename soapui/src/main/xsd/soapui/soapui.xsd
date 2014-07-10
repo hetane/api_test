@@ -1,22 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-          ~ Copyright 2004-2014 SmartBear Software
-          ~
-          ~ Licensed under the EUPL, Version 1.1 or - as soon as they will be approved by the European Commission - subsequent
-          ~ versions of the EUPL (the "Licence");
-          ~ You may not use this work except in compliance with the Licence.
-          ~ You may obtain a copy of the Licence at:
-          ~
-          ~ http://ec.europa.eu/idabc/eupl
-          ~
-          ~ Unless required by applicable law or agreed to in writing, software distributed under the Licence is
-          ~ distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-          ~ express or implied. See the Licence for the specific language governing permissions and limitations
-          ~ under the Licence.
--->
+<!DOCTYPE xsd:schema [
+        <!ELEMENT xsd:schema (xsd:complexType|xsd:element|xsd:simpleType|xsd:attribute)*>
+        <!ATTLIST xsd:schema
+                xmlns:xsd CDATA #REQUIRED
+                targetNamespace CDATA #REQUIRED
+                elementFormDefault CDATA #REQUIRED
+                xmlns:tns CDATA #REQUIRED>
+        <!ELEMENT xsd:complexType (xsd:complexContent|xsd:sequence|xsd:attribute|xsd:simpleContent|xsd:annotation)*>
+        <!ATTLIST xsd:complexType
+                abstract CDATA #IMPLIED
+                name CDATA #IMPLIED>
+        <!ELEMENT xsd:complexContent (xsd:extension)*>
+        <!ELEMENT xsd:extension (xsd:sequence|xsd:attribute)*>
+        <!ATTLIST xsd:extension
+                base CDATA #REQUIRED>
+        <!ELEMENT xsd:sequence (xsd:element)*>
+        <!ATTLIST xsd:sequence
+                maxOccurs CDATA #IMPLIED
+                minOccurs CDATA #IMPLIED>
+        <!ELEMENT xsd:element (xsd:simpleType|xsd:complexType|xsd:annotation)*>
+        <!ATTLIST xsd:element
+                default CDATA #IMPLIED
+                maxOccurs CDATA #IMPLIED
+                minOccurs CDATA #IMPLIED
+                name CDATA #REQUIRED
+                type CDATA #IMPLIED>
+        <!ELEMENT xsd:attribute (xsd:simpleType)*>
+        <!ATTLIST xsd:attribute
+                default CDATA #IMPLIED
+                name CDATA #REQUIRED
+                type CDATA #IMPLIED
+                use CDATA #IMPLIED>
+        <!ELEMENT xsd:simpleType (xsd:restriction|xsd:list)*>
+        <!ATTLIST xsd:simpleType
+                name CDATA #IMPLIED>
+        <!ELEMENT xsd:restriction (xsd:enumeration)*>
+        <!ATTLIST xsd:restriction
+                base CDATA #REQUIRED>
+        <!ELEMENT xsd:enumeration (#PCDATA)>
+        <!ATTLIST xsd:enumeration
+                value CDATA #REQUIRED>
+        <!ELEMENT xsd:simpleContent (xsd:extension)*>
+        <!ELEMENT xsd:list (#PCDATA)>
+        <!ATTLIST xsd:list
+                itemType CDATA #REQUIRED>
+        <!ELEMENT xsd:annotation (xsd:documentation)*>
+        <!ELEMENT xsd:documentation (#PCDATA)>
+        ]>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://eviware.com/soapui/config" elementFormDefault="qualified"
-            xmlns:tns="http://eviware.com/soapui/config">
+            xmlns:tns="http://eviware.com/soapui/config" targetNamespace="http://eviware.com/soapui/config"
+            elementFormDefault="qualified">
     <xsd:complexType name="Workspace">
         <xsd:complexContent>
             <xsd:extension base="tns:ModelItem">
@@ -142,15 +175,33 @@
                                  minOccurs="0" maxOccurs="unbounded">
                     </xsd:element>
                 </xsd:sequence>
-                <xsd:attribute name="definition" type="xsd:string"></xsd:attribute>
-                <xsd:attribute name="bindingName" type="xsd:string"></xsd:attribute>
-                <xsd:attribute name="soapVersion" type="tns:SoapVersionTypes">
-                </xsd:attribute>
-                <xsd:attribute name="wsaVersion" type="tns:WsaVersionType"></xsd:attribute>
-                <xsd:attribute name="anonymous" type="tns:AnonymousType"></xsd:attribute>
+                <xsd:attribute name="definition" type="xsd:string"/>
+                <xsd:attribute name="bindingName" type="xsd:string"/>
+                <xsd:attribute name="soapVersion" type="tns:SoapVersionTypes"/>
+                <xsd:attribute name="wsaVersion" type="tns:WsaVersionType"/>
+                <xsd:attribute name="anonymous" type="tns:AnonymousType"/>
             </xsd:extension>
         </xsd:complexContent>
 
+    </xsd:complexType>
+
+    <xsd:complexType name="XmlRpcService">
+        <xsd:complexContent>
+            <xsd:extension base="tns:Interface">
+                <xsd:sequence>
+
+                    <xsd:element name="resource" type="tns:RestResource"
+                                 maxOccurs="unbounded" minOccurs="0"><![CDATA[
+
+                            ]]>
+                    </xsd:element>
+                    <xsd:element name="inferredSchema" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="definitionUrl" type="xsd:string"/>
+                <xsd:attribute name="basePath" type="xsd:string"/>
+                <xsd:attribute name="wadlVersion" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
 
     <xsd:complexType name="RestService">
@@ -159,15 +210,15 @@
                 <xsd:sequence>
 
                     <xsd:element name="resource" type="tns:RestResource"
-                                 maxOccurs="unbounded" minOccurs="0">
+                                 maxOccurs="unbounded" minOccurs="0"><![CDATA[
+
+                            ]]>
                     </xsd:element>
-                    <xsd:element name="inferredSchema" type="xsd:string"
-                                 maxOccurs="1" minOccurs="0">
-                    </xsd:element>
+                    <xsd:element name="inferredSchema" type="xsd:string" maxOccurs="1" minOccurs="0"/>
                 </xsd:sequence>
-                <xsd:attribute name="definitionUrl" type="xsd:string"></xsd:attribute>
-                <xsd:attribute name="basePath" type="xsd:string"></xsd:attribute>
-                <xsd:attribute name="wadlVersion" type="xsd:string"></xsd:attribute>
+                <xsd:attribute name="definitionUrl" type="xsd:string"/>
+                <xsd:attribute name="basePath" type="xsd:string"/>
+                <xsd:attribute name="wadlVersion" type="xsd:string"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

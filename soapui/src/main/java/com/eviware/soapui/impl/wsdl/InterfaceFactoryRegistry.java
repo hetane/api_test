@@ -16,15 +16,16 @@
 
 package com.eviware.soapui.impl.wsdl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.eviware.soapui.config.InterfaceConfig;
 import com.eviware.soapui.impl.InterfaceFactory;
 import com.eviware.soapui.impl.WsdlInterfaceFactory;
+import com.eviware.soapui.impl.XmlRpc.XmlRpcServiceFactory;
 import com.eviware.soapui.impl.rest.RestServiceFactory;
 import com.eviware.soapui.impl.support.AbstractInterface;
 import com.eviware.soapui.support.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InterfaceFactoryRegistry {
     private static Map<String, InterfaceFactory<?>> factories = new HashMap<String, InterfaceFactory<?>>();
@@ -32,6 +33,7 @@ public class InterfaceFactoryRegistry {
     static {
         factories.put(WsdlInterfaceFactory.WSDL_TYPE, new WsdlInterfaceFactory());
         factories.put(RestServiceFactory.REST_TYPE, new RestServiceFactory());
+        factories.put(XmlRpcServiceFactory.getType(), new XmlRpcServiceFactory());
     }
 
     public static AbstractInterface<?> createNew(WsdlProject project, String type, String name) {
