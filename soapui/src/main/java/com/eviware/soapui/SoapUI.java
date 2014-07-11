@@ -344,7 +344,7 @@ public class SoapUI {
         mainToolbar.add(new NewWsdlProjectActionDelegate());
         mainToolbar.add(new ImportWsdlProjectActionDelegate());
         mainToolbar.add(new SaveAllActionDelegate());
-        mainToolbar.addSpace(2);
+        mainToolbar.addSeparator();
         mainToolbar.add(new ShowOnlineHelpAction("Forum", HelpUrls.FORUMS_HELP_URL,
                 "Opens the SoapUI Forum in a browser", "/group_go.png"));
         mainToolbar.addSpace(2);
