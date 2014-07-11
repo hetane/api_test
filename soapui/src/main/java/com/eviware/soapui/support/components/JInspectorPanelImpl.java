@@ -41,7 +41,7 @@ import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
 public class JInspectorPanelImpl extends JPanel implements PropertyChangeListener, JInspectorPanel {
-    private float defaultDividerLocation = 0.65F;
+    private float defaultDividerLocation = 0.25F;
 
     private final JSplitPane mainSplit;
     private JPanel inspectorPanel;
