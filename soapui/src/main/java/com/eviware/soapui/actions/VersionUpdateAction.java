@@ -25,7 +25,7 @@ import com.eviware.soapui.support.SoapUIVersionUpdate;
 public class VersionUpdateAction extends AbstractAction {
 
     public VersionUpdateAction() {
-        super("Check for updates");
+        super("Check for Updates");
         putValue(Action.SHORT_DESCRIPTION, "Checks if newer version is available");
     }
 
