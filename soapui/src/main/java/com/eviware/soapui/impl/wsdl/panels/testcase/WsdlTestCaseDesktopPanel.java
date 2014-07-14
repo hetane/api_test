@@ -244,7 +244,7 @@ public class WsdlTestCaseDesktopPanel extends KeySensitiveModelItemDesktopPanel<
                     || type.equals("datasourceloop")
                     || type.equals(RunTestCaseStepFactory.RUNTESTCASE_TYPE)
                     || type.equals(ManualTestStepFactory.MANUAL_TEST_STEP)) {
-                toolbar.addRelatedGap();
+                toolbar.addSeparator();
             }
         }
 
