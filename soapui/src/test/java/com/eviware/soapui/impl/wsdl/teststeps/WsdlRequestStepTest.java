@@ -33,7 +33,7 @@ public class WsdlRequestStepTest {
     public void executesAndReturnsResult() throws Exception {
         File sampleProjectFile = new File(WsdlRequestStepTest.class.getResource("/sample-soapui-project.xml").toURI());
         WsdlProject project = new WsdlProject(sampleProjectFile.getAbsolutePath());
-        TestSuite testSuite = project.getTestSuiteByName("Test Suite");
+        TestSuite testSuite = project.getTestSuiteByName("TestSuite");
         com.eviware.soapui.model.testsuite.TestCase testCase = testSuite.getTestCaseByName("Test Conversions");
 
         WsdlTestRequestStep testStep = (WsdlTestRequestStep) testCase.getTestStepByName("SEK to USD Test");

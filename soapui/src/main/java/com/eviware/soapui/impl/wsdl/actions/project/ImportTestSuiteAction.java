@@ -24,11 +24,11 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 
 public class ImportTestSuiteAction extends AbstractSoapUIAction<WsdlProject> {
     public ImportTestSuiteAction() {
-        super("Import Test Suite", "Import test suite for this interface");
+        super("Import TestSuite", "Import TestSuite for this interface");
     }
 
     public void perform(WsdlProject project, Object param) {
-        File file = UISupport.getFileDialogs().openXML(this, "Choose test suite to import");
+        File file = UISupport.getFileDialogs().openXML(this, "Choose TestSuite to import");
 
         if (file == null) {
             return;

@@ -58,7 +58,7 @@ public class TestOnDemandCallerTest {
     public void setUp() throws Exception {
         WsdlProject project = new WsdlProject(TestOnDemandCallerTest.class.getResource(
                 "/soapui-projects/sample-soapui-project.xml").getPath());
-        WsdlTestSuite testSuite = project.getTestSuiteByName("Test Suite");
+        WsdlTestSuite testSuite = project.getTestSuiteByName("TestSuite");
         testCase = testSuite.getTestCaseByName("Test Conversions");
         caller = new TestOnDemandCaller();
     }

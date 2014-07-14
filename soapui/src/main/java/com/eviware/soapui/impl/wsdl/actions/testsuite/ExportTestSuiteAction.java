@@ -26,7 +26,7 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 public class ExportTestSuiteAction extends AbstractSoapUIAction<WsdlTestSuite> {
 
     public ExportTestSuiteAction() {
-        super("Export", "Export this test suite");
+        super("Export", "Export this TestSuite");
     }
 
     public void perform(WsdlTestSuite tSuite, Object param) {

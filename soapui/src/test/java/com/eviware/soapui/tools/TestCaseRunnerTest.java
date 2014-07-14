@@ -85,7 +85,7 @@ public class TestCaseRunnerTest {
             failed = true;
         } catch (Exception e) {
             assertEquals(e.getMessage(),
-                    "TestCase with name [tjoho] in TestSuite [Test Suite] is missing in Project [Sample Project]");
+                    "TestCase with name [tjoho] in TestSuite [TestSuite] is missing in Project [Sample Project]");
         }
 
         assertFalse(failed);
@@ -119,7 +119,7 @@ public class TestCaseRunnerTest {
     public void testValidTestSuiteAndTestCaseName() throws Exception {
         SoapUITestCaseRunner runner = new SoapUITestCaseRunner();
         runner.setProjectFile(projectFilePath);
-        runner.setTestSuite("Test Suite");
+        runner.setTestSuite("TestSuite");
         runner.setTestCase("Test Conversions");
         // assertTrue( runner.run() );
     }

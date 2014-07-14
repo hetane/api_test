@@ -25,7 +25,7 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 public class ImportTestCaseAction extends AbstractSoapUIAction<WsdlTestSuite> {
 
     public ImportTestCaseAction() {
-        super("Import TestCase", "Import TestCase in this test suite");
+        super("Import TestCase", "Import TestCase in this TestSuite");
     }
 
     public void perform(WsdlTestSuite testSuite, Object param) {
