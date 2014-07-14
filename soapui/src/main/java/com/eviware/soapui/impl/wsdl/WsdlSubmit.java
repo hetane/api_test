@@ -86,7 +86,7 @@ public final class WsdlSubmit<T extends AbstractHttpRequestInterface<?>> impleme
             return;
         }
 
-        logger.info("Canceling request..");
+        logger.info("Canceling request...");
         if (status == Status.RUNNING) {
             transport.abortRequest(submitContext);
         }
@@ -110,7 +110,7 @@ public final class WsdlSubmit<T extends AbstractHttpRequestInterface<?>> impleme
             for (int i = 0; i < listeners.length; i++) {
                 if (!listeners[i].beforeSubmit(this, submitContext)) {
                     status = Status.CANCELED;
-                    System.err.println("listener cancelled submit..");
+                    System.err.println("listener cancelled submit...");
                     return;
                 }
             }

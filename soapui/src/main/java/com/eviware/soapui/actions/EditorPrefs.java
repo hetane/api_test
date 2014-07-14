@@ -69,7 +69,7 @@ public class EditorPrefs implements Prefs {
             editorFontTextField.setEnabled(false);
             builder.addFixed(editorFontTextField);
             builder.addRelatedGap();
-            builder.addFixed(new JButton(new AbstractAction("Select Font..") {
+            builder.addFixed(new JButton(new AbstractAction("Select Font...") {
                 public void actionPerformed(ActionEvent e) {
                     Font font = JFontChooser.showDialog(UISupport.getMainFrame(), "Select XML Editor Font",
                             Font.decode(editorFontTextField.getText()));

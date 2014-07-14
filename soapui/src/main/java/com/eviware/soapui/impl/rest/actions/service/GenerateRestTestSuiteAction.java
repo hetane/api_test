@@ -74,7 +74,7 @@ public class GenerateRestTestSuiteAction extends AbstractSoapUIAction<RestServic
         if (dialog.show()) {
             List<String> resources = Arrays.asList(StringUtils.toStringArray(operationsFormField.getSelectedOptions()));
             if (resources.size() == 0) {
-                UISupport.showErrorMessage("No Resources selected..");
+                UISupport.showErrorMessage("No Resources selected...");
                 return null;
             }
 

@@ -72,20 +72,20 @@ public class StringListFormComponent extends JPanel implements JFormComponent, A
         buttonBox.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
 
         if (!editOnly) {
-            addButton = new JButton("Add..");
+            addButton = new JButton("Add...");
             addButton.addActionListener(this);
             buttonBox.add(addButton);
             buttonBox.add(Box.createVerticalStrut(5));
         }
 
-        editButton = new JButton("Edit..");
+        editButton = new JButton("Edit...");
         editButton.addActionListener(this);
         buttons.add(editButton);
         buttonBox.add(editButton);
 
         if (!editOnly) {
             buttonBox.add(Box.createVerticalStrut(5));
-            removeButton = new JButton("Remove..");
+            removeButton = new JButton("Remove...");
             removeButton.addActionListener(this);
             buttonBox.add(removeButton);
             buttons.add(removeButton);
@@ -147,7 +147,7 @@ public class StringListFormComponent extends JPanel implements JFormComponent, A
         String[] oldData = getData();
 
         if (e.getSource() == addButton) {
-            String value = UISupport.prompt("Specify value to add", "Add..", defaultValue);
+            String value = UISupport.prompt("Specify value to add", "Add...", defaultValue);
             if (value != null) {
                 listModel.addElement(value);
                 firePropertyChange("options", oldData, getData());
@@ -163,7 +163,7 @@ public class StringListFormComponent extends JPanel implements JFormComponent, A
                 }
             } else if (e.getSource() == editButton && selectedIndex != -1) {
                 String elm = (String) listModel.getElementAt(selectedIndex);
-                String value = UISupport.prompt("Specify value", "Edit..", elm);
+                String value = UISupport.prompt("Specify value", "Edit...", elm);
 
                 if (value != null) {
                     listModel.setElementAt(value, selectedIndex);

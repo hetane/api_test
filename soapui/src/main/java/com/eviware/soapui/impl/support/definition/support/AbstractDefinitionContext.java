@@ -128,7 +128,7 @@ public abstract class AbstractDefinitionContext<T extends AbstractInterface<?>, 
             progressDialog.run(loader);
         } else {
             // always use progressDialog since files can import http urls
-            progressDialog = UISupport.getDialogs().createProgressDialog("Loading Definition", 3, "Loading definition..",
+            progressDialog = UISupport.getDialogs().createProgressDialog("Loading Definition", 3, "Loading definition...",
                     true);
 
             progressDialog.run(loader);

@@ -60,7 +60,7 @@ public abstract class FileAttachment<T extends AbstractWsdlModelItem<?>> impleme
 
         if (config.getTempFilename() != null) {
             try {
-                log.info("Moving locally cached file [" + config.getTempFilename() + "] to internal cache..");
+                log.info("Moving locally cached file [" + config.getTempFilename() + "] to internal cache...");
                 File tempFile = new File(config.getTempFilename());
                 cacheFileLocally(tempFile);
             } catch (IOException e) {

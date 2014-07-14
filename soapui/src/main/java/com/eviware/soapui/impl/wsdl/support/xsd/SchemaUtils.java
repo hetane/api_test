@@ -79,7 +79,7 @@ public class SchemaUtils {
 
             public void settingChanged(String name, String newValue, String oldValue) {
                 if (name.equals(WsdlSettings.SCHEMA_DIRECTORY)) {
-                    log.info("Reloading default schemas..");
+                    log.info("Reloading default schemas...");
                     initDefaultSchemas();
                 }
             }

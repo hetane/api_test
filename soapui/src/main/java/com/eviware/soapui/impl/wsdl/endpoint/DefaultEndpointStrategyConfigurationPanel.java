@@ -220,7 +220,7 @@ public class DefaultEndpointStrategyConfigurationPanel extends JPanel implements
             list.add(2, ALL_REQUESTS_AND_TEST_REQUESTS);
             list.add(3, ALL_REQUESTS_WITH_NO_ENDPOINT);
 
-            Object endpoint = UISupport.prompt("Assign selected endpoint and authorization to..", "Assign Endpoint",
+            Object endpoint = UISupport.prompt("Assign selected endpoint and authorization to...", "Assign Endpoint",
                     list.toArray(), ALL_REQUESTS_WITH_NO_ENDPOINT);
 
             if (endpoint == null) {

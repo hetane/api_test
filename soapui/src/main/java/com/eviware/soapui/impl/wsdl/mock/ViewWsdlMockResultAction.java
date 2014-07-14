@@ -61,7 +61,7 @@ public class ViewWsdlMockResultAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         try {
             if (result.isDiscarded()) {
-                UISupport.showInfoMessage("Request has been discarded..");
+                UISupport.showInfoMessage("Request has been discarded...");
             } else {
                 UISupport.showDesktopPanel(buildFrame());
             }

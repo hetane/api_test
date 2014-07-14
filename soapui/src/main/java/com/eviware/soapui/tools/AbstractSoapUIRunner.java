@@ -111,7 +111,7 @@ public abstract class AbstractSoapUIRunner implements CmdLineRunner {
                     formatter.printHelp(options.getRunnerName() + " [options] <soapui-project-file>", options);
                 }
 
-                System.err.println("Missing SoapUI project file..");
+                System.err.println("Missing SoapUI project file...");
                 return false;
             }
 

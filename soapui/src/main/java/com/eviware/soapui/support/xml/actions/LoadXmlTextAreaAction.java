@@ -40,7 +40,7 @@ public class LoadXmlTextAreaAction extends AbstractAction {
     private String dialogTitle;
 
     public LoadXmlTextAreaAction(RSyntaxTextArea textArea, String dialogTitle) {
-        super("Load from..");
+        super("Load from...");
         this.textArea = textArea;
         this.dialogTitle = dialogTitle;
         if (UISupport.isMac()) {

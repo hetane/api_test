@@ -39,8 +39,8 @@ import java.util.Set;
  */
 
 public class EndpointsComboBoxModel implements ComboBoxModel, PropertyChangeListener {
-    public static final String ADD_NEW_ENDPOINT = "[add new endpoint..]";
-    public static final String EDIT_ENDPOINT = "[edit current..]";
+    public static final String ADD_NEW_ENDPOINT = "[add new endpoint...]";
+    public static final String EDIT_ENDPOINT = "[edit current...]";
     private static final String DELETE_ENDPOINT = "[delete current]";
 
     private Set<ListDataListener> listeners = Collections.synchronizedSet(new HashSet<ListDataListener>());

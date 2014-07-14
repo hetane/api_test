@@ -395,11 +395,11 @@ public class WsdlValidator {
                     if (offendingQName != null) {
                         if (offendingQName.equals(new QName(wsdlContext.getSoapVersion().getEnvelopeNamespace(),
                                 "encodingStyle"))) {
-                            log.debug("ignoring encodingStyle validation..");
+                            log.debug("ignoring encodingStyle validation...");
                             continue;
                         } else if (offendingQName.equals(new QName(wsdlContext.getSoapVersion().getEnvelopeNamespace(),
                                 "mustUnderstand"))) {
-                            log.debug("ignoring mustUnderstand validation..");
+                            log.debug("ignoring mustUnderstand validation...");
                             continue;
                         }
                     }

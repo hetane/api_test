@@ -50,7 +50,7 @@ public class PropertyTreeNode extends AbstractModelItemTreeNode<PropertyTreeNode
             value = "";
         } else {
             if (value.length() > 12) {
-                value = value.substring(0, 12) + "..";
+                value = value.substring(0, 12) + "...";
             }
 
             value = "'" + value + "'";

@@ -92,7 +92,7 @@ public class MockAsWar {
     public void createMockAsWarArchive() {
 
         XProgressDialog progressDialog = UISupport.getDialogs().createProgressDialog("Creating War File", 3,
-                "Building war file..", false);
+                "Building war file...", false);
         WorkerAdapter warWorker = new WorkerAdapter() {
 
             public Object construct(XProgressMonitor monitor) {

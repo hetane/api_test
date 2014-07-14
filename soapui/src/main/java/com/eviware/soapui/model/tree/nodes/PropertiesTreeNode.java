@@ -182,7 +182,7 @@ public class PropertiesTreeNode<T extends ModelItem> extends AbstractModelItemTr
             String name = UISupport.prompt("Specify unique property name", "Add Property", "");
             if (StringUtils.hasContent(name)) {
                 if (holder.hasProperty(name)) {
-                    UISupport.showErrorMessage("Property name [" + name + "] already exists..");
+                    UISupport.showErrorMessage("Property name [" + name + "] already exists...");
                     return;
                 }
 

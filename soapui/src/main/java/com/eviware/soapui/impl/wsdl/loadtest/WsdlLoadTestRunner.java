@@ -280,7 +280,7 @@ public class WsdlLoadTestRunner implements LoadTestRunner {
 
     public synchronized void finishRunner(InternalTestCaseRunner runner) {
         if (!runners.contains(runner)) {
-            throw new RuntimeException("Trying to finish unknown runner.. ");
+            throw new RuntimeException("Trying to finish unknown runner... ");
         }
 
         runners.remove(runner);

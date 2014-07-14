@@ -295,7 +295,7 @@ public class WSIValidateRequestAction extends AbstractToolsAction<WsdlRequest> {
         }
 
         public String getDescription() {
-            return "Running WSI Analysis tools..";
+            return "Running WSI Analysis tools...";
         }
 
         protected void afterRun(int exitCode, RunnerContext context) {

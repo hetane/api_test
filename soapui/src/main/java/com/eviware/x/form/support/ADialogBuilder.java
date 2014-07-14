@@ -58,7 +58,7 @@ public class ADialogBuilder {
     public static XFormDialog buildDialog(Class<? extends Object> formClass, ActionList actions, FormLayout layout) {
         AForm formAnnotation = formClass.getAnnotation(AForm.class);
         if (formAnnotation == null) {
-            throw new RuntimeException("formClass is not annotated correctly..");
+            throw new RuntimeException("formClass is not annotated correctly...");
         }
 
         MessageSupport messages = MessageSupport.getMessages(formClass);
@@ -118,7 +118,7 @@ public class ADialogBuilder {
         }
         AForm formAnnotation = formClass.getAnnotation(AForm.class);
         if (formAnnotation == null) {
-            throw new RuntimeException("formClass is not annotated correctly..");
+            throw new RuntimeException("formClass is not annotated correctly...");
         }
 
         MessageSupport messages = MessageSupport.getMessages(formClass);
@@ -155,7 +155,7 @@ public class ADialogBuilder {
     public static XFormDialog buildTabbedDialog(Class<? extends Object> tabbedFormClass, ActionList actions) {
         AForm formAnnotation = tabbedFormClass.getAnnotation(AForm.class);
         if (formAnnotation == null) {
-            throw new RuntimeException("formClass is not annotated correctly..");
+            throw new RuntimeException("formClass is not annotated correctly...");
         }
 
         MessageSupport messages = MessageSupport.getMessages(tabbedFormClass);
@@ -197,7 +197,7 @@ public class ADialogBuilder {
                                                                  ActionList actions) {
         AForm formAnnotation = tabbedFormClass.getAnnotation(AForm.class);
         if (formAnnotation == null) {
-            throw new RuntimeException("formClass is not annotated correctly..");
+            throw new RuntimeException("formClass is not annotated correctly...");
         }
 
         MessageSupport messages = MessageSupport.getMessages(tabbedFormClass);
@@ -239,7 +239,7 @@ public class ADialogBuilder {
     public static XFormDialog buildWizard(Class<? extends Object> tabbedFormClass) {
         AForm formAnnotation = tabbedFormClass.getAnnotation(AForm.class);
         if (formAnnotation == null) {
-            throw new RuntimeException("formClass is not annotated correctly..");
+            throw new RuntimeException("formClass is not annotated correctly...");
         }
 
         MessageSupport messages = MessageSupport.getMessages(tabbedFormClass);

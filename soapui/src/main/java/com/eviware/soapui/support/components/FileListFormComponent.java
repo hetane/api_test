@@ -48,11 +48,11 @@ public class FileListFormComponent extends JPanel implements JFormComponent, Act
         scrollPane.setPreferredSize(new Dimension(300, 70));
         add(scrollPane, BorderLayout.CENTER);
         Box box = new Box(BoxLayout.Y_AXIS);
-        addButton = new JButton("Add..");
+        addButton = new JButton("Add...");
         addButton.addActionListener(this);
         box.add(addButton);
         box.add(Box.createVerticalStrut(5));
-        removeButton = new JButton("Remove..");
+        removeButton = new JButton("Remove...");
         removeButton.addActionListener(this);
         box.add(removeButton);
         box.add(Box.createVerticalGlue());

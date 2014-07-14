@@ -35,7 +35,7 @@ import java.util.List;
 
 public class AddRestRequestToMockServiceAction extends AbstractSoapUIAction<RestRequest> {
 
-    private static final String SELECT_MOCKSERVICE_OPTION = "Create new..";
+    private static final String SELECT_MOCKSERVICE_OPTION = "Create new...";
     public static final String SOAPUI_ACTION_ID = "AddRestRequestToMockServiceAction";
     private static final MessageSupport messages = MessageSupport.getMessages(AddRestRequestToMockServiceAction.class);
     private static List<String> HEADERS_TO_IGNORE = new ArrayList<String>();

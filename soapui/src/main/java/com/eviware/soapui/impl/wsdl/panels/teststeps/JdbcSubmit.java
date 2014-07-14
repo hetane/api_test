@@ -85,7 +85,7 @@ public class JdbcSubmit implements Submit, Runnable {
             return;
         }
 
-        JdbcRequest.logger.info("Canceling request..");
+        JdbcRequest.logger.info("Canceling request...");
         if (status == Status.RUNNING) {
             cancelQuery();
         }
@@ -138,7 +138,7 @@ public class JdbcSubmit implements Submit, Runnable {
             for (int i = 0; i < listeners.length; i++) {
                 if (!listeners[i].beforeSubmit(this, context)) {
                     status = Status.CANCELED;
-                    System.err.println("listener cancelled submit..");
+                    System.err.println("listener cancelled submit...");
                     return;
                 }
             }

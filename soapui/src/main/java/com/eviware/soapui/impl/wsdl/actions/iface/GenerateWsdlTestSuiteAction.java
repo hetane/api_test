@@ -67,7 +67,7 @@ public class GenerateWsdlTestSuiteAction extends AbstractSoapUIAction<WsdlInterf
         if (dialog.show()) {
             List<String> operations = StringUtils.toStringList(operationsFormField.getSelectedOptions());
             if (operations.size() == 0) {
-                UISupport.showErrorMessage("No Operations selected..");
+                UISupport.showErrorMessage("No Operations selected...");
                 return null;
             }
 

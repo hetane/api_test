@@ -285,7 +285,7 @@ public class WSIValidateResponseAction extends AbstractToolsAction<MockResponse>
         }
 
         public String getDescription() {
-            return "Running WSI Analysis tools..";
+            return "Running WSI Analysis tools...";
         }
 
         protected void afterRun(int exitCode, RunnerContext context) {

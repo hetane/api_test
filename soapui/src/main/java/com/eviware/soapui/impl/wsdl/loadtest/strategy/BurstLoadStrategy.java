@@ -75,7 +75,7 @@ public class BurstLoadStrategy extends AbstractLoadStrategy {
         super.beforeLoadTest(loadTestRunner, context);
         startTime = System.currentTimeMillis();
         if (infoLabel != null) {
-            infoLabel.setText("starting..");
+            infoLabel.setText("starting...");
         }
 
         WsdlLoadTest wsdlLoadTest = (WsdlLoadTest) loadTestRunner.getLoadTest();

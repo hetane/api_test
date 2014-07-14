@@ -129,7 +129,7 @@ public class CloneParametersAction extends AbstractAction {
 
         if (targetSecurityScans.length == 0) {
             if (showErrorMessage) {
-                UISupport.showErrorMessage("No SecurityScans selected..");
+                UISupport.showErrorMessage("No SecurityScans selected...");
             }
             return items;
         }
@@ -138,7 +138,7 @@ public class CloneParametersAction extends AbstractAction {
                 .getSelectedIndexes();
         if (indexes.length == 0) {
             if (showErrorMessage) {
-                UISupport.showErrorMessage("No Parameters selected..");
+                UISupport.showErrorMessage("No Parameters selected...");
             }
             return items;
         }

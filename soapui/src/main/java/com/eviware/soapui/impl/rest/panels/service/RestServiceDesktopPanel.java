@@ -226,7 +226,7 @@ public class RestServiceDesktopPanel extends ModelItemDesktopPanel<RestService> 
         try {
             if (iface.getWadlContext().loadIfNecessary()) {
                 XProgressDialog progressDialog = UISupport.getDialogs().createProgressDialog("Loading Defintion", 3,
-                        "Initializing definition..", true);
+                        "Initializing definition...", true);
                 Loader loader = new Loader(iface);
 
                 progressDialog.run(loader);
@@ -462,7 +462,7 @@ public class RestServiceDesktopPanel extends ModelItemDesktopPanel<RestService> 
             progressBar = new JProgressBar(0, 1);
             progressBar.setSize(new Dimension(120, 20));
             progressBar.setStringPainted(true);
-            progressBar.setString("Loading Definition..");
+            progressBar.setString("Loading Definition...");
             progressBar.setIndeterminate(true);
 
             ButtonBarBuilder builder = ButtonBarBuilder.createLeftToRightBuilder();
@@ -471,7 +471,7 @@ public class RestServiceDesktopPanel extends ModelItemDesktopPanel<RestService> 
             builder.addGlue();
             builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            partTabs.addTab("Loading.. ", builder.getPanel());
+            partTabs.addTab("Loading... ", builder.getPanel());
             return true;
         }
     }

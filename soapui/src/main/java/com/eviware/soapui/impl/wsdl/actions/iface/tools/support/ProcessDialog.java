@@ -71,7 +71,7 @@ public class ProcessDialog extends JDialog implements RunnerContext {
                 if (runner != null && !runner.isRunning()) {
                     dispose();
                 } else {
-                    UISupport.showErrorMessage("Cannot close while task is running..");
+                    UISupport.showErrorMessage("Cannot close while task is running...");
                 }
             }
         });

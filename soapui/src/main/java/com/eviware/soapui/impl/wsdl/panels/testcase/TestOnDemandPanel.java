@@ -69,7 +69,7 @@ public class TestOnDemandPanel extends JPanel {
     private static final String COULD_NOT_UPLOAD_MESSAGE = "Could not upload TestCase to the selected location";
 
     private static final String UPLOAD_TEST_CASE_HEADING = "Upload TestCase";
-    private static final String UPLOADING_TEST_CASE_MESSAGE = "Uploading TestCase..";
+    private static final String UPLOADING_TEST_CASE_MESSAGE = "Uploading TestCase...";
 
     private static final String SERVER_IP_ADDRESSES_PREFIX = "IP: ";
     private static final String SERVER_IP_ADDRESSES_DELIMETER = ", ";

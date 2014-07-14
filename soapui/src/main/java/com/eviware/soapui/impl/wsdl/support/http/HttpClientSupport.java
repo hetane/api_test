@@ -252,7 +252,7 @@ public class HttpClientSupport {
 
                 if (name.equals(SSLSettings.KEYSTORE) || name.equals(SSLSettings.KEYSTORE_PASSWORD)) {
                     try {
-                        log.info("Updating keyStore..");
+                        log.info("Updating keyStore...");
                         registry.register(new Scheme("https", 443, initSocketFactory()));
                     } catch (Throwable e) {
                         SoapUI.logError(e);
@@ -269,7 +269,7 @@ public class HttpClientSupport {
             @Override
             public void settingsReloaded() {
                 try {
-                    log.info("Updating keyStore..");
+                    log.info("Updating keyStore...");
                     registry.register(new Scheme("https", 443, initSocketFactory()));
                 } catch (Throwable e) {
                     SoapUI.logError(e);

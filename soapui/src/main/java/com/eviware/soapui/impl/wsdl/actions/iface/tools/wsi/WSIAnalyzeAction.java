@@ -205,7 +205,7 @@ public class WSIAnalyzeAction extends AbstractToolsAction<Interface> {
         }
 
         public String getDescription() {
-            return "Running WSI Analysis tools..";
+            return "Running WSI Analysis tools...";
         }
 
         protected void afterRun(int exitCode, RunnerContext context) {

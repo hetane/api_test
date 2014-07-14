@@ -77,7 +77,7 @@ public class AMFSubmit implements Submit, Runnable {
             return;
         }
 
-        SoapUI.log.info("Canceling request..");
+        SoapUI.log.info("Canceling request...");
 
         status = Status.CANCELED;
 
@@ -111,7 +111,7 @@ public class AMFSubmit implements Submit, Runnable {
             for (int i = 0; i < listeners.length; i++) {
                 if (!listeners[i].beforeSubmit(this, context)) {
                     status = Status.CANCELED;
-                    SoapUI.log.error("listener cancelled submit..");
+                    SoapUI.log.error("listener cancelled submit...");
                     return;
                 }
             }

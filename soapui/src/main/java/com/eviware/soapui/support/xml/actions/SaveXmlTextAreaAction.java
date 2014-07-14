@@ -45,7 +45,7 @@ public class SaveXmlTextAreaAction extends AbstractAction {
     private static final Logger log = Logger.getLogger(SaveXmlTextAreaAction.class);
 
     public SaveXmlTextAreaAction(RSyntaxTextArea editArea, String dialogTitle) {
-        super("Save as..");
+        super("Save as...");
         this.textArea = editArea;
         this.dialogTitle = dialogTitle;
         if (UISupport.isMac()) {

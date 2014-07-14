@@ -36,7 +36,7 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
  */
 
 public class AddRequestToMockServiceAction extends AbstractSoapUIAction<WsdlRequest> {
-    private static final String CREATE_MOCKSUITE_OPTION = "Create new..";
+    private static final String CREATE_MOCKSUITE_OPTION = "Create new...";
     public static final String SOAPUI_ACTION_ID = "AddRequestToMockServiceAction";
 
     public AddRequestToMockServiceAction() {

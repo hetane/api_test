@@ -101,7 +101,7 @@ public class JUnitReportCollector implements TestRunListener, TestSuiteRunListen
             String key = (String) keys.toArray()[0];
             return reports.get(key).toString();
         }
-        return "No reports..:";
+        return "No reports...:";
     }
 
     public void afterRun(TestCaseRunner testRunner, TestCaseRunContext runContext) {

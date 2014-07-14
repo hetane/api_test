@@ -252,10 +252,10 @@ public class AttachmentsPanel extends javax.swing.JPanel {
     }
 
     protected void exportBtnActionPerformed(ActionEvent evt) {
-        File file = UISupport.getFileDialogs().saveAs(this, "Export Attachment..");
+        File file = UISupport.getFileDialogs().saveAs(this, "Export Attachment...");
         while (file != null && file.exists()
                 && !UISupport.confirm("File " + file.getName() + " exists, overwrite?", "Export Attachment")) {
-            file = UISupport.getFileDialogs().saveAs(this, "Export Attachment..");
+            file = UISupport.getFileDialogs().saveAs(this, "Export Attachment...");
         }
 
         if (file != null) {
@@ -292,7 +292,7 @@ public class AttachmentsPanel extends javax.swing.JPanel {
             return;
         }
 
-        File file = UISupport.getFileDialogs().open(this, "Reload Attachment..", "*", "Any File", attachment.getUrl());
+        File file = UISupport.getFileDialogs().open(this, "Reload Attachment...", "*", "Any File", attachment.getUrl());
         if (file != null) {
             Boolean retval = UISupport.confirmOrCancel("Cache attachment in request?", "Reload Attachment");
             if (retval == null) {

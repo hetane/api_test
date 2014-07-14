@@ -227,7 +227,7 @@ public class JettyMockEngine implements MockEngine {
                 try {
                     log.info("Stopping connector on port " + port);
                     if (!connector.waitUntilIdle(5000)) {
-                        log.warn("Failed to wait for idle.. stopping connector anyway..");
+                        log.warn("Failed to wait for idle... stopping connector anyway...");
                     }
                     connector.stop();
                 } catch (Exception e) {
@@ -274,7 +274,7 @@ public class JettyMockEngine implements MockEngine {
 
         public boolean waitUntilIdle(long maxWait) throws Exception {
             while (maxWait > 0 && hasActiveConnections()) {
-                System.out.println("Waiting for active connections to finish..");
+                System.out.println("Waiting for active connections to finish...");
                 Thread.sleep(500);
                 maxWait -= 500;
             }
