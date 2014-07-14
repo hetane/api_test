@@ -36,7 +36,7 @@ public class RestMockResponsePersistencyTest {
     private MockResponse restMockResponse;
     private Integer httpStatusCode = HttpStatus.SC_NOT_FOUND;
     private String projectFileName = "RESTMockResponseTest.xml";
-    private String restMockServiceName = "REST Mock Service";
+    private String restMockServiceName = "REST MockService";
 
     @Before
     public void setUp() throws XmlException, IOException, SoapUIException {

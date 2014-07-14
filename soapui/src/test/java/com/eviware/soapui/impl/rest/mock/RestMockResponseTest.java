@@ -31,7 +31,7 @@ public class RestMockResponseTest {
     @Before
     public void setUp() throws SoapUIException {
         RestMockAction restMockAction = ModelItemFactory.makeRestMockAction();
-        restMockAction.getMockService().setName("REST Mock Service");
+        restMockAction.getMockService().setName("REST MockService");
         restMockResponse = restMockAction.addNewMockResponse("REST Mock Response");
     }
 

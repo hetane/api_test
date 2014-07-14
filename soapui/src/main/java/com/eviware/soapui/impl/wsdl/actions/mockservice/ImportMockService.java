@@ -25,11 +25,11 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 public class ImportMockService extends AbstractSoapUIAction<WsdlProject> {
 
     public ImportMockService() {
-        super("Import Mock Service", "Import Mock Service");
+        super("Import MockService", "Import MockService");
     }
 
     public void perform(WsdlProject project, Object param) {
-        File file = UISupport.getFileDialogs().openXML(this, "Choose mock service to import");
+        File file = UISupport.getFileDialogs().openXML(this, "Choose MockService to import");
 
         if (file == null) {
             return;

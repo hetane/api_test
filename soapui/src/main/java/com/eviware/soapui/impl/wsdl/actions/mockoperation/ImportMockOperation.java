@@ -25,7 +25,7 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 public class ImportMockOperation extends AbstractSoapUIAction<WsdlMockService> {
 
     public ImportMockOperation() {
-        super("Import Mock Operation", "Import Mock Operation in this Mock Service");
+        super("Import Mock Operation", "Import Mock Operation in this MockService");
     }
 
     public void perform(WsdlMockService target, Object param) {

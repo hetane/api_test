@@ -25,7 +25,7 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 public class ExportMockService extends AbstractSoapUIAction<WsdlMockService> {
 
     public ExportMockService() {
-        super("Export", "Export this mock service");
+        super("Export", "Export this MockService");
     }
 
     public void perform(WsdlMockService mService, Object param) {

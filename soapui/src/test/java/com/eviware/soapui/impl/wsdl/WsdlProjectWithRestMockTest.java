@@ -54,7 +54,7 @@ public class WsdlProjectWithRestMockTest {
 
     @Test
     public void shouldSaveAndReloadRestMockServices() throws Exception {
-        String expectedName = "Teh Awesome Mock Service";
+        String expectedName = "Teh Awesome MockService";
         project.addNewRestMockService(expectedName);
 
         WsdlProject reloadedProject = saveAndReloadProject(project);

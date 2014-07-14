@@ -37,7 +37,7 @@ public class GenerateRestMockServiceAction extends AbstractSoapUIAction<RestServ
     XFormDialog dialog = null;
 
     public GenerateRestMockServiceAction() {
-        super("Generate REST Mock Service", "Generates a REST mock service containing all resources of this REST service");
+        super("Generate REST MockService", "Generates a REST MockService containing all resources of this REST service");
     }
 
     @Override
@@ -119,9 +119,9 @@ public class GenerateRestMockServiceAction extends AbstractSoapUIAction<RestServ
         this.dialog = dialog;
     }
 
-    @AForm(name = "Generate REST Mock Service", description = "Set name for the new REST Mock Service", helpUrl = HelpUrls.GENERATE_REST_MOCKSERVICE)
+    @AForm(name = "Generate REST MockService", description = "Set name for the new REST MockService", helpUrl = HelpUrls.GENERATE_REST_MOCKSERVICE)
     protected interface Form {
-        @AField(name = "MockService Name", description = "The Mock Service name", type = AField.AFieldType.STRING)
+        @AField(name = "MockService Name", description = "The MockService name", type = AField.AFieldType.STRING)
         public final static String MOCKSERVICE_NAME = "MockService Name";
     }
 }

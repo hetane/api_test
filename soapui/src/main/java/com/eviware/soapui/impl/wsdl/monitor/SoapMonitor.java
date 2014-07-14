@@ -410,7 +410,7 @@ public class SoapMonitor extends JPanel {
         addToTestCaseButton.setToolTipText("Adds selected requests to a TestCase");
         // addToRestTestCaseButton.setToolTipText(
         // "Adds selected REST requests to a TestCase" );
-        addToMockServiceButton.setToolTipText("Adds selected responses to a mock service");
+        addToMockServiceButton.setToolTipText("Adds selected responses to a MockService");
 
         createRequestButton.setEnabled(false);
         addToMockServiceButton.setEnabled(false);

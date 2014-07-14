@@ -52,7 +52,7 @@ public class GenerateRestMockServiceActionTest {
     @Before
     public void setUp() throws Exception {
         restService = ModelItemFactory.makeRestService();
-        restMockServiceName = "My Mock Service";
+        restMockServiceName = "My MockService";
         action = new GenerateRestMockServiceAction();
 
         mockFormDialog();

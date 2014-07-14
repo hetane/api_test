@@ -81,7 +81,7 @@ public class MockAsWarServlet extends HttpServlet {
             }
 
             if (project == null) {
-                logger.info("Starting Mock service(s)");
+                logger.info("Starting MockService(s)");
             }
 
             for (MockService mockService : project.getMockServiceList()) {
@@ -94,7 +94,7 @@ public class MockAsWarServlet extends HttpServlet {
             }
 
             for (MockService mockService : project.getRestMockServiceList()) {
-                logger.info("Starting REST mock service [" + mockService.getName() + "]");
+                logger.info("Starting REST MockService [" + mockService.getName() + "]");
                 mockService.start();
             }
         } catch (Exception ex) {

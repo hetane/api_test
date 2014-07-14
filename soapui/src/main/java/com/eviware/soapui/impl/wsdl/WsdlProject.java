@@ -1971,7 +1971,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
         }
 
         if (newMockServiceConfig == null) {
-            UISupport.showErrorMessage("Not valid mock service xml");
+            UISupport.showErrorMessage("Not valid MockService xml");
         } else {
             MockServiceConfig config = (MockServiceConfig) projectDocument.getSoapuiProject().addNewMockService()
                     .set(newMockServiceConfig.getMockService());

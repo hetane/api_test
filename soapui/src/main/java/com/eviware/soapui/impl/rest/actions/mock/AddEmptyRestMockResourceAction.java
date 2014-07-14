@@ -31,7 +31,7 @@ public class AddEmptyRestMockResourceAction extends AbstractSoapUIAction<RestMoc
     public static final String SOAPUI_ACTION_ID = "AddEmptyRestMockResourceAction";
 
     public AddEmptyRestMockResourceAction() {
-        super("Add new mock action", "Add a new REST mock action to this mock service");
+        super("Add new mock action", "Add a new REST mock action to this MockService");
     }
 
 
