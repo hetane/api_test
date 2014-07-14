@@ -73,7 +73,7 @@ public class ChooseAnotherTestCase implements Resolver {
     }
 
     public boolean resolve() {
-        TestCaseChangeDialog dialog = new TestCaseChangeDialog("Choose another test case");
+        TestCaseChangeDialog dialog = new TestCaseChangeDialog("Choose another TestCase");
         dialog.showAndChoose();
 
         return resolved;

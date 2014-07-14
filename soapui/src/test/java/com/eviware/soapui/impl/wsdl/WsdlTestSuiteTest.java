@@ -48,7 +48,7 @@ public class WsdlTestSuiteTest {
 
     @Test
     public void addsTestCasesForNames() throws Exception {
-        String testCaseName = "Frakking big test case";
+        String testCaseName = "Frakking big TestCase";
         suite.addNewTestCase(testCaseName);
         assertThat(suite, hasATestCaseNamed(testCaseName));
 

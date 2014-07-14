@@ -506,7 +506,7 @@ public class AssertionsPanel extends JPanel {
             if (assertionListModel.getAssertionAt(assertionIndex).getParent().getParent() instanceof TestCase) {
                 if (SoapUI.getTestMonitor().hasRunningTestCase(
                         (TestCase) assertionListModel.getAssertionAt(assertionIndex).getParent().getParent())) {
-                    UISupport.showInfoMessage("Can not remove assertion(s) while test case is running");
+                    UISupport.showInfoMessage("Can not remove assertion(s) while TestCase is running");
                     return true;
                 }
             }

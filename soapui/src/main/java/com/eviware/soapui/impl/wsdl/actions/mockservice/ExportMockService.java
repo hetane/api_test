@@ -31,7 +31,7 @@ public class ExportMockService extends AbstractSoapUIAction<WsdlMockService> {
     public void perform(WsdlMockService mService, Object param) {
         mService.beforeSave();
         String defaultFileName = System.getProperty("user.home") + File.separator + mService.getName() + ".xml";
-        File file = UISupport.getFileDialogs().saveAs(this, "Select test case file", "xml", "XML",
+        File file = UISupport.getFileDialogs().saveAs(this, "Select TestCase file", "xml", "XML",
                 new File(defaultFileName));
 
         if (file == null) {

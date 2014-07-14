@@ -31,7 +31,7 @@ public class CreateNewEmptyTestCase implements Resolver {
     }
 
     public String getDescription() {
-        return "Create new empty test case";
+        return "Create new empty TestCase";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CreateNewEmptyTestCase implements Resolver {
     }
 
     public boolean resolve() {
-        WsdlTestCase tCase = testStep.getTestCase().getTestSuite().addNewTestCase("New Test Case");
+        WsdlTestCase tCase = testStep.getTestCase().getTestSuite().addNewTestCase("New TestCase");
         testStep.setTargetTestCase(tCase);
         resolved = true;
 

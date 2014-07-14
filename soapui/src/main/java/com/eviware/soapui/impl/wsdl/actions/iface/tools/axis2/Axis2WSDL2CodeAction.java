@@ -134,7 +134,7 @@ public class Axis2WSDL2CodeAction extends AbstractToolsAction<Interface> {
 
         mainForm.addCheckBox(ASYNC, "(generate code only for async style)");
         mainForm.addCheckBox(SYNC, "(generate code only for sync style)");
-        mainForm.addCheckBox(TESTCASE, "(Generate a test case)");
+        mainForm.addCheckBox(TESTCASE, "(Generate a TestCase)");
 
         XFormField serverSideCB = mainForm.addCheckBox(SERVERSIDE, "(Generate server side code (i.e. skeletons))");
 

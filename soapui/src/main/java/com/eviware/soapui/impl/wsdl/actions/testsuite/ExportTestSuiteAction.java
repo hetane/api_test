@@ -33,7 +33,7 @@ public class ExportTestSuiteAction extends AbstractSoapUIAction<WsdlTestSuite> {
         tSuite.beforeSave();
         String defaultFileName = System.getProperty("user.home") + File.separator
                 + StringUtils.createFileName(tSuite.getName(), '-') + ".xml";
-        File file = UISupport.getFileDialogs().saveAs(this, "Select test case file", "xml", "XML",
+        File file = UISupport.getFileDialogs().saveAs(this, "Select TestCase file", "xml", "XML",
                 new File(defaultFileName));
 
         if (file == null) {

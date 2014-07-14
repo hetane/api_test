@@ -539,19 +539,19 @@ public class WsdlRunTestCaseTestStep extends WsdlTestStep {
         super.resolve(context);
 
         if (targetTestCase == null) {
-            if (context.hasThisModelItem(this, "Missing Test Case",
+            if (context.hasThisModelItem(this, "Missing TestCase",
                     getTestStepTitle() + "/" + stepConfig.getTargetTestCase())) {
                 return;
             }
             context
-                    .addPathToResolve(this, "Missing Test Case", getTestStepTitle() + "/" + stepConfig.getTargetTestCase())
+                    .addPathToResolve(this, "Missing TestCase", getTestStepTitle() + "/" + stepConfig.getTargetTestCase())
                     .addResolvers(new RunTestCaseRemoveResolver(this), new ChooseAnotherTestCase(this),
                             new CreateNewEmptyTestCase(this));
         } else {
             targetTestCase.resolve(context);
-            if (context.hasThisModelItem(this, "Missing Test Case",
+            if (context.hasThisModelItem(this, "Missing TestCase",
                     getTestStepTitle() + "/" + stepConfig.getTargetTestCase())) {
-                context.getPath(this, "Missing Test Case", getTestStepTitle() + "/" + stepConfig.getTargetTestCase())
+                context.getPath(this, "Missing TestCase", getTestStepTitle() + "/" + stepConfig.getTargetTestCase())
                         .setSolved(true);
             }
         }

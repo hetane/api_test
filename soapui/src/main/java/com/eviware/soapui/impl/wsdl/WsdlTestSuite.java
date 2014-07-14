@@ -592,7 +592,7 @@ public class WsdlTestSuite extends AbstractTestPropertyHolderWsdlModelItem<TestS
         TestCaseConfig importTestCaseConfig = null;
 
         if (!file.exists()) {
-            UISupport.showErrorMessage("Error loading test case ");
+            UISupport.showErrorMessage("Error loading TestCase ");
             return;
         }
 

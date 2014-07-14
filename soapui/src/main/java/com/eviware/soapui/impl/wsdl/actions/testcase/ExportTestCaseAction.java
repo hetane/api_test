@@ -26,14 +26,14 @@ import com.eviware.soapui.support.action.support.AbstractSoapUIAction;
 public class ExportTestCaseAction extends AbstractSoapUIAction<WsdlTestCase> {
 
     public ExportTestCaseAction() {
-        super("Export", "Exports the test case");
+        super("Export", "Exports the TestCase");
     }
 
     public void perform(WsdlTestCase testCase, Object param) {
         testCase.beforeSave();
         String defaultFileName = System.getProperty("user.home", ".") + File.separator
                 + StringUtils.createFileName(testCase.getName(), '-') + ".xml";
-        File file = UISupport.getFileDialogs().saveAs(this, "Select test case file", "xml", "XML",
+        File file = UISupport.getFileDialogs().saveAs(this, "Select TestCase file", "xml", "XML",
                 new File(defaultFileName));
 
         if (file == null) {

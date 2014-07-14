@@ -29,7 +29,7 @@ public class ImportMockOperation extends AbstractSoapUIAction<WsdlMockService> {
     }
 
     public void perform(WsdlMockService target, Object param) {
-        File file = UISupport.getFileDialogs().openXML(this, "Choose test case to import");
+        File file = UISupport.getFileDialogs().openXML(this, "Choose TestCase to import");
 
         if (file == null) {
             return;

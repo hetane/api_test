@@ -1678,7 +1678,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 
     public void importTestSuite(File file) {
         if (!file.exists()) {
-            UISupport.showErrorMessage("Error loading test case ");
+            UISupport.showErrorMessage("Error loading TestCase ");
             return;
         }
 
@@ -1958,7 +1958,7 @@ public class WsdlProject extends AbstractTestPropertyHolderWsdlModelItem<Project
 
     public void importMockService(File file) {
         if (!file.exists()) {
-            UISupport.showErrorMessage("Error loading test case ");
+            UISupport.showErrorMessage("Error loading TestCase ");
             return;
         }
 

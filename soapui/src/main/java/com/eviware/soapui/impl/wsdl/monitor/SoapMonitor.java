@@ -407,7 +407,7 @@ public class SoapMonitor extends JPanel {
         optionsButton.setToolTipText("Sets Monitor Options");
         clearButton.setToolTipText("Clear all/selected messages from the log");
         createRequestButton.setToolTipText("Creates requests from selected messages");
-        addToTestCaseButton.setToolTipText("Adds selected requests to a test case");
+        addToTestCaseButton.setToolTipText("Adds selected requests to a TestCase");
         // addToRestTestCaseButton.setToolTipText(
         // "Adds selected REST requests to a TestCase" );
         addToMockServiceButton.setToolTipText("Adds selected responses to a mock service");

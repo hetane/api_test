@@ -253,7 +253,7 @@ public class GotoStepDesktopPanel extends ModelItemDesktopPanel<WsdlGotoTestStep
         JXToolBar builder = UISupport.createSmallToolbar();
         testStepsModel = new GotoTestStepsComboBoxModel(gotoStep.getTestCase(), null);
         testStepsCombo = new JComboBox(testStepsModel);
-        testStepsCombo.setToolTipText("The step the test case will go to if the current condition is true");
+        testStepsCombo.setToolTipText("The step the TestCase will go to if the current condition is true");
         testStepsCombo.setEnabled(false);
         UISupport.setFixedSize(testStepsCombo, 280, 20);
         builder.addFixed(new JLabel("<html><b>Target step:</b></html>"));

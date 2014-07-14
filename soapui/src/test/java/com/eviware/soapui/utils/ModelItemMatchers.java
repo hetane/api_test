@@ -56,7 +56,7 @@ public class ModelItemMatchers {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("a TestSuite with a test case named " + testCaseName);
+                description.appendText("a TestSuite with a TestCase named " + testCaseName);
             }
         };
     }

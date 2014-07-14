@@ -37,7 +37,7 @@ public class MultiAssertionDeleteAction extends AbstractSoapUIMultiAction<ModelI
     public void perform(ModelItem[] targets, Object param) {
         if (UISupport.confirm("Delete selected Assertions?", "Delete Assertions")) {
             if (SoapUI.getTestMonitor().hasRunningTestCase((TestCase) targets[0].getParent().getParent())) {
-                UISupport.showInfoMessage("Can not remove assertion(s) while test case is running");
+                UISupport.showInfoMessage("Can not remove assertion(s) while TestCase is running");
                 return;
             }
             // remove duplicates
